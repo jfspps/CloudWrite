@@ -1,17 +1,17 @@
 package com.example.cloudwrite.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 /**
  * Stores a purpose and description of a concept, and is paired to a fundamental piece
  */
-@Builder
+@Setter
+@Getter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
+@Builder
 @Entity
 public class Concept {
 

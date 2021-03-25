@@ -1,8 +1,6 @@
 package com.example.cloudwrite.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,9 +8,11 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Builder
+@Setter
+@Getter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
+@Builder
 @Entity
 public class FundamentalPiece {
 
@@ -23,7 +23,7 @@ public class FundamentalPiece {
     String title;
 
     // for topic search purposes
-    String keywords;
+    String keyword;
 
     String prerequisites;
 
@@ -38,6 +38,4 @@ public class FundamentalPiece {
 
     @UpdateTimestamp
     private Timestamp lastModifiedDate;
-
-
 }

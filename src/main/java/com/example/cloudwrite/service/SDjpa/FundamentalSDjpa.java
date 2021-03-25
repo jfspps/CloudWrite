@@ -49,12 +49,12 @@ public class FundamentalSDjpa implements FundamentalPieceService {
     }
 
     @Override
-    public Set<ExpositionPiece> findByKeywords(List<String> keywords) {
-        return fundamentalPieceRepo.findAllByKeywords(keywords);
+    public Set<ExpositionPiece> findAllByKeyword(String keyword) {
+        return fundamentalPieceRepo.findAllByKeyword(keyword);
     }
 
     @Override
-    public Set<ExpositionPiece> findByTitle(String title) {
+    public Set<ExpositionPiece> findAllByTitle(String title) {
         return fundamentalPieceRepo.findAllByTitle(title);
     }
 }

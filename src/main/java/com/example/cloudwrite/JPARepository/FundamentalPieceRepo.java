@@ -11,5 +11,5 @@ public interface FundamentalPieceRepo extends JpaRepository<FundamentalPiece, Lo
 
     Set<ExpositionPiece> findAllByTitle(String title);
 
-    Set<ExpositionPiece> findAllByKeywords(List<String> keywords);
+    Set<ExpositionPiece> findAllByKeyword(String keyword);
 }

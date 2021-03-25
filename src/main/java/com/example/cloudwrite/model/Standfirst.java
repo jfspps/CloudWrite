@@ -1,14 +1,14 @@
 package com.example.cloudwrite.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Builder
+@Setter
+@Getter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
+@Builder
 @Entity
 public class Standfirst {
 

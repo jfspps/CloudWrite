@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface FundamentalPieceService extends BaseService<FundamentalPiece, Long> {
 
-    Set<ExpositionPiece> findByKeywords(List<String> keywords);
+    Set<ExpositionPiece> findAllByKeyword(String keyword);
 
-    Set<ExpositionPiece> findByTitle(String title);
+    Set<ExpositionPiece> findAllByTitle(String title);
 }

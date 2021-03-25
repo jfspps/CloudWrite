@@ -48,12 +48,12 @@ public class ExpositionSDjpa implements ExpositionPieceService {
     }
 
     @Override
-    public Set<ExpositionPiece> findByKeywords(List<String> keywords) {
-        return expositionPieceRepo.findAllByKeywords(keywords);
+    public Set<ExpositionPiece> findAllByKeyword(String keyword) {
+        return expositionPieceRepo.findAllByKeyword(keyword);
     }
 
     @Override
-    public Set<ExpositionPiece> findByTitle(String title) {
+    public Set<ExpositionPiece> findAllByTitle(String title) {
         return expositionPieceRepo.findAllByTitle(title);
     }
 }

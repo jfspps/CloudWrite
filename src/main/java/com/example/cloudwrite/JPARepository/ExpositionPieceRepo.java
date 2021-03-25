@@ -10,5 +10,5 @@ public interface ExpositionPieceRepo extends JpaRepository<ExpositionPiece, Long
 
     Set<ExpositionPiece> findAllByTitle(String title);
 
-    Set<ExpositionPiece> findAllByKeywords(List<String> keywords);
+    Set<ExpositionPiece> findAllByKeyword(String keyword);
 }
