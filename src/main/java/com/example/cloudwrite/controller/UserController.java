@@ -25,6 +25,12 @@ public class UserController {
         return "authenticated";
     }
 
+    @GetMapping("/adminPage")
+    public String getAdminPage(Model model){
+        model.addAttribute("user", getUsername());
+        return "/admin/adminPage";
+    }
+
     //this overrides the default GET logout page
     @GetMapping("/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response){
