@@ -20,6 +20,11 @@ public class ExpositionPiece {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    String title;
+
+    // for topic search purposes
+    String keywords;
+
     @OneToOne
     Standfirst standfirst;
 

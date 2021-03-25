@@ -20,6 +20,11 @@ public class FundamentalPiece {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    String title;
+
+    // for topic search purposes
+    String keywords;
+
     String prerequisites;
 
     @OneToMany(mappedBy = "fundamentalPiece")
