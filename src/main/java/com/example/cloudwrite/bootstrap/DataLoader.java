@@ -68,14 +68,16 @@ public class DataLoader implements CommandLineRunner {
     private void buildResearchExpositions(){
 
         KeyResult someResult = KeyResult.builder().description("Some description").build();
-        Standfirst standfirst = Standfirst.builder().rationale("What's wrong").approach("The approach").build();
+        Standfirst standfirst = Standfirst.builder().rationale("What's wrong?").approach("The approach").build();
 
         Standfirst savedStandfirst = standfirstService.save(standfirst);
         KeyResult savedResult = keyResultService.save(someResult);
 
         ExpositionPiece piece = ExpositionPiece.builder()
+                .title("The best piece in the world!")
                 .expositionPurpose("A purpose")
                 .currentProgress("The current state")
+                .keyword("Keyword")
                 .keyResults(List.of(savedResult))
                 .standfirst(savedStandfirst)
                 .futureWork("What to expect").build();

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome page</title>
+</head>
+<body>
+
+
+<h1>Spring Security</h1>
+
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+
+<a href="/authenticated">Proceed</a>
+
+</body>
+</html>
