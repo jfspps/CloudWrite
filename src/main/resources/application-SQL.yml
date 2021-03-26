@@ -1,10 +1,10 @@
-# note that PORT is configured to 3307, not the default 3306 for MySQL,
+# the default port is 3306; when running MySQL from Docker change to 3307
 # since this project was built alongside a MySQL Docker container (which uses port 3306)
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3307/cloudwrite
-    username: SRM_dev_user
-    password: admin
+    url: jdbc:mysql://localhost:3306/cloud_write
+    username: cw_dev_user
+    password: admin2021admin
     platform: mysql
   jpa:
     hibernate:
@@ -13,11 +13,11 @@ spring:
     database: mysql
     show-sql: true
 #    Comment out the following (p in properties aligns with s in show-sql) to prevent SQL script from being created or appended
-#properties:
-#  javax:
-#    persistence:
-#      schema-generation:
-#        create-source: metadata
-#        scripts:
-#          action: create
-#          create-target: cloudwrite.sql
+#    properties:
+#      javax:
+#        persistence:
+#          schema-generation:
+#            create-source: metadata
+#            scripts:
+#              action: create
+#              create-target: cloudwrite.sql

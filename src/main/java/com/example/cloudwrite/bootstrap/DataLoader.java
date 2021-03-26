@@ -5,6 +5,7 @@ import com.example.cloudwrite.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Component
 @Slf4j
 @AllArgsConstructor
+@Profile(value = {"SQL", "SDjpa"})
 public class DataLoader implements CommandLineRunner {
 
     private final FundamentalPieceService fundamentalPieceService;
@@ -21,9 +23,17 @@ public class DataLoader implements CommandLineRunner {
     private final StandfirstService standfirstService;
 
     @Override
-    public void run(String... args) throws Exception{
-        buildFundamentalPieces();
-        buildResearchExpositions();
+    public void run(String... args) {
+        if (fundamentalPieceService.findAll() == null || fundamentalPieceService.findAll().size() == 0){
+            buildFundamentalPieces();
+        } else {
+            log.info("Fundamental pieces already on file; nothing loaded");
+        }
+        if (expositionPieceService.findAll() == null || expositionPieceService.findAll().size() == 0){
+            buildResearchExpositions();
+        } else {
+            log.info("Exposition pieces already on file; nothing loaded");
+        }
         log.info("All data loaded");
     }
 
