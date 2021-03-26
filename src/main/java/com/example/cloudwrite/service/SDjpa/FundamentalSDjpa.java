@@ -5,14 +5,15 @@ import com.example.cloudwrite.model.ExpositionPiece;
 import com.example.cloudwrite.model.FundamentalPiece;
 import com.example.cloudwrite.service.FundamentalPieceService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
 @Service
+@Profile("SDjpa")
 public class FundamentalSDjpa implements FundamentalPieceService {
 
     private final FundamentalPieceRepo fundamentalPieceRepo;

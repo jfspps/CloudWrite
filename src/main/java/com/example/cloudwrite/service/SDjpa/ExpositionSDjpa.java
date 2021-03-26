@@ -4,14 +4,15 @@ import com.example.cloudwrite.JPARepository.ExpositionPieceRepo;
 import com.example.cloudwrite.model.ExpositionPiece;
 import com.example.cloudwrite.service.ExpositionPieceService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
 @Service
+@Profile("SDjpa")
 public class ExpositionSDjpa implements ExpositionPieceService {
 
     private final ExpositionPieceRepo expositionPieceRepo;

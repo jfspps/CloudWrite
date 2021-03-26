@@ -4,6 +4,7 @@ import com.example.cloudwrite.JPARepository.KeyResultRepo;
 import com.example.cloudwrite.model.KeyResult;
 import com.example.cloudwrite.service.KeyResultService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
+@Profile("SDjpa")
 public class KeyResultSDjpa implements KeyResultService {
 
     private final KeyResultRepo keyResultRepo;

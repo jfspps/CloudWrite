@@ -1,0 +1,23 @@
+# note that PORT is configured to 3307, not the default 3306 for MySQL,
+# since this project was built alongside a MySQL Docker container (which uses port 3306)
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/cloudwrite
+    username: SRM_dev_user
+    password: admin
+    platform: mysql
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    show-sql: true
+#    Comment out the following (p in properties aligns with s in show-sql) to prevent SQL script from being created or appended
+#properties:
+#  javax:
+#    persistence:
+#      schema-generation:
+#        create-source: metadata
+#        scripts:
+#          action: create
+#          create-target: cloudwrite.sql
