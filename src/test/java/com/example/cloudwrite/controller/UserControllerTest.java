@@ -85,7 +85,7 @@ class UserControllerTest {
     // 4xx type errors not implemented yet; see SecurityConfiguration
     @Test
     void getRedirectedToAuthenticated_Denied() throws Exception {
-        mockMvc.perform(get("/login").with(httpBasic("admin", "wrongPassword")))
+        mockMvc.perform(get("/login").with(httpBasic("admin", USERPWD)))
                 .andExpect(status().is2xxSuccessful());
     }
 
