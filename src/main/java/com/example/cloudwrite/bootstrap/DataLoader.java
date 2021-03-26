@@ -1,11 +1,17 @@
 package com.example.cloudwrite.bootstrap;
 
+import com.example.cloudwrite.JPARepository.AuthorityRepo;
+import com.example.cloudwrite.JPARepository.UserRepo;
 import com.example.cloudwrite.model.*;
+import com.example.cloudwrite.model.security.Authority;
+import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,6 +28,10 @@ public class DataLoader implements CommandLineRunner {
     private final KeyResultService keyResultService;
     private final StandfirstService standfirstService;
 
+    private final UserRepo userRepo;
+    private final AuthorityRepo authorityRepo;
+    private final PasswordEncoder DBpasswordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public void run(String... args) {
         if (fundamentalPieceService.findAll() == null || fundamentalPieceService.findAll().size() == 0){
@@ -29,11 +39,19 @@ public class DataLoader implements CommandLineRunner {
         } else {
             log.info("Fundamental pieces already on file; nothing loaded");
         }
+
         if (expositionPieceService.findAll() == null || expositionPieceService.findAll().size() == 0){
             buildResearchExpositions();
         } else {
             log.info("Exposition pieces already on file; nothing loaded");
         }
+
+        if (authorityRepo.findAll().size() == 0){
+            addUsers();
+            log.debug("User databases finished populating");
+        } else
+            log.debug("User databases already contains data; no changes made");
+
         log.info("All data loaded");
     }
 
@@ -101,5 +119,25 @@ public class DataLoader implements CommandLineRunner {
         keyResultService.save(savedResult);
 
         log.info("Saved " + expositionPieceService.findAll().size() + " piece(s)");
+    }
+
+    private void addUsers(){
+        //example, as per Student Record Management (SRM) account
+        Authority adminAuthority = authorityRepo.save(Authority.builder().role("ADMIN").build());
+        Authority teacherAuthority = authorityRepo.save(Authority.builder().role("USER").build());
+        log.debug("Authorities added: " + authorityRepo.findAll().size());
+
+        userRepo.save(User.builder()
+                .username("admin")
+                .password(DBpasswordEncoder.encode("admin123"))
+                .authority(adminAuthority)  //singular set, courtesy of Project Lombok
+                .build());
+        userRepo.save(User.builder()
+                .username("user")
+                .password(DBpasswordEncoder.encode("user123"))
+                .authority(teacherAuthority)
+                .build());
+
+        log.debug("Users added: " + userRepo.findAll().size());
     }
 }

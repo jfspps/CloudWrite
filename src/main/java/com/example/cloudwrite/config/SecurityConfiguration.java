@@ -1,4 +1,4 @@
-package com.example.cloudwrite;
+package com.example.cloudwrite.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

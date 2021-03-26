@@ -7,8 +7,9 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@NoArgsConstructor
 @Entity
 public class Authority {
 

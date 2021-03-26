@@ -9,9 +9,9 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 @Entity
 public class User {
 
@@ -31,12 +31,6 @@ public class User {
     @Size(min = 8, max = 255)
     private String password;
 
-    @Builder.Default
-    private boolean enabled = true;
-
-    @NotNull
-    private String authority;
-
     //Singular (Lombok) builds a singular Set with one Authority in authorities
     @Singular
     @ManyToMany(cascade = CascadeType.MERGE)
@@ -45,6 +39,16 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private Set<Authority> authorities;
 
+    //adding other Spring's UserDetails interface properties
+    @Builder.Default
+    private Boolean enabled = true;
+
+    @Builder.Default
+    private Boolean accountNonExpired = true;
+
     @Builder.Default
     private Boolean accountNonLocked = true;
+
+    @Builder.Default
+    private Boolean credentialsNonExpired = true;
 }

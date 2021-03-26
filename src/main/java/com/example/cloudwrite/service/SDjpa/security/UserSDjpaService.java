@@ -1,4 +1,4 @@
-package com.example.cloudwrite.service.SDjpa;
+package com.example.cloudwrite.service.SDjpa.security;
 
 import com.example.cloudwrite.JPARepository.UserRepo;
 import com.example.cloudwrite.model.security.User;
@@ -14,11 +14,11 @@ import java.util.Set;
 @Slf4j
 @Service
 @Profile("SDjpa")
-public class UserSDjpa implements UserService {
+public class UserSDjpaService implements UserService {
 
     private final UserRepo userRepo;
 
-    public UserSDjpa(UserRepo userRepo) {
+    public UserSDjpaService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
