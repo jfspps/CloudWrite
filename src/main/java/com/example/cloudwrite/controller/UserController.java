@@ -37,6 +37,12 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/login-error")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
+    }
+
     //this overrides the default GET logout page
     @GetMapping("/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response){

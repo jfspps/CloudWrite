@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -45,8 +46,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authenticated/**").hasAnyRole("ADMIN", "USER")
                 // handle admin pages
                 .antMatchers("/adminPage").hasAnyRole("ADMIN")
-                .and().formLogin().loginPage("/login").permitAll()
+                .and().formLogin().loginPage("/login").permitAll().failureUrl("/login-error")
                 .and().logout().logoutSuccessUrl("/welcome").permitAll()
-                .and().csrf().disable();
+                .and().csrf().disable()
+                .rememberMe().key("remember-me").rememberMeParameter("remember_me")
+                .rememberMeCookieName("CloudWriteLoginRememberMe").tokenValiditySeconds(3600)
+                //maximum of one session per user
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS).maximumSessions(1);
     }
 }
