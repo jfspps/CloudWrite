@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>User page</title>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: baseHead(~{::title})">
+    <title>Authenticated user page</title>
 </head>
 <body>
 
-<div>
-    <h1>Welcome on board</h1>
-    <p sec:authorize="hasRole('ADMIN')">
-        You are in the ADMIN group
-    </p>
-    <p sec:authorize="hasRole('USER')">
-        You are in the USER group
-    </p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="row-md-12">
+            <h1>Welcome on board</h1>
+            <p sec:authorize="hasRole('ADMIN')">
+                You are in the ADMIN group
+            </p>
+            <p sec:authorize="hasRole('USER')">
+                You are in the USER group
+            </p>
 
-    Authenticated username:
-    <div sec:authentication="name"></div>
-    Authenticated user roles:
-    <div sec:authentication="principal.authorities"></div>
+            Authenticated username:
+            <div sec:authentication="name"></div>
+            Authenticated user roles:
+            <div sec:authentication="principal.authorities"></div>
 
-    <a href="/adminPage" sec:authorize="hasRole('ADMIN')">Admin page</a>
-    <a href="/logout">Sign out</a>
+            <a href="/adminPage" sec:authorize="hasRole('ADMIN')">Admin page</a>
+            <a href="/logout">Sign out</a>
+        </div>
+    </div>
 </div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
 
 </body>
 </html>

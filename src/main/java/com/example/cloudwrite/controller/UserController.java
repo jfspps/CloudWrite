@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/authenticated")
-    public String userLogin(Model model){
+    public String getAuthenticatedPage(Model model){
         model.addAttribute("user", getUsername());
         return "authenticated";
     }
@@ -29,6 +29,12 @@ public class UserController {
     public String getAdminPage(Model model){
         model.addAttribute("user", getUsername());
         return "/admin/adminPage";
+    }
+
+    //this overrides the default Spring Security login page
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
     }
 
     //this overrides the default GET logout page

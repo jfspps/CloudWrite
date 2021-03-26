@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Page</title>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: baseHead(~{::title})">
+    <title>Admin page</title>
 </head>
 <body>
 
-<h1>Admin page</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="row-md-12">
+            <h1>Admin page</h1>
+            <p>
+                <a href="/authenticated">Go back</a> to the authenticated user page.
+            </p>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
 
 </body>
 </html>

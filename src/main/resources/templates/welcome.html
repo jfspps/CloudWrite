@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: baseHead(~{::title})">
     <title>Welcome page</title>
 </head>
 <body>
 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="row-md-12">
+            <h1>Spring Security</h1>
 
-<h1>Spring Security</h1>
+            <div th:if="${param.logout}">
+                You have been logged out.
+            </div>
 
-<div th:if="${param.logout}">
-    You have been logged out.
+            <a href="/authenticated">Proceed</a>
+        </div>
+    </div>
 </div>
 
-<a href="/authenticated">Proceed</a>
+<footer th:replace="fragments/footer :: footer"></footer>
 
 </body>
 </html>
