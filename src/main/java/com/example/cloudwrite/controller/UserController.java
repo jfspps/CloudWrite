@@ -37,6 +37,7 @@ public class UserController {
         return "login";
     }
 
+    // see SecurityConfiguration for redirection details
     @GetMapping("/login-error")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
