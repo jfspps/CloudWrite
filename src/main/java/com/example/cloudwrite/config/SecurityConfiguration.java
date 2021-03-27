@@ -40,7 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().httpBasic()
                 .and().formLogin().loginPage("/login").permitAll().failureUrl("/login-error")
                 .and().logout().logoutSuccessUrl("/welcome").permitAll()
-                .and().csrf().disable()
+                // enable Cross Site Reference Forgery, except for H2 console and REST APIs
+                .and().csrf().ignoringAntMatchers("/h2-console/**").ignoringAntMatchers("/api/**")
+                .and()
                 .rememberMe().key("remember-me").rememberMeParameter("remember_me")
                 .rememberMeCookieName("CloudWriteLoginRememberMe").tokenValiditySeconds(3600)
                 //maximum of one session per user
