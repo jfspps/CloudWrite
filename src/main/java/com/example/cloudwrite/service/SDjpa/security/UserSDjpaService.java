@@ -24,7 +24,10 @@ public class UserSDjpaService implements UserService {
 
     @Override
     public User save(User object) {
-        return userRepo.save(object);
+        if (userRepo.findByUsername(object.getUsername()).isEmpty()){
+            return userRepo.save(object);
+        }
+        return null;
     }
 
     @Override

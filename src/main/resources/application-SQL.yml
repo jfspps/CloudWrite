@@ -20,4 +20,4 @@ spring:
 #            create-source: metadata
 #            scripts:
 #              action: create
-#              create-target: cloudwrite.sql
+#              create-target: cloud_write.sql

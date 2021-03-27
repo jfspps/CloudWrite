@@ -56,23 +56,20 @@ class UserControllerTest {
 
     @Test
     void getRedirectedToLogin_adminPage() throws Exception {
-        mockMvc.perform(get("/adminPage"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlTemplate("http://localhost/login"));
+        mockMvc.perform(get("/adminPage").with(httpBasic("admin", ADMIN_PWD)))
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
     void getRedirectedToLogin_authenticated() throws Exception{
-        mockMvc.perform(get("/authenticated"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlTemplate("http://localhost/login"));
+        mockMvc.perform(get("/authenticated").with(httpBasic("admin", ADMIN_PWD)))
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
     void getRedirectedToLogin_adminPage2() throws Exception {
         mockMvc.perform(get("/adminPage").with(httpBasic("admin", ADMIN_PWD)))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlTemplate("http://localhost/login"));
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -85,12 +82,12 @@ class UserControllerTest {
     @Test
     void getRedirectedToAuthenticated_Denied() throws Exception {
         mockMvc.perform(get("/login").with(httpBasic("admin", USERPWD)))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
     void logoutPage() throws Exception {
         mockMvc.perform(post("/logout").with(csrf()))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is2xxSuccessful());
     }
 }

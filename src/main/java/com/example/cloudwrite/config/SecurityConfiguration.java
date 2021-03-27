@@ -21,9 +21,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().passwordEncoder(passwordEncoder)
-                .withUser("admin").password(passwordEncoder.encode("admin123")).roles("USER", "ADMIN")
+                .withUser("user").password(passwordEncoder.encode("user123")).roles("USER")
                 .and()
-                .withUser("user").password(passwordEncoder.encode("user123")).roles("USER");
+                .withUser("admin").password(passwordEncoder.encode("admin123")).roles("USER", "ADMIN");
     }
 
     @Bean
@@ -44,8 +44,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/welcome", "/login").permitAll()
                 //set pages which require authentication
                 .antMatchers("/authenticated/**").hasAnyRole("ADMIN", "USER")
-                // handle admin pages
                 .antMatchers("/adminPage").hasAnyRole("ADMIN")
+                // handle login/logout pages
+                .and().httpBasic()
                 .and().formLogin().loginPage("/login").permitAll().failureUrl("/login-error")
                 .and().logout().logoutSuccessUrl("/welcome").permitAll()
                 .and().csrf().disable()

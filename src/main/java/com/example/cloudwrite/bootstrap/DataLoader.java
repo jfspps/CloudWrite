@@ -7,6 +7,7 @@ import com.example.cloudwrite.model.security.Authority;
 import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.*;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Component
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Profile(value = {"SQL", "SDjpa"})
 public class DataLoader implements CommandLineRunner {
 
