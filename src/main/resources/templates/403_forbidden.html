@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HTTP 403 Forbidden</title>
+</head>
+<body>
+
+<h1>HTTP 403 Forbidden</h1>
+<p>You are logged on the system but not permitted to access this resource:</p>
+
+<!--/*@thymesVar id="exception" type="java.lang.Exception"*/-->
+<p th:text="${exception.getMessage()}">The requested record does was not found on the database</p>
+</body>
+</html>

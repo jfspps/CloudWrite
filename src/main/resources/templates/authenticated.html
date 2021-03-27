@@ -24,6 +24,7 @@
             <div sec:authentication="principal.authorities"></div>
 
             <a href="/adminPage" sec:authorize="hasRole('ADMIN')">Admin page</a>
+            <a href="/userPage">User page</a>
             <a href="/logout">Sign out</a>
         </div>
     </div>

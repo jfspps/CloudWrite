@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+</head>
+<body>
+
+<div>
+    <h1>User page</h1>
+    <p sec:authorize="hasRole('ADMIN')">
+        You are in the ADMIN group
+    </p>
+    <p sec:authorize="hasRole('USER')">
+        You are in the USER group
+    </p>
+    <br />
+
+    Authenticated username:
+    <div sec:authentication="name"></div>
+    Authenticated user roles:
+    <div sec:authentication="principal.authorities"></div>
+
+    <br />
+    <form th:action="@{/CRUD}" method="get" class="form-horizontal" id="search-student-form">
+        <button type="submit" class="btn btn-info">List all users</button>
+    </form>
+
+    <table>
+        <!--/*@thymesVar id="found" type="com.example.cloudwrite.model.security.User"*/-->
+        <tr th:each="found: ${usersFound}">
+            <td th:text="${found.username}"></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td><a href="/adminPage">Admin page</a></td>
+            <td><a href="/userPage">User page</a></td>
+            <td><a href="/logout">Sign out</a></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

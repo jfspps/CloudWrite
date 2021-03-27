@@ -124,6 +124,14 @@ class UserControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
+    @MethodSource("streamAllUsers")
+    @ParameterizedTest
+    void userPage_withAllUsers(String username, String pwd) throws Exception {
+        mockMvc.perform(get("/userPage").with(httpBasic(username, pwd)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("userPage"));
+    }
+
     @Test
     void logoutPage() throws Exception {
         mockMvc.perform(post("/logout").with(csrf()))

@@ -2,6 +2,7 @@ package com.example.cloudwrite.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -10,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+// see UserController and related @Secured
+@EnableGlobalMethodSecurity(securedEnabled = true)
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -31,7 +34,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/welcome", "/login").permitAll()
                 //set pages which require authentication
                 .antMatchers("/authenticated/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/adminPage").hasAnyRole("ADMIN")
+                .antMatchers("/userPage/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/adminPage/**").hasAnyRole("ADMIN")
                 // handle login/logout pages
                 .and().httpBasic()
                 .and().formLogin().loginPage("/login").permitAll().failureUrl("/login-error")

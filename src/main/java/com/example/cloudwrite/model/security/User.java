@@ -52,4 +52,20 @@ public class User implements Serializable {
 
     @Builder.Default
     private Boolean credentialsNonExpired = true;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj){
+            return true;
+        }
+
+        if (obj instanceof User){
+            User passed = (User) obj;
+            String passUsername = passed.username;
+
+            String thisUser = this.username;
+            return (thisUser.equals(passUsername));
+        }
+        return false;
+    }
 }

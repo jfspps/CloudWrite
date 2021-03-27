@@ -119,6 +119,10 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void addUsers(){
+        if (!userRepo.findAll().isEmpty()){
+            userRepo.findAll().forEach(userRepo::delete);
+        }
+
         //use ROLE_ prefix with JPAUserDetailsService
         Authority adminAuthority = authorityRepo.save(Authority.builder().role("ROLE_ADMIN").build());
         Authority teacherAuthority = authorityRepo.save(Authority.builder().role("ROLE_USER").build());
