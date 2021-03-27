@@ -3,6 +3,7 @@ package com.example.cloudwrite.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Stores a purpose and description of a concept, and is paired to a fundamental piece
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Concept {
+public class Concept implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

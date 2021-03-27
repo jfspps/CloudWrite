@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @SpringBootTest
+// note that these are mock tests and pass when using in-memory H2 database only
 class UserControllerTest {
 
     @Autowired
@@ -30,8 +32,8 @@ class UserControllerTest {
 
     protected MockMvc mockMvc;
 
-    private final static String ADMIN_PWD = "admin123";
-    private final static String USERPWD = "user123";
+    private final String ADMINPWD = "admin123";
+    private final String USERPWD = "user123";
 
     @BeforeEach
     void setUp() {
@@ -56,29 +58,19 @@ class UserControllerTest {
 
     @Test
     void getRedirectedToLogin_adminPage() throws Exception {
-        mockMvc.perform(get("/adminPage").with(httpBasic("admin", ADMIN_PWD)))
-                .andExpect(status().is2xxSuccessful());
+        mockMvc.perform(get("/adminPage").with(httpBasic("admin", ADMINPWD)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/admin/adminPage"));
     }
 
     @Test
     void getRedirectedToLogin_authenticated() throws Exception{
-        mockMvc.perform(get("/authenticated").with(httpBasic("admin", ADMIN_PWD)))
-                .andExpect(status().is2xxSuccessful());
+        mockMvc.perform(get("/authenticated").with(httpBasic("user", USERPWD)).with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("authenticated"))
+                .andExpect(model().attributeExists("user"));
     }
 
-    @Test
-    void getRedirectedToLogin_adminPage2() throws Exception {
-        mockMvc.perform(get("/adminPage").with(httpBasic("admin", ADMIN_PWD)))
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
-    void getRedirectedToAuthenticated() throws Exception {
-        mockMvc.perform(get("/login").with(httpBasic("admin", ADMIN_PWD)))
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    // 4xx type errors not implemented yet; see SecurityConfiguration
     @Test
     void getRedirectedToAuthenticated_Denied() throws Exception {
         mockMvc.perform(get("/login").with(httpBasic("admin", USERPWD)))

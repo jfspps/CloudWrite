@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User, Long> {
     // add custom JPA queries here
-    Optional<User> findByUsername(String username);
+    User findByUsername(String username);
 }

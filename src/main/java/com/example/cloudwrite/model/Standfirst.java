@@ -3,6 +3,7 @@ package com.example.cloudwrite.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Setter
 @Getter
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Standfirst {
+public class Standfirst implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

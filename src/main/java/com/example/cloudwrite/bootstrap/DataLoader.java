@@ -6,7 +6,6 @@ import com.example.cloudwrite.model.*;
 import com.example.cloudwrite.model.security.Authority;
 import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.*;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -20,7 +19,7 @@ import java.util.List;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@Profile(value = {"SQL", "SDjpa"})
+@Profile(value = {"SDjpa"})
 public class DataLoader implements CommandLineRunner {
 
     private final FundamentalPieceService fundamentalPieceService;
@@ -47,11 +46,8 @@ public class DataLoader implements CommandLineRunner {
             log.info("Exposition pieces already on file; nothing loaded");
         }
 
-        if (authorityRepo.findAll().size() == 0){
-            addUsers();
-            log.debug("User databases finished populating");
-        } else
-            log.debug("User databases already contains data; no changes made");
+        // reset user login credentials on each run
+        addUsers();
 
         log.info("All data loaded");
     }
@@ -123,9 +119,9 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void addUsers(){
-        //example, as per Student Record Management (SRM) account
-        Authority adminAuthority = authorityRepo.save(Authority.builder().role("ADMIN").build());
-        Authority teacherAuthority = authorityRepo.save(Authority.builder().role("USER").build());
+        //use ROLE_ prefix with JPAUserDetailsService
+        Authority adminAuthority = authorityRepo.save(Authority.builder().role("ROLE_ADMIN").build());
+        Authority teacherAuthority = authorityRepo.save(Authority.builder().role("ROLE_USER").build());
         log.debug("Authorities added: " + authorityRepo.findAll().size());
 
         userRepo.save(User.builder()

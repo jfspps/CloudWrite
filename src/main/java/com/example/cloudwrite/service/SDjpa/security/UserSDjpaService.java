@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -24,7 +23,7 @@ public class UserSDjpaService implements UserService {
 
     @Override
     public User save(User object) {
-        if (userRepo.findByUsername(object.getUsername()).isEmpty()){
+        if (userRepo.findByUsername(object.getUsername()) == null){
             return userRepo.save(object);
         }
         return null;
@@ -53,7 +52,7 @@ public class UserSDjpaService implements UserService {
     }
 
     @Override
-    public Optional<User> findByUserName(String username) {
+    public User findByUserName(String username) {
         return userRepo.findByUsername(username);
     }
 }

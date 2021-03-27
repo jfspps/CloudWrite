@@ -5,6 +5,7 @@ import com.example.cloudwrite.JPARepository.UserRepo;
 import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.model.security.Authority;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,9 +20,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 @RequiredArgsConstructor
 @Service
 @Profile("SDjpa")
+@Slf4j
 public class JpaUserDetailsService implements UserDetailsService {
 
     private final UserRepo userRepo;
@@ -38,11 +41,11 @@ public class JpaUserDetailsService implements UserDetailsService {
 
         User user = new User();
         try {
-            user = userRepo.findByUsername(username).orElse(null);
+            user = userRepo.findByUsername(username);
+            log.debug("Found user: " + username + " with JPAUserDetailsService");
         } catch (UsernameNotFoundException exception){
             System.out.println("User name, " + username + ", not found");
         }
-
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                 user.getEnabled(), user.getAccountNonExpired(), user.getCredentialsNonExpired(),
                 user.getAccountNonLocked(), convertToSpringAuthorities(user.getAuthorities()));
