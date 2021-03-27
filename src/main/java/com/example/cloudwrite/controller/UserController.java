@@ -1,8 +1,6 @@
 package com.example.cloudwrite.controller;
 
-import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.UserService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -42,12 +38,6 @@ public class UserController {
     public String getAuthenticatedPage(Model model){
         model.addAttribute("user", getUsername());
         return "authenticated";
-    }
-
-    @GetMapping("/adminPage")
-    public String getAdminPage(Model model){
-        model.addAttribute("user", getUsername());
-        return "/admin/adminPage";
     }
 
     //this overrides the default Spring Security login page
@@ -77,17 +67,6 @@ public class UserController {
     public String userPage(Model model) {
         model.addAttribute("user", getUsername());
         return "userPage";
-    }
-
-    //need to prefix with ROLE_ here
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @GetMapping("/CRUD")
-    public String listUsers(Model model){
-        Set<User> userSet = new HashSet<>();
-
-        userSet.addAll(userService.findAll());
-        model.addAttribute("usersFound", userSet);
-        return "/admin/adminPage";
     }
 
     private String getUsername(){

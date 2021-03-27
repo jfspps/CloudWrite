@@ -29,16 +29,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Slf4j
-@SpringBootTest
-
 // Cross-site request forgery, also known as session riding (sometimes pronounced sea-surf) or XSRF, is a type of
 // malicious exploit of a website where unauthorized commands are submitted from a user that the web application trusts.
 // POST requests, with csrf enabled, will be denied (HTTP 403) in the browser but likely pass in Spring MVC tests
 // (tests bypass Spring security); if POST fails in the browser, add:
 // <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 // immediately after any <input> tags which represent POST requests (the above fragment adds the requisite info to Model)
-
+@Slf4j
+@SpringBootTest
 class UserControllerTest {
 
     @Autowired
@@ -65,21 +63,6 @@ class UserControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("welcome"));
-    }
-
-    //this fails with Spring Security with any username ('random' is effectively replaced with anyString())
-    @WithMockUser("random")
-    @Test
-    void loginPage_random() throws Exception {
-        mockMvc.perform(get("/adminPage"))
-                .andExpect(status().is4xxClientError());
-    }
-
-    @Test
-    void getRedirectedToLogin_adminPage() throws Exception {
-        mockMvc.perform(get("/adminPage").with(httpBasic("admin", ADMINPWD)))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/admin/adminPage"));
     }
 
     @WithAnonymousUser
