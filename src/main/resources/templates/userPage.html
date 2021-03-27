@@ -10,12 +10,12 @@
 <div class="container">
     <div class="row justify-content-start">
         <div class="col">
-            <h1>User page</h1>
+            <h1>User page: <span sec:authentication="name"></span></h1>
         </div>
     </div>
     <br/>
     <div class="row justify-content-start">
-        <div class="col-4">
+        <div class="col">
             <p sec:authorize="hasRole('ADMIN')">
                 You are in the ADMIN group
             </p>
@@ -25,30 +25,18 @@
             <br/>
 
             <p>
-                Authenticated username: <span sec:authentication="name"></span>
+                You are granted the following user roles: <span sec:authentication="principal.authorities"></span>
             </p>
-            <p>
-                Authenticated user roles: <span sec:authentication="principal.authorities"></span>
-            </p>
-        </div>
-        <div class="col-8">
-            <form th:action="@{/CRUD}" method="get" class="form-horizontal" id="search-student-form">
-                <button type="submit" class="btn btn-info">List all users</button>
-            </form>
-            <table>
-                <!--/*@thymesVar id="found" type="com.example.cloudwrite.model.security.User"*/-->
-                <tr th:each="found: ${usersFound}">
-                    <td th:text="${found.username}"></td>
-                </tr>
-            </table>
         </div>
     </div>
+    <hr />
+
     <div class="row justify-content-start">
-        <div class="col-4">
+        <div class="col">
             <div class="btn-group">
-                <a href="/adminPage" class="btn btn-primary" sec:authorize="hasRole('ADMIN')">Admin page</a>
-                <a href="/userPage" class="btn btn-primary">User page</a>
-                <a href="/logout" class="btn btn-primary">Sign out</a>
+                <a href="/adminPage" class="btn btn-outline-primary" sec:authorize="hasRole('ADMIN')">Admin page</a>
+                <a href="/authenticated" class="btn btn-outline-secondary">Return to welcome page</a>
+                <a href="/logout" class="btn btn-outline-info">Sign out</a>
             </div>
         </div>
     </div>

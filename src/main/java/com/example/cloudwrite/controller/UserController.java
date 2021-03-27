@@ -87,7 +87,7 @@ public class UserController {
 
         userSet.addAll(userService.findAll());
         model.addAttribute("usersFound", userSet);
-        return "/userPage";
+        return "/admin/adminPage";
     }
 
     private String getUsername(){

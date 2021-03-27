@@ -10,30 +10,23 @@
 <div class="container">
     <div class="row justify-content-start">
         <div class="col">
-            <h1>Welcome on board</h1>
-            <br>
-            <p sec:authorize="hasRole('ADMIN')">
-                You are in the ADMIN group
-            </p>
-            <p sec:authorize="hasRole('USER')">
-                You are in the USER group
-            </p>
-            <br/>
-
-            <p>
-                Authenticated username: <span sec:authentication="name"></span>
-            </p>
-            <p>
-                Authenticated user roles: <span sec:authentication="principal.authorities"></span>
-            </p>
+            <h1>Welcome to CloudWrite</h1>
         </div>
     </div>
     <div class="row justify-content-start">
         <div class="col">
+            <p>
+                You are logged in with username: <b><span sec:authentication="name"></span></b>
+            </p>
+        </div>
+    </div>
+    <hr/>
+    <div class="row justify-content-start">
+        <div class="col">
             <div class="btn-group">
-                <a href="/adminPage" class="btn btn-primary" sec:authorize="hasRole('ADMIN')">Admin page</a>
-                <a href="/userPage" class="btn btn-primary">User page</a>
-                <a href="/logout" class="btn btn-primary">Sign out</a>
+                <a href="/adminPage" class="btn btn-outline-primary" sec:authorize="hasRole('ADMIN')">Admin page</a>
+                <a href="/userPage" class="btn btn-outline-secondary">Edit account settings</a>
+                <a href="/logout" class="btn btn-outline-info">Sign out</a>
             </div>
         </div>
     </div>

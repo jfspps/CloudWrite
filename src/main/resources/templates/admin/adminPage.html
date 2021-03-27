@@ -8,12 +8,32 @@
 
 <div class="container">
     <div class="row justify-content-start">
-        <h1>Admin page</h1>
+        <div class="col">
+            <h1>Admin page</h1>
+        </div>
     </div>
     <div class="row justify-content-start">
-        <p>
-            <a href="/authenticated">Go back</a> to the authenticated user page.
-        </p>
+        <div class="col">
+            <form th:action="@{/CRUD}" method="get" class="form-horizontal" id="search-users-form">
+                <button type="submit" class="btn btn-outline-info">List all users</button>
+            </form>
+            <table th:if="${usersFound != null}">
+                <!--/*@thymesVar id="found" type="com.example.cloudwrite.model.security.User"*/-->
+                <tr th:each="found: ${usersFound}">
+                    <td th:text="${found.username}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <hr />
+    <div class="row justify-content-start">
+        <div class="col">
+            <div class="btn-group">
+                <a href="/userPage" class="btn btn-outline-primary">Edit account settings</a>
+                <a href="/authenticated" class="btn btn-outline-secondary">Return to welcome page</a>
+                <a href="/logout" class="btn btn-outline-info">Sign out</a>
+            </div>
+        </div>
     </div>
 </div>
 <footer th:replace="fragments/footer :: footer"></footer>
