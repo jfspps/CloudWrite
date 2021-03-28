@@ -14,7 +14,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @Entity
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,5 +67,13 @@ public class User implements Serializable {
             return (thisUser.equals(passUsername));
         }
         return false;
+    }
+
+    //custom comparator (list users by username)
+    @Override
+    public int compareTo(User input) {
+        String thisUser = this.username;
+        String inputUserName = input.username;
+        return thisUser.compareTo(inputUserName);
     }
 }

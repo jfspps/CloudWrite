@@ -2,26 +2,26 @@ package com.example.cloudwrite.controller;
 
 import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.UserService;
+import javassist.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.validation.Valid;
+import java.util.*;
 
+//need to prefix with ROLE_ here
+@Secured("ROLE_ADMIN")
+@RequiredArgsConstructor
 @Controller
 public class AdminController {
 
     private final UserService userService;
-
-    public AdminController(UserService userService) {
-        this.userService = userService;
-    }
 
     //prevent the HTTP form POST from editing listed properties
     @InitBinder
@@ -35,14 +35,52 @@ public class AdminController {
         return "/admin/adminPage";
     }
 
-    //need to prefix with ROLE_ here
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @GetMapping("/CRUD")
+    @GetMapping("/listUsers")
     public String listUsers(Model model){
-        Set<User> userSet = new HashSet<>();
+        List<User> userSet = new ArrayList<>(userService.findAll());
 
-        userSet.addAll(userService.findAll());
+        Collections.sort(userSet);
+
         model.addAttribute("usersFound", userSet);
+        return "/admin/adminPage";
+    }
+
+    @GetMapping("/getUserDetails/{id}")
+    public String listUsers(@PathVariable("id") String ID, Model model) throws NotFoundException {
+        if (userService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("User not found");
+        }
+
+        User found = userService.findById(Long.valueOf(ID));
+
+        List<User> userSet = new ArrayList<>(userService.findAll());
+        Collections.sort(userSet);
+
+        model.addAttribute("usersFound", userSet);
+        model.addAttribute("chosenUser", found);
+        return "/admin/adminPage";
+    }
+
+    @PostMapping("/adminPage/{id}/update")
+    public String postUpdateUser(@ModelAttribute("chosenUser") User chosenUser, @PathVariable("id") String ID, Model model) throws NotFoundException {
+        if (userService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("User not found");
+        }
+
+        User found = userService.findById(Long.valueOf(ID));
+        if (!chosenUser.getUsername().isBlank() && userService.findByUserName(chosenUser.getUsername()) == null) {
+            found.setUsername(chosenUser.getUsername());
+        }
+
+        found.setEnabled(chosenUser.getEnabled());
+        userService.save(found);
+
+        List<User> userSet = new ArrayList<>(userService.findAll());
+        Collections.sort(userSet);
+
+        model.addAttribute("usersFound", userSet);
+        model.addAttribute("chosenUser", found);
+        model.addAttribute("reply", "Confirmed");
         return "/admin/adminPage";
     }
 

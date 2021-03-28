@@ -13,19 +13,46 @@
         </div>
     </div>
     <div class="row justify-content-start">
-        <div class="col">
-            <form th:action="@{/CRUD}" method="get" class="form-horizontal" id="search-users-form">
+        <div class="col-md-4">
+            <form th:action="@{/listUsers}" method="get" class="form-horizontal" id="search-users-form">
                 <button type="submit" class="btn btn-outline-info">List all users</button>
             </form>
             <table th:if="${usersFound != null}">
                 <!--/*@thymesVar id="found" type="com.example.cloudwrite.model.security.User"*/-->
                 <tr th:each="found: ${usersFound}">
-                    <td th:text="${found.username}"></td>
+                    <td class="px-3"><a role="button" class="btn btn-sm btn-outline-warning"
+                                        th:href="@{/getUserDetails/{id}(id=${found.getId()})}"
+                                        th:text="${'ID: ' + found.getId() + ' '}"></a></td>
+                    <td class="px-3" th:text="${found.username}"></td>
                 </tr>
             </table>
         </div>
+        <!--/*@thymesVar id="chosenUser" type="com.example.cloudwrite.model.security.User"*/-->
+        <div class="col-md-4">
+            <form th:object="${chosenUser}" th:if="${chosenUser != null}"
+                  th:action="@{/adminPage/{chosenID}/update(chosenID=${chosenUser.getId()})}" method="post">
+                <div>
+                    <label>Username: </label>
+                    <input name="userName" type="text" th:field="*{username}"/>
+                </div>
+                <br>
+                <div>
+                    <label>Account is enabled (untick to disable): </label>
+                    <input type="checkbox" th:field="*{enabled}" th:value="${chosenUser.enabled}"/>
+                </div>
+                <br>
+                <div>
+                    <button class="btn btn-warning" type="submit">Confirm</button>
+                </div>
+
+                <!--/*@thymesVar id="reply" type="java.lang.String"*/-->
+                <div th:object="${reply}" th:if="${reply != null}">
+                    <p style="color: green" th:text="${reply}"></p>
+                </div>
+            </form>
+        </div>
     </div>
-    <hr />
+    <hr/>
     <div class="row justify-content-start">
         <div class="col">
             <div class="btn-group">

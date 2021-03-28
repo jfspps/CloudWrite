@@ -11,13 +11,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.transaction.Transactional;
 import java.util.stream.Stream;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 // Cross-site request forgery, also known as session riding (sometimes pronounced sea-surf) or XSRF, is a type of
 // malicious exploit of a website where unauthorized commands are submitted from a user that the web application trusts.
@@ -27,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // immediately after any <input> tags which represent POST requests (the above fragment adds the requisite info to Model)
 @Slf4j
 @SpringBootTest
+@Transactional
 class AdminControllerTest {
 
     @Autowired
@@ -36,11 +39,6 @@ class AdminControllerTest {
 
     private final static String ADMINPWD = "admin123";
     private final static String USERPWD = "user123";
-
-    public static Stream<Arguments> streamAllUsers() {
-        return Stream.of(Arguments.of("admin", ADMINPWD),
-                Arguments.of("user", USERPWD));
-    }
 
     @BeforeEach
     void setUp() {
@@ -61,4 +59,33 @@ class AdminControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("/admin/adminPage"));
     }
+
+    @Test
+    void getListUsers() throws Exception {
+        mockMvc.perform(get("/listUsers").with(httpBasic("admin", ADMINPWD)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/admin/adminPage"))
+                .andExpect(model().attributeExists("usersFound"));
+    }
+
+    // note that this fails when connected to a persistent MySQL db
+    @Test
+    void getUserDetails() throws Exception {
+        mockMvc.perform(get("/getUserDetails/1").with(httpBasic("admin", ADMINPWD)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/admin/adminPage"))
+                .andExpect(model().attributeExists("usersFound"))
+                .andExpect(model().attributeExists("chosenUser"));
+    }
+
+//    @Test
+//    void postUpdateUser() throws Exception {
+//        mockMvc.perform(post("/adminPage/1/update").with(httpBasic("admin", ADMINPWD)).with(csrf())
+//                .param("userName", "fskfksdjklsdfkl"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("/admin/adminPage"))
+//                .andExpect(model().attributeExists("usersFound"))
+//                .andExpect(model().attributeExists("chosenUser"))
+//                .andExpect(model().attributeExists("reply"));
+//    }
 }
