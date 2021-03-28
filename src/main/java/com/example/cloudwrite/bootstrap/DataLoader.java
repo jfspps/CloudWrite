@@ -27,6 +27,7 @@ public class DataLoader implements CommandLineRunner {
     private final ConceptService conceptService;
     private final KeyResultService keyResultService;
     private final StandfirstService standfirstService;
+    private final CitationService citationService;
 
     private final UserRepo userRepo;
     private final AuthorityRepo authorityRepo;
@@ -92,11 +93,13 @@ public class DataLoader implements CommandLineRunner {
 
     private void buildResearchExpositions(){
 
-        KeyResult someResult = KeyResult.builder().description("Some description").build();
+        KeyResult someResult = KeyResult.builder().description("Some description").priority(1).build();
         Standfirst standfirst = Standfirst.builder().rationale("What's wrong?").approach("The approach").build();
+        Citation citation = Citation.builder().ref("The Journal of this and that").build();
 
         Standfirst savedStandfirst = standfirstService.save(standfirst);
         KeyResult savedResult = keyResultService.save(someResult);
+        Citation savedCitation = citationService.save(citation);
 
         ExpositionPiece piece = ExpositionPiece.builder()
                 .title("The best piece in the world!")
@@ -105,15 +108,18 @@ public class DataLoader implements CommandLineRunner {
                 .keyword("Keyword")
                 .keyResults(List.of(savedResult))
                 .standfirst(savedStandfirst)
+                .citations(List.of(savedCitation))
                 .futureWork("What to expect").build();
 
         ExpositionPiece savedPiece = expositionPieceService.save(piece);
 
         savedResult.setExpositionPiece(savedPiece);
         savedStandfirst.setExpositionPiece(savedPiece);
+        savedCitation.setPiece(savedPiece);
 
         standfirstService.save(savedStandfirst);
         keyResultService.save(savedResult);
+        citationService.save(savedCitation);
 
         log.info("Saved " + expositionPieceService.findAll().size() + " piece(s)");
     }

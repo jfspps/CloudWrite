@@ -34,6 +34,9 @@ public class ExpositionPiece implements Serializable, Comparable<ExpositionPiece
 
     String currentProgress;
 
+    @OneToMany(mappedBy = "piece")
+    List<Citation> citations;
+
     @OneToMany(mappedBy = "expositionPiece")
     List<KeyResult> keyResults;
 

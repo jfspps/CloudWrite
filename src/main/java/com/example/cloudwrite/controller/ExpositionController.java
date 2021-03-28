@@ -1,7 +1,9 @@
 package com.example.cloudwrite.controller;
 
+import com.example.cloudwrite.model.Citation;
 import com.example.cloudwrite.model.ExpositionPiece;
 import com.example.cloudwrite.model.FundamentalPiece;
+import com.example.cloudwrite.model.KeyResult;
 import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.*;
 import javassist.NotFoundException;
@@ -50,8 +52,16 @@ public class ExpositionController {
 
         ExpositionPiece piece = expositionPieceService.findById(Long.valueOf(ID));
 
+        // sort by priority
+        List<KeyResult> results = piece.getKeyResults();
+        Collections.sort(results);
+
+        List<Citation> citations = piece.getCitations();
+        Collections.sort(citations);
+
+        model.addAttribute("references", citations);
         model.addAttribute("exposition", piece);
-        model.addAttribute("results", piece.getKeyResults());
+        model.addAttribute("results", results);
         return "/expositions/expoDetail";
     }
 
