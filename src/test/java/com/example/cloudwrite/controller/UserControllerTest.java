@@ -119,7 +119,20 @@ class UserControllerTest {
     void userPage_withAllUsers(String username, String pwd) throws Exception {
         mockMvc.perform(get("/userPage").with(httpBasic(username, pwd)))
                 .andExpect(status().isOk())
-                .andExpect(view().name("userPage"));
+                .andExpect(view().name("userPage"))
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeExists("currentUser"));
+    }
+
+    @MethodSource("streamAllUsers")
+    @ParameterizedTest
+    void postUpdatePassword(String username, String pwd) throws Exception {
+        mockMvc.perform(post("/userPage/1/reset").with(httpBasic(username, pwd)).with(csrf())
+                .param("newPassword", "sfjksdkfjsfdlj"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("userPage"))
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeExists("currentUser"));
     }
 
     @Test

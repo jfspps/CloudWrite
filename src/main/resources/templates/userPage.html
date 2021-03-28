@@ -15,7 +15,7 @@
     </div>
     <br/>
     <div class="row justify-content-start">
-        <div class="col">
+        <div class="col-md-4">
             <p sec:authorize="hasRole('ADMIN')">
                 You are in the ADMIN group
             </p>
@@ -23,10 +23,30 @@
                 You are in the USER group
             </p>
             <br/>
-
             <p>
                 You are granted the following user roles: <span sec:authentication="principal.authorities"></span>
             </p>
+        </div>
+
+        <!--/*@thymesVar id="currentUser" type="com.example.cloudwrite.model.security.User"*/-->
+        <div class="col-md-4" th:object="${currentUser}">
+            <p>
+                New passwords must be at least eight characters in length.
+            </p>
+            <form th:action="@{/userPage/{ID}/reset(ID=${currentUser.getId()})}" method="post">
+                <div>
+                    <label>New password: </label>
+                    <input name="newPassword" type="password"/>
+                </div>
+                <br>
+                <div>
+                    <button class="btn btn-warning" type="submit">Change password</button>
+                </div>
+            </form>
+            <!--/*@thymesVar id="reply" type="java.lang.String"*/-->
+            <div th:object="${reply}" th:if="${reply != null}">
+                <p style="color: green" th:text="${reply}"></p>
+            </div>
         </div>
     </div>
     <hr />

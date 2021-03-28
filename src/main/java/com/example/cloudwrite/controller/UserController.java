@@ -1,15 +1,21 @@
 package com.example.cloudwrite.controller;
 
+import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.UserService;
+import javassist.NotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
     private final UserService userService;
+    private final PasswordEncoder DBpasswordEncoder = new BCryptPasswordEncoder();
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -65,7 +72,34 @@ public class UserController {
 
     @GetMapping("/userPage")
     public String userPage(Model model) {
+        // reserve 'user' here (do not use 'user' with other references)
         model.addAttribute("user", getUsername());
+        model.addAttribute("currentUser", userService.findByUserName(getUsername()));
+        return "userPage";
+    }
+
+    @PostMapping("/userPage/{id}/reset")
+    public String postResetPassword(@PathVariable("id") String ID, String newPassword, Model model) throws NotFoundException {
+        if (userService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("User not found");
+        }
+
+        User found = userService.findById(Long.valueOf(ID));
+        String reply = "";
+        User saved;
+
+        if (newPassword.length() > 7){
+            found.setPassword(DBpasswordEncoder.encode(newPassword));
+            saved = userService.save(found);
+            reply = "Password updated";
+        } else {
+            saved = found;
+            reply = "Password must be at least eight characters in length";
+        }
+
+        model.addAttribute("user", saved.getUsername());
+        model.addAttribute("currentUser", saved);
+        model.addAttribute("reply", reply);
         return "userPage";
     }
 
