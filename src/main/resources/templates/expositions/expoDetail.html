@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: baseHead(~{::title})">
+    <title>Exposition</title>
+</head>
+<body>
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+<!--/*@thymesVar id="exposition" type="com.example.cloudwrite.model.ExpositionPiece"*/-->
+<div class="container" th:object="${exposition}">
+    <div class="row justify-content-start">
+        <div class="col">
+            <h1 th:text="${exposition.title}"></h1>
+            <p th:text="${'Article started: ' + exposition.createdDate.toGMTString() + '. Article last updated: ' + exposition.lastModifiedDate.toGMTString()}"></p>
+        </div>
+        <br>
+    </div>
+
+    <div class="row justify-content-start">
+        <div class="col-2">
+            <label><b>Title:</b> </label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" th:field="*{title}"/>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col-2">
+            <label><b>Keyword:</b> </label>
+        </div>
+        <div class="col-10">
+            <input type="text" class="form-control" th:field="*{keyword}"/>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col-2">
+            <label><b>Standfirst rationale:</b> </label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" rows="2" th:field="*{standfirst.rationale}"></textarea>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col-2">
+            <label><b>Standfirst approach:</b> </label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" rows="2" th:field="*{standfirst.approach}"></textarea>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col-2">
+            <label><b>Research question/purpose:</b> </label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" rows="2" th:field="*{expositionPurpose}"></textarea>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col-2">
+            <label><b>Current status:</b> </label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" rows="2" th:field="*{currentProgress}"></textarea>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row justify-content-start">
+        <div class="col">
+            <h3>Key results</h3>
+        </div>
+    </div>
+    <div>
+        <div class="row justify-content-start" th:each="result: ${exposition.keyResults}">
+            <div class="col-2">
+                <div>
+                    <label><b>User: (username)</b></label>
+                </div>
+            </div>
+            <div class="col-10">
+                <textarea class="form-control" rows="2" th:text="${result.getDescription()}"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-start">
+        <div class="col-2">
+            <label><b>Future work:</b> </label>
+        </div>
+        <div class="col-10">
+            <textarea class="form-control" rows="2" th:field="*{futureWork}"></textarea>
+        </div>
+    </div>
+    <div class="row justify-content-start">
+        <div class="col-2">
+            <a href="/authenticated" class="btn btn-outline-warning">Update article</a>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row justify-content-start">
+        <div class="col">
+            <div class="btn-group">
+                <a href="/authenticated" class="btn btn-outline-secondary">Return to welcome page</a>
+                <a href="/logout" class="btn btn-outline-info">Sign out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>

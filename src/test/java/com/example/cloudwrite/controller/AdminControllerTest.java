@@ -39,8 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 class AdminControllerTest extends SecurityCredentialsSetup {
 
-    //this fails with Spring Security with any username ('random' is effectively replaced with anyString())
-    @WithMockUser("random")
     @Test
     void loginPage_random() throws Exception {
         mockMvc.perform(get("/adminPage"))

@@ -42,7 +42,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 class UserControllerTest extends SecurityCredentialsSetup {
 
-    @WithAnonymousUser
     @Test
     void welcomePage() throws Exception {
         mockMvc.perform(get("/"))
@@ -120,7 +119,6 @@ class UserControllerTest extends SecurityCredentialsSetup {
                 .andExpect(model().attributeExists("currentUser"));
     }
 
-    @WithAnonymousUser
     @Test
     void logoutPage() throws Exception {
         mockMvc.perform(post("/logout").with(csrf()))
