@@ -121,6 +121,28 @@ public class AdminController {
         return "/admin/adminPage";
     }
 
+    @PostMapping("/adminPage/newUser")
+    public String postNewUser(String userName, String suffix, Model model){
+        String reply;
+        User saved;
+
+        if (userName.isBlank() || userService.findByUserName(userName) != null){
+            reply = "Username and password suffix does not adhere to requirements";
+            saved = null;
+        } else {
+            String newPassword = DBpasswordEncoder.encode(userName + suffix);
+            User newUser = User.builder().username(userName).password(newPassword).build();
+            saved = userService.save(newUser);
+            reply = "New user, " + saved.getUsername() + ", saved.";
+        }
+
+        List<User> userSet = new ArrayList<>(userService.findAll());
+        model.addAttribute("usersFound", userSet);
+        model.addAttribute("chosenUser", saved);
+        model.addAttribute("reply", reply);
+        return "/admin/adminPage";
+    }
+
     private String getUsername(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {

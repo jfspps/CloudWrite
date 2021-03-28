@@ -45,30 +45,66 @@
                     <button class="btn btn-warning" type="submit">Confirm</button>
                 </div>
             </form>
-                <hr />
-                <p>
-                    To reset the password, enter a suffix below so that the new password will temporarily be
-                    'username+suffix'. The length of 'username+suffix' must be at least eight characters in length.
-                    The user should change the password in their account as soon as possible.
-                </p>
-                <form th:object="${chosenUser}"
-                      th:action="@{/adminPage/{chosenID}/reset(chosenID=${chosenUser.getId()})}" method="post">
-                    <div>
-                        <label>New password suffix: </label>
-                        <input name="suffix" type="password"/>
-                    </div>
-                    <br>
-                    <div>
-                        <button class="btn btn-warning" type="submit">Reset password</button>
-                    </div>
-                </form>
-                <!--/*@thymesVar id="reply" type="java.lang.String"*/-->
-                <div th:object="${reply}" th:if="${reply != null}">
-                    <p style="color: green" th:text="${reply}"></p>
+            <hr/>
+
+            <p>
+                To reset the password, enter a suffix below so that the new password will temporarily be
+                'username+suffix'. The length of 'username+suffix' must be at least eight characters in length.
+                The user should change the password in their account as soon as possible.
+            </p>
+            <form th:object="${chosenUser}"
+                  th:action="@{/adminPage/{chosenID}/reset(chosenID=${chosenUser.getId()})}" method="post">
+                <div>
+                    <label>New password suffix: </label>
+                    <input name="suffix" type="password"/>
                 </div>
+                <br>
+                <div>
+                    <button class="btn btn-warning" type="submit">Reset password</button>
+                </div>
+            </form>
+            <!--/*@thymesVar id="reply" type="java.lang.String"*/-->
+            <div th:object="${reply}" th:if="${reply != null}">
+                <p style="color: green" th:text="${reply}"></p>
+            </div>
         </div>
     </div>
     <hr/>
+
+    <div class="row justify-content-start">
+        <div class="col">
+            <!--/*@thymesVar id="newUser" type="com.example.cloudwrite.model.security.User"*/-->
+            <form th:action="@{/adminPage/newUser}" method="post">
+                <h3>New user requirements</h3>
+                <p>
+                    Username must be between 1-255 characters. The password is initially the same as the username with
+                    the addition of the 'suffix'. The password, equivalent to 'username+suffix', must be at least eight
+                    characters in length.
+                </p>
+                <div class="row">
+                    <div class="col-2">
+                        <div>
+                            <label>New username: </label>
+                        </div>
+                        <div>
+                            <label>New password suffix: </label>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div>
+                            <input name="userName" type="text" size="50"/>
+                        </div>
+                        <div>
+                            <input name="suffix" type="password" size="50"/>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Submit new user</button>
+            </form>
+        </div>
+    </div>
+    <hr/>
+
     <div class="row justify-content-start">
         <div class="col">
             <div class="btn-group">

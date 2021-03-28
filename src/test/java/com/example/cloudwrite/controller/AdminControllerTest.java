@@ -5,10 +5,15 @@ import com.example.cloudwrite.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -30,24 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 // immediately after any <input> tags which represent POST requests (the above fragment adds the requisite info to Model)
 @Slf4j
-@SpringBootTest
 @Transactional
-class AdminControllerTest {
-
-    @Autowired
-    WebApplicationContext context;
-
-    protected MockMvc mockMvc;
-
-    private final static String ADMINPWD = "admin123";
-
-    @Autowired
-    private UserService userService;
-
-    @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-    }
+@SpringBootTest
+class AdminControllerTest extends SecurityCredentialsSetup {
 
     //this fails with Spring Security with any username ('random' is effectively replaced with anyString())
     @WithMockUser("random")
@@ -57,36 +47,40 @@ class AdminControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    @Test
-    void getRedirectedToLogin_adminPage() throws Exception {
-        mockMvc.perform(get("/adminPage").with(httpBasic("admin", ADMINPWD)))
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAdminUsers")
+    @ParameterizedTest
+    void getRedirectedToLogin_adminPage(String username, String password) throws Exception {
+        mockMvc.perform(get("/adminPage").with(httpBasic(username, password)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/admin/adminPage"));
     }
 
-    @Test
-    void getListUsers() throws Exception {
-        mockMvc.perform(get("/listUsers").with(httpBasic("admin", ADMINPWD)))
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAdminUsers")
+    @ParameterizedTest
+    void getListUsers(String username, String password) throws Exception {
+        mockMvc.perform(get("/listUsers").with(httpBasic(username, password)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/admin/adminPage"))
                 .andExpect(model().attributeExists("usersFound"));
     }
 
     // note that this fails when connected to a persistent MySQL db
-    @Test
-    void getUserDetails() throws Exception {
-        mockMvc.perform(get("/getUserDetails/1").with(httpBasic("admin", ADMINPWD)))
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAdminUsers")
+    @ParameterizedTest
+    void getUserDetails(String username, String password) throws Exception {
+        mockMvc.perform(get("/getUserDetails/1").with(httpBasic(username, password)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/admin/adminPage"))
                 .andExpect(model().attributeExists("usersFound"))
                 .andExpect(model().attributeExists("chosenUser"));
     }
 
-    @Test
-    void postUpdateUser() throws Exception {
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAdminUsers")
+    @ParameterizedTest
+    void postUpdateUser(String username, String password) throws Exception {
         User user = userService.findById(1L);
 
-        mockMvc.perform(post("/adminPage/1/update").with(httpBasic("admin", ADMINPWD)).with(csrf())
+        mockMvc.perform(post("/adminPage/1/update").with(httpBasic(username, password)).with(csrf())
                 .param("userName", "fskfksdjklsdfkl")
                 .flashAttr("chosenUser", user))
                 .andExpect(status().isOk())
@@ -96,13 +90,27 @@ class AdminControllerTest {
                 .andExpect(model().attributeExists("reply"));
     }
 
-    @Test
-    void postResetUserPassword() throws Exception {
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAdminUsers")
+    @ParameterizedTest
+    void postResetUserPassword(String username, String password) throws Exception {
         User user = userService.findById(1L);
 
-        mockMvc.perform(post("/adminPage/1/reset").with(httpBasic("admin", ADMINPWD)).with(csrf())
+        mockMvc.perform(post("/adminPage/1/reset").with(httpBasic(username, password)).with(csrf())
                 .param("suffix", "fskfksdjklsdfkl")
                 .flashAttr("chosenUser", user))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/admin/adminPage"))
+                .andExpect(model().attributeExists("usersFound"))
+                .andExpect(model().attributeExists("chosenUser"))
+                .andExpect(model().attributeExists("reply"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAdminUsers")
+    @ParameterizedTest
+    void postNewUser(String username, String password) throws Exception {
+        mockMvc.perform(post("/adminPage/newUser").with(httpBasic(username, password)).with(csrf())
+                .param("suffix", "fskfksdjklsdfkl")
+                .param("userName", "fsdjfjsd"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/admin/adminPage"))
                 .andExpect(model().attributeExists("usersFound"))

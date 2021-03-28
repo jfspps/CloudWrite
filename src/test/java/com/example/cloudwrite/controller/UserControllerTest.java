@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,26 +38,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 // immediately after any <input> tags which represent POST requests (the above fragment adds the requisite info to Model)
 @Slf4j
+@Transactional
 @SpringBootTest
-class UserControllerTest {
-
-    @Autowired
-    WebApplicationContext context;
-
-    protected MockMvc mockMvc;
-
-    private final static String ADMINPWD = "admin123";
-    private final static String USERPWD = "user123";
-
-    public static Stream<Arguments> streamAllUsers() {
-        return Stream.of(Arguments.of("admin", ADMINPWD),
-                Arguments.of("user", USERPWD));
-    }
-
-    @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-    }
+class UserControllerTest extends SecurityCredentialsSetup {
 
     @WithAnonymousUser
     @Test
@@ -110,7 +95,7 @@ class UserControllerTest {
 
     @Test
     void getRedirectedToAuthenticated_Denied() throws Exception {
-        mockMvc.perform(get("/login").with(httpBasic("admin", USERPWD)))
+        mockMvc.perform(get("/login").with(httpBasic("admin", "sdflsjfkldsj")))
                 .andExpect(status().is4xxClientError());
     }
 
@@ -135,6 +120,7 @@ class UserControllerTest {
                 .andExpect(model().attributeExists("currentUser"));
     }
 
+    @WithAnonymousUser
     @Test
     void logoutPage() throws Exception {
         mockMvc.perform(post("/logout").with(csrf()))
