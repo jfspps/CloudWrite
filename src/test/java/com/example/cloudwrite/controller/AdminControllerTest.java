@@ -1,5 +1,7 @@
 package com.example.cloudwrite.controller;
 
+import com.example.cloudwrite.model.security.User;
+import com.example.cloudwrite.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +40,9 @@ class AdminControllerTest {
     protected MockMvc mockMvc;
 
     private final static String ADMINPWD = "admin123";
-    private final static String USERPWD = "user123";
+
+    @Autowired
+    private UserService userService;
 
     @BeforeEach
     void setUp() {
@@ -78,14 +82,17 @@ class AdminControllerTest {
                 .andExpect(model().attributeExists("chosenUser"));
     }
 
-//    @Test
-//    void postUpdateUser() throws Exception {
-//        mockMvc.perform(post("/adminPage/1/update").with(httpBasic("admin", ADMINPWD)).with(csrf())
-//                .param("userName", "fskfksdjklsdfkl"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("/admin/adminPage"))
-//                .andExpect(model().attributeExists("usersFound"))
-//                .andExpect(model().attributeExists("chosenUser"))
-//                .andExpect(model().attributeExists("reply"));
-//    }
+    @Test
+    void postUpdateUser() throws Exception {
+        User user = userService.findById(1L);
+
+        mockMvc.perform(post("/adminPage/1/update").with(httpBasic("admin", ADMINPWD)).with(csrf())
+                .param("userName", "fskfksdjklsdfkl")
+                .flashAttr("chosenUser", user))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/admin/adminPage"))
+                .andExpect(model().attributeExists("usersFound"))
+                .andExpect(model().attributeExists("chosenUser"))
+                .andExpect(model().attributeExists("reply"));
+    }
 }
