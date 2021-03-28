@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -22,6 +24,7 @@ import java.util.*;
 public class AdminController {
 
     private final UserService userService;
+    private final PasswordEncoder DBpasswordEncoder = new BCryptPasswordEncoder();
 
     //prevent the HTTP form POST from editing listed properties
     @InitBinder
@@ -68,8 +71,13 @@ public class AdminController {
         }
 
         User found = userService.findById(Long.valueOf(ID));
+        String reply = "";
+
         if (!chosenUser.getUsername().isBlank() && userService.findByUserName(chosenUser.getUsername()) == null) {
             found.setUsername(chosenUser.getUsername());
+            reply += "Username updated";
+        } else {
+            reply += "Username cannot be blank or is already in use";
         }
 
         found.setEnabled(chosenUser.getEnabled());
@@ -80,7 +88,36 @@ public class AdminController {
 
         model.addAttribute("usersFound", userSet);
         model.addAttribute("chosenUser", found);
-        model.addAttribute("reply", "Confirmed");
+        model.addAttribute("reply", reply);
+        return "/admin/adminPage";
+    }
+
+    @PostMapping("/adminPage/{id}/reset")
+    public String postResetUserPassword(@PathVariable("id") String ID, String suffix, Model model) throws NotFoundException {
+        if (userService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("User not found");
+        }
+
+        User found = userService.findById(Long.valueOf(ID));
+        String newPassword = found.getUsername() + suffix;
+        String reply;
+        User saved;
+
+        if (newPassword.length() > 7){
+            found.setPassword(DBpasswordEncoder.encode(newPassword));
+            saved = userService.save(found);
+            reply = "Password was reset";
+        } else {
+            reply = "Username + suffix must be at least 8 characters in length";
+            saved = found;
+        }
+
+        List<User> userSet = new ArrayList<>(userService.findAll());
+        Collections.sort(userSet);
+
+        model.addAttribute("usersFound", userSet);
+        model.addAttribute("chosenUser", saved);
+        model.addAttribute("reply", reply);
         return "/admin/adminPage";
     }
 

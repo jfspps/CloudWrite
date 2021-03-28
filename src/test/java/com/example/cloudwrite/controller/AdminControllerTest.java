@@ -95,4 +95,18 @@ class AdminControllerTest {
                 .andExpect(model().attributeExists("chosenUser"))
                 .andExpect(model().attributeExists("reply"));
     }
+
+    @Test
+    void postResetUserPassword() throws Exception {
+        User user = userService.findById(1L);
+
+        mockMvc.perform(post("/adminPage/1/reset").with(httpBasic("admin", ADMINPWD)).with(csrf())
+                .param("suffix", "fskfksdjklsdfkl")
+                .flashAttr("chosenUser", user))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/admin/adminPage"))
+                .andExpect(model().attributeExists("usersFound"))
+                .andExpect(model().attributeExists("chosenUser"))
+                .andExpect(model().attributeExists("reply"));
+    }
 }

@@ -28,8 +28,8 @@
             </table>
         </div>
         <!--/*@thymesVar id="chosenUser" type="com.example.cloudwrite.model.security.User"*/-->
-        <div class="col-md-4">
-            <form th:object="${chosenUser}" th:if="${chosenUser != null}"
+        <div class="col-md-8" th:if="${chosenUser != null}">
+            <form th:object="${chosenUser}"
                   th:action="@{/adminPage/{chosenID}/update(chosenID=${chosenUser.getId()})}" method="post">
                 <div>
                     <label>Username: </label>
@@ -44,12 +44,28 @@
                 <div>
                     <button class="btn btn-warning" type="submit">Confirm</button>
                 </div>
-
+            </form>
+                <hr />
+                <p>
+                    To reset the password, enter a suffix below so that the new password will temporarily be
+                    'username+suffix'. The length of 'username+suffix' must be at least eight characters in length.
+                    The user should change the password in their account as soon as possible.
+                </p>
+                <form th:object="${chosenUser}"
+                      th:action="@{/adminPage/{chosenID}/reset(chosenID=${chosenUser.getId()})}" method="post">
+                    <div>
+                        <label>New password suffix: </label>
+                        <input name="suffix" type="text"/>
+                    </div>
+                    <br>
+                    <div>
+                        <button class="btn btn-warning" type="submit">Reset password</button>
+                    </div>
+                </form>
                 <!--/*@thymesVar id="reply" type="java.lang.String"*/-->
                 <div th:object="${reply}" th:if="${reply != null}">
                     <p style="color: green" th:text="${reply}"></p>
                 </div>
-            </form>
         </div>
     </div>
     <hr/>
