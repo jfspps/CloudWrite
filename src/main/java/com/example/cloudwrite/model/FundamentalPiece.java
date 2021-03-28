@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class FundamentalPiece implements Serializable {
+public class FundamentalPiece implements Serializable, Comparable<FundamentalPiece> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +39,29 @@ public class FundamentalPiece implements Serializable {
 
     @UpdateTimestamp
     private Timestamp lastModifiedDate;
+
+    // restrict pieces by unique title
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj){
+            return true;
+        }
+
+        if (obj instanceof FundamentalPiece){
+            FundamentalPiece passed = (FundamentalPiece) obj;
+            String passedTitle = passed.title;
+
+            String thisTitle = this.title;
+            return (thisTitle.equals(passedTitle));
+        }
+        return false;
+    }
+
+    // list exposition pieces by title
+    @Override
+    public int compareTo(FundamentalPiece o) {
+        String thisPiece = this.title;
+        String inputTitle = o.title;
+        return thisPiece.compareTo(inputTitle);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.cloudwrite.model;
 
+import com.example.cloudwrite.model.security.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class ExpositionPiece implements Serializable {
+public class ExpositionPiece implements Serializable, Comparable<ExpositionPiece> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +45,29 @@ public class ExpositionPiece implements Serializable {
 
     @UpdateTimestamp
     private Timestamp lastModifiedDate;
+
+    // restrict pieces by unique title
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj){
+            return true;
+        }
+
+        if (obj instanceof ExpositionPiece){
+            ExpositionPiece passed = (ExpositionPiece) obj;
+            String passedTitle = passed.title;
+
+            String thisTitle = this.title;
+            return (thisTitle.equals(passedTitle));
+        }
+        return false;
+    }
+
+    // list exposition pieces by title
+    @Override
+    public int compareTo(ExpositionPiece o) {
+        String thisPiece = this.title;
+        String inputTitle = o.title;
+        return thisPiece.compareTo(inputTitle);
+    }
 }

@@ -1,8 +1,13 @@
 package com.example.cloudwrite.controller;
 
+import com.example.cloudwrite.model.ExpositionPiece;
+import com.example.cloudwrite.model.FundamentalPiece;
 import com.example.cloudwrite.model.security.User;
+import com.example.cloudwrite.service.ExpositionPieceService;
+import com.example.cloudwrite.service.FundamentalPieceService;
 import com.example.cloudwrite.service.UserService;
 import javassist.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,16 +24,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+    private final ExpositionPieceService expositionPieceService;
+    private final FundamentalPieceService fundamentalPieceService;
     private final PasswordEncoder DBpasswordEncoder = new BCryptPasswordEncoder();
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     //prevent the HTTP form POST from editing listed properties
     @InitBinder
@@ -43,6 +51,14 @@ public class UserController {
 
     @GetMapping("/authenticated")
     public String getAuthenticatedPage(Model model){
+        List<ExpositionPiece> expositionPieces = new ArrayList<>(expositionPieceService.findAll());
+        Collections.sort(expositionPieces);
+        model.addAttribute("expositions", expositionPieces);
+
+        List<FundamentalPiece> fundamentalPieces = new ArrayList<>(fundamentalPieceService.findAll());
+        Collections.sort(fundamentalPieces);
+        model.addAttribute("fundamentals", fundamentalPieces);
+
         model.addAttribute("user", getUsername());
         return "authenticated";
     }
