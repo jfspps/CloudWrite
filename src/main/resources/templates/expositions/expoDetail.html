@@ -10,7 +10,7 @@
 
 <!--/*@thymesVar id="exposition" type="com.example.cloudwrite.model.ExpositionPiece"*/-->
 <div class="container">
-    <form th:object="${exposition}" th:action="@{/}">
+    <form th:object="${exposition}" th:action="@{/expositions/{id}/update(id=${exposition.id})}" method="post">
         <div class="row justify-content-start">
             <div class="col">
                 <h1 th:text="${exposition.title}"></h1>
@@ -76,8 +76,9 @@
             </div>
         </div>
         <div class="row justify-content-start">
-            <div class="col-2">
-                <a href="/authenticated" class="btn btn-outline-primary">Update article</a>
+            <div class="col">
+                <p>The latest confirmation date and time is provided above.</p>
+                <button type="submit" class="btn btn-outline-primary">Update above fields</button>
             </div>
         </div>
     </form>

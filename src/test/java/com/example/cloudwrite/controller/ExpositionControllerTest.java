@@ -1,5 +1,6 @@
 package com.example.cloudwrite.controller;
 
+import com.example.cloudwrite.model.ExpositionPiece;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,8 +11,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Slf4j
@@ -32,6 +35,18 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
                 .andExpect(status().isOk())
                 .andExpect(view().name("/expositions/expoDetail"))
                 .andExpect(model().attributeExists("exposition"))
-                .andExpect(model().attributeExists("results"));
+                .andExpect(model().attributeExists("results"))
+                .andExpect(model().attributeExists("references"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void postUpdateExposition(String username, String password) throws Exception {
+        ExpositionPiece piece = expositionPieceService.findById(1L);
+
+        mockMvc.perform(post("/expositions/1/update").with(httpBasic(username, password)).with(csrf())
+                .flashAttr("exposition", piece))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expositions/1"));
     }
 }

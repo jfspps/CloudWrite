@@ -1,9 +1,6 @@
 package com.example.cloudwrite.controller;
 
-import com.example.cloudwrite.model.Citation;
-import com.example.cloudwrite.model.ExpositionPiece;
-import com.example.cloudwrite.model.FundamentalPiece;
-import com.example.cloudwrite.model.KeyResult;
+import com.example.cloudwrite.model.*;
 import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.*;
 import javassist.NotFoundException;
@@ -63,6 +60,34 @@ public class ExpositionController {
         model.addAttribute("exposition", piece);
         model.addAttribute("results", results);
         return "/expositions/expoDetail";
+    }
+
+    @PostMapping("/{id}/update")
+    public String postUpdateExposition(@ModelAttribute("exposition") ExpositionPiece piece, @PathVariable("id") String ID) throws NotFoundException{
+        if (expositionPieceService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        ExpositionPiece pieceOnFile = expositionPieceService.findById(Long.valueOf(ID));
+
+        //allow users to clear field entries by submitting empty string fields
+        pieceOnFile.setTitle(piece.getTitle());
+        pieceOnFile.setKeyword(piece.getKeyword());
+        pieceOnFile.setCurrentProgress(piece.getCurrentProgress());
+
+        Standfirst standfirstOnFile = standfirstService.findById(pieceOnFile.getStandfirst().getId());
+        Standfirst standfirstSubmitted = piece.getStandfirst();
+        standfirstOnFile.setApproach(standfirstSubmitted.getApproach());
+        standfirstOnFile.setRationale(standfirstSubmitted.getRationale());
+        Standfirst updatedStandfirst = standfirstService.save(standfirstOnFile);
+        pieceOnFile.setStandfirst(updatedStandfirst);
+
+        pieceOnFile.setExpositionPurpose(piece.getExpositionPurpose());
+        pieceOnFile.setFutureWork(piece.getFutureWork());
+
+        ExpositionPiece updated = expositionPieceService.save(pieceOnFile);
+
+        return "redirect:/expositions/" + updated.getId();
     }
 
 
