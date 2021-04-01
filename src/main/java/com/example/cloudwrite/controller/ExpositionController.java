@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -93,22 +90,69 @@ public class ExpositionController {
 
     @PostMapping("/{expoId}/updateResults")
     public String postUpdateExpositionResult(@PathVariable("expoId")String expoID,
-                                             @RequestParam("deletable")String[] results) throws NotFoundException{
+                                             @RequestParam("deletable")String[] results,
+                                             @RequestParam("priority")String[] priorities,
+                                             @RequestParam("description")String[] descriptions) throws NotFoundException{
         if (expositionPieceService.findById(Long.valueOf(expoID)) == null){
             throw new NotFoundException("Resource not found");
         }
 
         ExpositionPiece pieceOnFile = expositionPieceService.findById(Long.valueOf(expoID));
         List<KeyResult> resultsOnFile = pieceOnFile.getKeyResults();
-        log.debug("Key results passed: " + results.length);
+        List<String> descriptionsOnFile = new ArrayList<>();
+        List<Integer> prioritiesOnFile = new ArrayList<>();
 
+        readFromResultsOnFile(resultsOnFile, descriptionsOnFile, prioritiesOnFile);
+
+        updatePriorities(priorities, prioritiesOnFile);
+        updateDescriptions(descriptions, descriptionsOnFile);
+
+        writeToResultsOnFile(resultsOnFile, descriptionsOnFile, prioritiesOnFile);
+
+        // update fields first before deleting those marked, to keep things in sync
         performDeletion(results, resultsOnFile);
-
-        //todo: add update description
-
         ExpositionPiece toFile = expositionPieceService.save(pieceOnFile);
+        log.debug("Exposition piece updated");
 
         return "redirect:/expositions/" + toFile.getId();
+    }
+
+    private void writeToResultsOnFile(List<KeyResult> resultsOnFile, List<String> descriptionsOnFile, List<Integer> prioritiesOnFile) {
+        // write to resultsOnFile
+        int i = 0;
+        for (KeyResult result : resultsOnFile) {
+            result.setPriority(prioritiesOnFile.get(i));
+            result.setDescription(descriptionsOnFile.get(i));
+            i++;
+        }
+    }
+
+    private void readFromResultsOnFile(List<KeyResult> resultsOnFile, List<String> descriptionsOnFile, List<Integer> prioritiesOnFile) {
+        // read from resultOnFile
+        resultsOnFile.forEach(keyResult -> {
+            prioritiesOnFile.add(keyResult.getPriority());
+            descriptionsOnFile.add(keyResult.getDescription());
+        });
+    }
+
+    private void updateDescriptions(String[] descriptions, List<String> descriptionsOnFile) {
+//        log.debug("Descriptions received: " + descriptions.length);
+
+        for (int i = 0; i < descriptions.length; i++){
+//            log.debug("Description " + i + ": " + descriptions[i]);
+//            log.debug("Description on file" + i + ": " + descriptionsOnFile.get(i));
+            descriptionsOnFile.set(i, descriptions[i]);
+        }
+    }
+
+    private void updatePriorities(String[] priorities, List<Integer> prioritiesOnFile) {
+//        log.debug("Priorities received: " + priorities.length);
+
+        for (int i = 0; i < priorities.length; i++){
+//            log.debug("Priority " + i + ": " + priorities[i]);
+//            log.debug("Priorities on file" + i + ": " + prioritiesOnFile.get(i));
+            prioritiesOnFile.set(i, Integer.valueOf(priorities[i]));
+        }
     }
 
     private void performDeletion(String[] results, List<KeyResult> resultsOnFile) {
@@ -118,7 +162,7 @@ public class ExpositionController {
         int pairsProcessed = 0;
         for (int i = 0; i < results.length; i++, pairsProcessed++){
             if (results[i].equals("on")){
-                log.debug("Element " + pairsProcessed + " to be deleted");
+//                log.debug("Element " + pairsProcessed + " to be deleted");
                 resultsOnFile.get(pairsProcessed).setDeletable(true);
                 i++;
             }
