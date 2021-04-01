@@ -102,25 +102,37 @@ public class ExpositionController {
         List<KeyResult> resultsOnFile = pieceOnFile.getKeyResults();
         log.debug("Key results passed: " + results.length);
 
-        // note that there only as many keyResults as there are deletable elements, so iterate through each
-        // the order of each result (in pairs) matches the sorted order in pieceOnFile
-        if (results.length >= 2){
-            for (int i = 0; i < results.length; i++) {
-                log.debug("Key result " + (i) + " checkbox: " + results[i]);
-                if (results[i].equals("on")){
-//                    KeyResult toBeDeleted = resultsOnFile.get(i);
-//                    pieceOnFile.getKeyResults().remove(toBeDeleted);
-//                    keyResultService.delete(toBeDeleted);
-                    log.debug("Key result " + (i) + " removed");
-                }
-            }
-        }
+        performDeletion(results, resultsOnFile);
 
         //todo: add update description
 
-        ExpositionPiece updated = expositionPieceService.save(pieceOnFile);
+        ExpositionPiece toFile = expositionPieceService.save(pieceOnFile);
 
-        return "redirect:/expositions/" + updated.getId();
+        return "redirect:/expositions/" + toFile.getId();
+    }
+
+    private void performDeletion(String[] results, List<KeyResult> resultsOnFile) {
+        // note that there only as many keyResults as there are deletable elements, so iterate through each
+        // the order of each result (in pairs) matches the sorted order in pieceOnFile
+        // mark for deletion first
+        int pairsProcessed = 0;
+        for (int i = 0; i < results.length; i++, pairsProcessed++){
+            if (results[i].equals("on")){
+                log.debug("Element " + pairsProcessed + " to be deleted");
+                resultsOnFile.get(pairsProcessed).setDeletable(true);
+                i++;
+            }
+        }
+
+        // remove marked results (account for reshuffling of nodes in List, process backwards)
+        for (int i = resultsOnFile.size() - 1; i >= 0; i--){
+            KeyResult toBeDeleted;
+            if (resultsOnFile.get(i).isDeletable()){
+                toBeDeleted = resultsOnFile.get(i);
+                resultsOnFile.remove(toBeDeleted);
+                keyResultService.delete(toBeDeleted);
+            }
+        }
     }
 
     private String getUsername(){

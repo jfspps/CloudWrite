@@ -110,8 +110,8 @@
                         <label>Delete</label>
                         <!-- For some reason, a hidden checkbox is also required; investigation underway -->
                         <!-- https://frontbackend.com/thymeleaf/spring-boot-bootstrap-thymeleaf-checkbox-tree -->
-                        <input type="hidden" name="deletable" th:value="${result.isDeletable()}">
-                        <input type="checkbox" name="deletable">
+                        <input type="checkbox" name="deletable" th:checked="${result.deletable}">
+                        <input type="hidden" name="deletable">
                     </div>
                     <div class="col-1">
                         <label>Priority</label>

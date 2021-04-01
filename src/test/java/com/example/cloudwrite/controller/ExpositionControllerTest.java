@@ -50,28 +50,50 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
                 .andExpect(view().name("redirect:/expositions/1"));
     }
 
+    // the following tests are best explained by examining the debug output from ExpositionController ===============
+
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
     @ParameterizedTest
-    void postUpdateExpositionResult_deletable(String username, String password) throws Exception {
-        // the parameter array length must be zero or even, and the initialised as "false", "false" or "false", "on"
-        String[] initialisedArray = {"false", "on"};
+    void performDeletion_FirstOnly(String username, String password) throws Exception {
+        // arguments represent pairs (see expoDetail template), the following means delete the first only
+        String[] initialisedArray = {"on", "", ""};
 
         mockMvc.perform(post("/expositions/1/updateResults").with(httpBasic(username, password)).with(csrf())
                 .param("deletable", initialisedArray))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/expositions/1"));
+
+        assertEquals(1, expositionPieceService.findById(1L).getKeyResults().size());
     }
 
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
     @ParameterizedTest
-    void postUpdateExpositionResult_nonDeletable(String username, String password) throws Exception {
-        // the parameter array length must be zero or even, and the initialised as "false", "false" or "false", "on"
-        String[] initialisedArray = {"false", "false"};
+    void performDeletion_SecondOnly(String username, String password) throws Exception {
+        // arguments represent pairs (see expoDetail template), the following means delete the second only
+        String[] initialisedArray = {"", "on", ""};
 
         mockMvc.perform(post("/expositions/1/updateResults").with(httpBasic(username, password)).with(csrf())
                 .param("deletable", initialisedArray))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/expositions/1"));
+
+        assertEquals(1, expositionPieceService.findById(1L).getKeyResults().size());
     }
 
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void performDeletion_Both(String username, String password) throws Exception {
+        // arguments represent pairs (see expoDetail template), the following means delete both results
+        String[] initialisedArray = {"on", "", "on", ""};
+
+        mockMvc.perform(post("/expositions/1/updateResults").with(httpBasic(username, password)).with(csrf())
+                .param("deletable", initialisedArray))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expositions/1"));
+
+        assertEquals(0, expositionPieceService.findById(1L).getKeyResults().size());
+    }
+
+    // =========================================================================================================
 }
