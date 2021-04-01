@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -58,6 +61,29 @@ public class ExpositionController {
         model.addAttribute("references", citations);
         model.addAttribute("exposition", piece);
         return "/expositions/expoDetail";
+    }
+
+    @PostMapping("/{id}/newResult")
+    public String postNewResult(@PathVariable("id") String ID) throws NotFoundException {
+        if (expositionPieceService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        ExpositionPiece piece = expositionPieceService.findById(Long.valueOf(ID));
+
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        KeyResult newResult = KeyResult.builder().description("New result created " + simpleDateFormat.format(timestamp)).build();
+        KeyResult savedResult = keyResultService.save(newResult);
+        piece.getKeyResults().add(savedResult);
+
+        ExpositionPiece savedPiece = expositionPieceService.save(piece);
+        savedResult.setExpositionPiece(savedPiece);
+        keyResultService.save(savedResult);
+
+        return "redirect:/expositions/" + savedPiece.getId();
     }
 
     @PostMapping("/{id}/update")

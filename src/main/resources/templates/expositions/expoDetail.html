@@ -127,12 +127,16 @@
                     <div class="col-2">
                         <button class="btn btn-outline-primary" type="submit">Update results</button>
                     </div>
-                    <div class="col-2">
-                        <a class="btn btn-outline-warning" type="button" th:href="@{/}">New result</a>
-                    </div>
                 </div>
             </form>
         </span>
+            <div class="row justify-content-start">
+                <div class="col-2">
+                    <form th:action="@{/expositions/{id}/newResult(id=${exposition.id})}" method="post">
+                        <button class="btn btn-outline-warning" type="submit">New result</button>
+                    </form>
+                </div>
+            </div>
     </div>
     <hr/>
 

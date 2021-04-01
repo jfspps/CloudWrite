@@ -44,6 +44,14 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
 
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
     @ParameterizedTest
+    void postNewKeyResult(String username, String password) throws Exception {
+        mockMvc.perform(post("/expositions/1/newResult").with(httpBasic(username, password)).with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expositions/1"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
     void postUpdateExposition(String username, String password) throws Exception {
         ExpositionPiece piece = expositionPieceService.findById(1L);
 
