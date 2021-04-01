@@ -36,4 +36,8 @@ public class KeyResult implements Serializable, Comparable<KeyResult> {
         Integer inputResult = o.priority;
         return thisResult.compareTo(inputResult);
     }
+
+    // used to delete a result from a list of results
+    @Builder.Default
+    boolean deletable = false;
 }

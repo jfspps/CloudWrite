@@ -49,4 +49,29 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/expositions/1"));
     }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void postUpdateExpositionResult_deletable(String username, String password) throws Exception {
+        // the parameter array length must be zero or even, and the initialised as "false", "false" or "false", "on"
+        String[] initialisedArray = {"false", "on"};
+
+        mockMvc.perform(post("/expositions/1/updateResults").with(httpBasic(username, password)).with(csrf())
+                .param("deletable", initialisedArray))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expositions/1"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void postUpdateExpositionResult_nonDeletable(String username, String password) throws Exception {
+        // the parameter array length must be zero or even, and the initialised as "false", "false" or "false", "on"
+        String[] initialisedArray = {"false", "false"};
+
+        mockMvc.perform(post("/expositions/1/updateResults").with(httpBasic(username, password)).with(csrf())
+                .param("deletable", initialisedArray))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expositions/1"));
+    }
+
 }

@@ -5,6 +5,7 @@ import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.*;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/expositions")
+@Slf4j
 public class ExpositionController {
 
     private final UserService userService;
@@ -49,16 +51,15 @@ public class ExpositionController {
 
         ExpositionPiece piece = expositionPieceService.findById(Long.valueOf(ID));
 
-        // sort by priority
-        List<KeyResult> results = piece.getKeyResults();
-        Collections.sort(results);
+        // sort by priority (sort returns void)
+        Collections.sort(piece.getKeyResults());
+        model.addAttribute("results", piece.getKeyResults());
 
         List<Citation> citations = piece.getCitations();
         Collections.sort(citations);
 
         model.addAttribute("references", citations);
         model.addAttribute("exposition", piece);
-        model.addAttribute("results", results);
         return "/expositions/expoDetail";
     }
 
@@ -90,6 +91,37 @@ public class ExpositionController {
         return "redirect:/expositions/" + updated.getId();
     }
 
+    @PostMapping("/{expoId}/updateResults")
+    public String postUpdateExpositionResult(@PathVariable("expoId")String expoID,
+                                             @RequestParam("deletable")String[] results) throws NotFoundException{
+        if (expositionPieceService.findById(Long.valueOf(expoID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        ExpositionPiece pieceOnFile = expositionPieceService.findById(Long.valueOf(expoID));
+        List<KeyResult> resultsOnFile = pieceOnFile.getKeyResults();
+        log.debug("Key results passed: " + results.length);
+
+        // note that there only as many keyResults as there are deletable elements, so iterate through each
+        // the order of each result (in pairs) matches the sorted order in pieceOnFile
+        if (results.length >= 2){
+            for (int i = 0; i < results.length - 1; i += 2) {
+                log.debug("Key result " + (i+1) + " checkbox: " + results[i+1]);
+                if (results[i+1].equals("on")){
+                    KeyResult toBeDeleted = resultsOnFile.get(i);
+                    pieceOnFile.getKeyResults().remove(toBeDeleted);
+                    keyResultService.delete(toBeDeleted);
+                    log.debug("Key result " + (i+1) + " removed");
+                }
+            }
+        }
+
+        //todo: add update description
+
+        ExpositionPiece updated = expositionPieceService.save(pieceOnFile);
+
+        return "redirect:/expositions/" + updated.getId();
+    }
 
     private String getUsername(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
