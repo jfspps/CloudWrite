@@ -166,6 +166,26 @@ public class ExpositionController {
         return "redirect:/expositions/" + toFile.getId();
     }
 
+    @PostMapping("/{expoId}/updateReferences")
+    public String postUpdateExpositionReferences(@PathVariable("expoId")String expoID,
+                                             @RequestParam("ref")String[] references) throws NotFoundException{
+        if (expositionPieceService.findById(Long.valueOf(expoID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        ExpositionPiece pieceOnFile = expositionPieceService.findById(Long.valueOf(expoID));
+        List<Citation> citationsOnFile = pieceOnFile.getCitations();
+
+        for (int i = 0; i < references.length; i++){
+            citationsOnFile.get(i).setRef(references[i]);
+        }
+
+        ExpositionPiece toFile = expositionPieceService.save(pieceOnFile);
+        log.debug("Exposition piece updated");
+
+        return "redirect:/expositions/" + toFile.getId();
+    }
+
     private void writeToResultsOnFile(List<KeyResult> resultsOnFile, List<String> descriptionsOnFile, List<Integer> prioritiesOnFile) {
         // write to resultsOnFile
         int i = 0;

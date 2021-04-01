@@ -153,8 +153,8 @@
     </span>
     <span th:object="${references}" th:unless="${references == null || references.isEmpty()}">
         <!--/*@thymesVar id="reference" type="com.example.cloudwrite.model.Citation"*/-->
-        <form th:each="reference: ${references}" th:action="@{/}" method="post">
-            <div class="row justify-content-start">
+        <form th:action="@{/expositions/{id}/updateReferences(id=${exposition.id})}" method="post">
+            <div class="row justify-content-start" th:each="reference: ${references}">
                 <div class="col-1">
                     <label>Delete</label>
                     <!-- For some reason, a hidden checkbox is also required; investigation underway -->
@@ -163,16 +163,16 @@
                     <input type="hidden" name="deletable">
                 </div>
                 <div class="col-11">
-                    <textarea class="form-control" rows="1" th:text="${reference.ref}"></textarea>
+                    <textarea name="ref" class="form-control" rows="1" th:text="${reference.ref}"></textarea>
                 </div>
             </div>
-        </form>
-        <br>
+            <br>
             <div class="row justify-content-start">
                 <div class="col">
                     <button class="btn btn-outline-primary" type="submit">Update references</button>
                 </div>
             </div>
+        </form>
     </span>
     <hr/>
 

@@ -69,6 +69,17 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
                 .andExpect(view().name("redirect:/expositions/1"));
     }
 
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void updateReferences(String username, String password) throws Exception {
+        String[] refArray = {"update reference"};
+
+        mockMvc.perform(post("/expositions/1/updateReferences").with(httpBasic(username, password)).with(csrf())
+                .param("ref", refArray))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expositions/1"));
+    }
+
     // the following tests are best explained by examining the debug output from ExpositionController ===============
 
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
