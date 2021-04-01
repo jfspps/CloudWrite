@@ -32,10 +32,10 @@ import java.util.*;
 @Slf4j
 public class ExpositionController {
 
-    private final UserService userService;
     private final ExpositionPieceService expositionPieceService;
     private final KeyResultService keyResultService;
     private final StandfirstService standfirstService;
+    private final CitationService citationService;
 
     //prevent the HTTP form POST from editing listed properties
     @InitBinder
@@ -82,6 +82,29 @@ public class ExpositionController {
         ExpositionPiece savedPiece = expositionPieceService.save(piece);
         savedResult.setExpositionPiece(savedPiece);
         keyResultService.save(savedResult);
+
+        return "redirect:/expositions/" + savedPiece.getId();
+    }
+
+    @PostMapping("/{id}/newReference")
+    public String postNewReference(@PathVariable("id") String ID) throws NotFoundException {
+        if (expositionPieceService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        ExpositionPiece piece = expositionPieceService.findById(Long.valueOf(ID));
+
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Citation newCitation = Citation.builder().ref("New reference created " + simpleDateFormat.format(timestamp)).build();
+        Citation savedCitation = citationService.save(newCitation);
+        piece.getCitations().add(savedCitation);
+
+        ExpositionPiece savedPiece = expositionPieceService.save(piece);
+        savedCitation.setPiece(savedPiece);
+        citationService.save(savedCitation);
 
         return "redirect:/expositions/" + savedPiece.getId();
     }
@@ -205,12 +228,4 @@ public class ExpositionController {
         }
     }
 
-    private String getUsername(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails)principal).getUsername();
-        } else {
-            return principal.toString();
-        }
-    }
 }

@@ -32,4 +32,7 @@ public class Citation implements Serializable, Comparable<Citation> {
         String inputRef = o.ref;
         return thisRef.compareTo(inputRef);
     }
+
+    @Builder.Default
+    boolean deletable = false;
 }

@@ -86,24 +86,25 @@
 
     <!--/*@thymesVar id="result" type="com.example.cloudwrite.model.KeyResult"*/-->
     <div th:object="${results}">
-        <span th:if="${results.isEmpty()}">
-            <div class="row justify-content-start">
-                <div class="col">
-                    <h3>Key results</h3>
-                </div>
+        <div class="row justify-content-start">
+            <div class="col">
+                <h3>Key results</h3>
+                <form th:action="@{/expositions/{id}/newResult(id=${exposition.id})}" method="post">
+                    <button class="btn btn-outline-warning" type="submit">New result</button>
+                </form>
             </div>
+        </div>
+
+        <br>
+        <span th:if="${results.isEmpty()}">
             <div class="row justify-content-start">
                 <div class="col">
                     <p>No key results on file</p>
                 </div>
             </div>
         </span>
+
         <span th:unless="${results.isEmpty()}">
-            <div class="row justify-content-start">
-                <div class="col">
-                    <h3>Key results</h3>
-                </div>
-            </div>
             <form th:action="@{/expositions/{expoId}/updateResults(expoId=${exposition.id})}" method="post">
                 <div class="row justify-content-start" th:each="result: ${results}">
                     <div class="col-1">
@@ -119,7 +120,8 @@
                                name="priority" th:value="${result.getPriority()}">
                     </div>
                     <div class="col-10">
-                        <textarea class="form-control" name="description" rows="3" th:text="${result.description}"></textarea>
+                        <textarea class="form-control" name="description" rows="3"
+                                  th:text="${result.description}"></textarea>
                     </div>
                 </div>
                 <br>
@@ -130,47 +132,47 @@
                 </div>
             </form>
         </span>
-            <div class="row justify-content-start">
-                <div class="col-2">
-                    <form th:action="@{/expositions/{id}/newResult(id=${exposition.id})}" method="post">
-                        <button class="btn btn-outline-warning" type="submit">New result</button>
-                    </form>
-                </div>
-            </div>
     </div>
     <hr/>
 
-    <span th:object="${references}">
-        <span th:if="${references == null || references.isEmpty()}">
+    <div class="row justify-content-start">
+        <div class="col">
+            <h3>References</h3>
+            <form th:action="@{/expositions/{id}/newReference(id=${exposition.id})}" method="post">
+                <button class="btn btn-outline-warning" type="submit">New reference</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    <span th:object="${references}" th:if="${references == null || references.isEmpty()}">
+        <div class="row justify-content-start">
+            <div class="col">
+                <p>No citations or references on file</p>
+            </div>
+        </div>
+    </span>
+    <span th:object="${references}" th:unless="${references == null || references.isEmpty()}">
+        <!--/*@thymesVar id="reference" type="com.example.cloudwrite.model.Citation"*/-->
+        <form th:each="reference: ${references}" th:action="@{/}" method="post">
             <div class="row justify-content-start">
-                <div class="col">
-                    <h3>References</h3>
-                    <p>No citations or references on file</p>
+                <div class="col-1">
+                    <label>Delete</label>
+                    <!-- For some reason, a hidden checkbox is also required; investigation underway -->
+                    <!-- https://frontbackend.com/thymeleaf/spring-boot-bootstrap-thymeleaf-checkbox-tree -->
+                    <input type="checkbox" name="deletable" th:checked="${reference.deletable}">
+                    <input type="hidden" name="deletable">
+                </div>
+                <div class="col-11">
+                    <textarea class="form-control" rows="1" th:text="${reference.ref}"></textarea>
                 </div>
             </div>
-        </span>
-        <span th:unless="${references == null || references.isEmpty()}">
-                <!--/*@thymesVar id="reference" type="com.example.cloudwrite.model.Citation"*/-->
-            <form th:each="reference: ${references}" th:action="@{/}" method="post">
-                <div class="row justify-content-start">
-                    <div class="col">
-                        <h3>References</h3>
-                    </div>
+        </form>
+        <br>
+            <div class="row justify-content-start">
+                <div class="col">
+                    <button class="btn btn-outline-primary" type="submit">Update references</button>
                 </div>
-                <div class="row justify-content-start">
-                    <div class="col">
-                        <textarea class="form-control" rows="1" th:text="${reference.ref}"></textarea>
-                    </div>
-                </div>
-                <br>
-                <div class="row justify-content-start">
-                    <div class="col">
-                        <button class="btn btn-outline-primary" type="submit">Update references</button>
-                        <a class="btn btn-outline-warning" type="button" th:href="@{/}">New reference</a>
-                    </div>
-                </div>
-            </form>
-        </span>
+            </div>
     </span>
     <hr/>
 
