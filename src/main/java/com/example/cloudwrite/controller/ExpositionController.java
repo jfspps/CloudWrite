@@ -105,13 +105,13 @@ public class ExpositionController {
         // note that there only as many keyResults as there are deletable elements, so iterate through each
         // the order of each result (in pairs) matches the sorted order in pieceOnFile
         if (results.length >= 2){
-            for (int i = 0; i < results.length - 1; i += 2) {
-                log.debug("Key result " + (i+1) + " checkbox: " + results[i+1]);
-                if (results[i+1].equals("on")){
-                    KeyResult toBeDeleted = resultsOnFile.get(i);
-                    pieceOnFile.getKeyResults().remove(toBeDeleted);
-                    keyResultService.delete(toBeDeleted);
-                    log.debug("Key result " + (i+1) + " removed");
+            for (int i = 0; i < results.length; i++) {
+                log.debug("Key result " + (i) + " checkbox: " + results[i]);
+                if (results[i].equals("on")){
+//                    KeyResult toBeDeleted = resultsOnFile.get(i);
+//                    pieceOnFile.getKeyResults().remove(toBeDeleted);
+//                    keyResultService.delete(toBeDeleted);
+                    log.debug("Key result " + (i) + " removed");
                 }
             }
         }

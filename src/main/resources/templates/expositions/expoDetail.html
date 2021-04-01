@@ -108,7 +108,8 @@
                 <div class="row justify-content-start" th:each="result: ${results}">
                     <div class="col-1">
                         <label>Delete</label>
-<!--                        For some reason, a hidden checkbox is also required; investigation underway -->
+                        <!-- For some reason, a hidden checkbox is also required; investigation underway -->
+                        <!-- https://frontbackend.com/thymeleaf/spring-boot-bootstrap-thymeleaf-checkbox-tree -->
                         <input type="hidden" name="deletable" th:value="${result.isDeletable()}">
                         <input type="checkbox" name="deletable">
                     </div>
@@ -121,6 +122,7 @@
                         <textarea class="form-control" rows="3" th:text="${result.description}"></textarea>
                     </div>
                 </div>
+                <br>
                 <div class="row justify-content-start">
                     <div class="col-2">
                         <button class="btn btn-outline-primary" type="submit">Update results</button>
@@ -156,6 +158,7 @@
                         <textarea class="form-control" rows="1" th:text="${reference.ref}"></textarea>
                     </div>
                 </div>
+                <br>
                 <div class="row justify-content-start">
                     <div class="col">
                         <button class="btn btn-outline-primary" type="submit">Update references</button>

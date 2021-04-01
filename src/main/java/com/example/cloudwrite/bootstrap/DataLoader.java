@@ -93,12 +93,16 @@ public class DataLoader implements CommandLineRunner {
 
     private void buildResearchExpositions(){
 
-        KeyResult someResult = KeyResult.builder().description("Some description").priority(1).build();
+        KeyResult someResult = KeyResult.builder().description("Some first description").priority(1).build();
+        KeyResult someResult2 = KeyResult.builder().description("Some second description").priority(2).build();
+
         Standfirst standfirst = Standfirst.builder().rationale("What's wrong?").approach("The approach").build();
         Citation citation = Citation.builder().ref("The Journal of this and that").build();
-
         Standfirst savedStandfirst = standfirstService.save(standfirst);
+
         KeyResult savedResult = keyResultService.save(someResult);
+        KeyResult savedResult2 = keyResultService.save(someResult2);
+
         Citation savedCitation = citationService.save(citation);
 
         ExpositionPiece piece = ExpositionPiece.builder()
@@ -106,7 +110,7 @@ public class DataLoader implements CommandLineRunner {
                 .expositionPurpose("A purpose")
                 .currentProgress("The current state")
                 .keyword("Keyword")
-                .keyResults(List.of(savedResult))
+                .keyResults(List.of(savedResult, savedResult2))
                 .standfirst(savedStandfirst)
                 .citations(List.of(savedCitation))
                 .futureWork("What to expect").build();
@@ -114,11 +118,13 @@ public class DataLoader implements CommandLineRunner {
         ExpositionPiece savedPiece = expositionPieceService.save(piece);
 
         savedResult.setExpositionPiece(savedPiece);
+        savedResult2.setExpositionPiece(savedPiece);
         savedStandfirst.setExpositionPiece(savedPiece);
         savedCitation.setPiece(savedPiece);
 
         standfirstService.save(savedStandfirst);
         keyResultService.save(savedResult);
+        keyResultService.save(savedResult2);
         citationService.save(savedCitation);
 
         log.info("Saved " + expositionPieceService.findAll().size() + " piece(s)");
