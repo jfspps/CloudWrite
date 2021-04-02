@@ -34,7 +34,7 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
 
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
     @ParameterizedTest
-    void getRedirectedToLogin_adminPage(String username, String password) throws Exception {
+    void getExposition(String username, String password) throws Exception {
         mockMvc.perform(get("/expositions/1").with(httpBasic(username, password)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/expositions/expoDetail"))
