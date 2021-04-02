@@ -217,6 +217,37 @@ public class ExpositionController {
         return "/expositions/confirmDelete";
     }
 
+    @PostMapping("/{id}/delete")
+    public String postDeleteExposition(@PathVariable("id") String ID) throws NotFoundException {
+        if (expositionPieceService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        ExpositionPiece pieceOnFile = expositionPieceService.findById(Long.valueOf(ID));
+
+        // remove all assoc. KeyResults
+        pieceOnFile.getKeyResults().forEach(keyResult -> {
+            keyResult.setExpositionPiece(null);
+            keyResultService.delete(keyResult);
+        });
+
+        // remove all assoc. citations
+        pieceOnFile.getCitations().forEach(citation -> {
+            citation.setPiece(null);
+            citationService.delete(citation);
+        });
+
+        // remove standfirst
+        Standfirst standfirstOnFile = pieceOnFile.getStandfirst();
+        standfirstOnFile.setExpositionPiece(null);
+        pieceOnFile.setStandfirst(null);
+        standfirstService.delete(standfirstOnFile);
+
+        expositionPieceService.delete(pieceOnFile);
+
+        return "redirect:/authenticated";
+    }
+
     private void performDeleteReferences(String[] references, String[] toDelete, List<Citation> citationsOnFile) {
         // mark checked references for deletion
         int pairsProcessed = 0;

@@ -219,4 +219,14 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
                 .andExpect(status().isOk())
                 .andExpect(view().name("/expositions/confirmDelete"));
     }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void postDeleteExposition(String username, String password) throws Exception {
+        mockMvc.perform(post("/expositions/1/delete").with(httpBasic(username, password)).with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/authenticated"));
+
+        assertEquals(0, expositionPieceService.findAll().size());
+    }
 }
