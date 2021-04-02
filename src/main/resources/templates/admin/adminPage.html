@@ -11,6 +11,10 @@
     <div class="row justify-content-start">
         <div class="col">
             <h1>Admin page</h1>
+            <!--/*@thymesVar id="reply" type="java.lang.String"*/-->
+            <div th:object="${reply}" th:if="${reply != null}">
+                <p style="color: green" th:text="${reply}"></p>
+            </div>
         </div>
     </div>
     <div class="row justify-content-start">
@@ -64,10 +68,10 @@
                     <button class="btn btn-warning" type="submit">Reset password</button>
                 </div>
             </form>
-            <!--/*@thymesVar id="reply" type="java.lang.String"*/-->
-            <div th:object="${reply}" th:if="${reply != null}">
-                <p style="color: green" th:text="${reply}"></p>
-            </div>
+            <br>
+            <form th:action="@{/adminPage/{userID}/deleteUser(userID=${chosenUser.id})}" method="post">
+                <button class="btn btn-danger" type="submit">Delete user</button>
+            </form>
         </div>
     </div>
     <hr/>

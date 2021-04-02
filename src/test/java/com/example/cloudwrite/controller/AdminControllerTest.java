@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.transaction.Transactional;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -114,5 +115,17 @@ class AdminControllerTest extends SecurityCredentialsSetup {
                 .andExpect(model().attributeExists("usersFound"))
                 .andExpect(model().attributeExists("chosenUser"))
                 .andExpect(model().attributeExists("reply"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAdminUsers")
+    @ParameterizedTest
+    void postDeleteUser(String username, String password) throws Exception {
+        mockMvc.perform(post("/adminPage/2/deleteUser").with(httpBasic(username, password)).with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/admin/adminPage"))
+                .andExpect(model().attributeExists("usersFound"))
+                .andExpect(model().attributeExists("reply"));
+
+        assertEquals(1, userService.findAll().size());
     }
 }

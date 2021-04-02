@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -77,7 +78,7 @@ public class AdminController {
             found.setUsername(chosenUser.getUsername());
             reply += "Username updated";
         } else {
-            reply += "Username cannot be blank or is already in use";
+            reply += "Note: username is blank or is already in use";
         }
 
         found.setEnabled(chosenUser.getEnabled());
@@ -140,6 +141,28 @@ public class AdminController {
         model.addAttribute("usersFound", userSet);
         model.addAttribute("chosenUser", saved);
         model.addAttribute("reply", reply);
+        return "/admin/adminPage";
+    }
+
+    @PostMapping("/adminPage/{id}/deleteUser")
+    public String postDeleteUser(@PathVariable("id") String userId, Model model) throws NotFoundException {
+        if (userService.findById(Long.valueOf(userId)) == null){
+            throw new NotFoundException("User not found");
+        }
+
+        User found = userService.findById(Long.valueOf(userId));
+
+        if (found.getUsername().equals(getUsername())){
+            model.addAttribute("reply", "Cannot delete your own account");
+        } else {
+            userService.delete(found);
+            model.addAttribute("reply", "User, " + found.getUsername() + ", removed");
+        }
+
+        List<User> userSet = new ArrayList<>(userService.findAll());
+        Collections.sort(userSet);
+        model.addAttribute("usersFound", userSet);
+
         return "/admin/adminPage";
     }
 
