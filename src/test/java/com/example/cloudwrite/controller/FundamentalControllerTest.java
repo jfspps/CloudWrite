@@ -2,6 +2,7 @@ package com.example.cloudwrite.controller;
 
 import com.example.cloudwrite.model.ExpositionPiece;
 import com.example.cloudwrite.model.FundamentalPiece;
+import com.example.cloudwrite.model.Standfirst;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,26 @@ class FundamentalControllerTest extends SecurityCredentialsSetup {
     void getFundamentalArticle_Denied() throws Exception {
         mockMvc.perform(get("/fundamentals/1"))
                 .andExpect(status().is4xxClientError());
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void getNewFundamental(String username, String password) throws Exception {
+        mockMvc.perform(get("/fundamentals/new").with(httpBasic(username, password)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/fundamentals/newFundamental"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void postNewFundamental(String username, String password) throws Exception {
+        FundamentalPiece piece = FundamentalPiece.builder().build();
+        FundamentalPiece savedPiece = fundamentalPieceService.save(piece);
+
+        mockMvc.perform(post("/fundamentals/new").with(httpBasic(username, password)).with(csrf())
+                .flashAttr("fundamental", piece))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/fundamentals/" + savedPiece.getId()));
     }
 
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")

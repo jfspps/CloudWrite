@@ -35,6 +35,21 @@ public class FundamentalController {
         dataBinder.setDisallowedFields("id");
     }
 
+    @GetMapping("/new")
+    public String getNewFundamental(Model model){
+        FundamentalPiece piece = FundamentalPiece.builder().build();
+
+        model.addAttribute("fundamental", piece);
+        return "/fundamentals/newFundamental";
+    }
+
+    @PostMapping("/new")
+    public String postNewFundamental(@ModelAttribute("fundamental") FundamentalPiece newFundamental){
+        FundamentalPiece savedPiece = fundamentalPieceService.save(newFundamental);
+
+        return "redirect:/fundamentals/" + savedPiece.getId();
+    }
+
     @GetMapping("/{id}")
     public String getFundamental(@PathVariable("id") String ID, Model model) throws NotFoundException {
         if (fundamentalPieceService.findById(Long.valueOf(ID)) == null){

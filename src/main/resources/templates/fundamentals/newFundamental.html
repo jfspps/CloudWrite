@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: baseHead(~{::title})">
+    <title>New fundamental</title>
+</head>
+<body>
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+<!--/*@thymesVar id="fundamental" type="com.example.cloudwrite.model.FundamentalPiece"*/-->
+<div class="container">
+    <form th:object="${fundamental}" th:action="@{/fundamentals/new}" method="post">
+        <div class="row justify-content-start">
+            <div class="col">
+                <h1>New fundamental article</h1>
+            </div>
+            <br>
+        </div>
+
+        <div class="row justify-content-start">
+            <div class="col-2">
+                <label><b>Title:</b> </label>
+            </div>
+            <div class="col-10">
+                <input type="text" class="form-control bg-light rounded" th:field="*{title}"/>
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-2">
+                <label><b>Keyword:</b> </label>
+            </div>
+            <div class="col-10">
+                <input type="text" class="form-control bg-light rounded" th:field="*{keyword}"/>
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-2">
+                <label><b>Prerequisites:</b> </label>
+            </div>
+            <div class="col-10">
+                <textarea class="form-control bg-light rounded" rows="1" th:field="*{prerequisites}"></textarea>
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-2">
+                <label><b>Summary</b> </label>
+            </div>
+            <div class="col-10">
+                <textarea class="form-control bg-light rounded" rows="2" th:field="*{summary}"></textarea>
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col">
+                <button class="btn btn-outline-primary" type="submit">Save</button>
+            </div>
+        </div>
+    </form>
+    <hr/>
+
+    <div class="row justify-content-start">
+        <div class="col">
+            <div class="btn-group">
+                <a href="/authenticated" class="btn btn-outline-warning">Return to welcome page</a>
+                <a href="/logout" class="btn btn-outline-danger">Sign out</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>
