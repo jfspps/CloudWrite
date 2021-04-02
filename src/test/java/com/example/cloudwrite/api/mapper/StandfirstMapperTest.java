@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StandfirstMapperTest {
 
-    public static final String RATIONALE = "The standfirst rationale";
-    public static final String APPROACH = "The standfirst approach";
+    private static final String RATIONALE = "The standfirst rationale";
+    private static final String APPROACH = "The standfirst approach";
 
     @Test
     void standfirstToStandfirstDTO() {
