@@ -1,28 +1,18 @@
 package com.example.cloudwrite.controller;
 
 import com.example.cloudwrite.model.*;
-import com.example.cloudwrite.model.security.User;
 import com.example.cloudwrite.service.*;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -159,16 +149,21 @@ public class ExpositionController {
         writeToResultsOnFile(resultsOnFile, descriptionsOnFile, prioritiesOnFile);
 
         // update fields first before deleting those marked, to keep things in sync
-        performDeletion(results, resultsOnFile);
+        if (results.length != 0){
+            performDeleteResults(results, resultsOnFile);
+        }
+
         ExpositionPiece toFile = expositionPieceService.save(pieceOnFile);
-        log.debug("Exposition piece updated");
+        log.debug("Exposition piece key results updated");
 
         return "redirect:/expositions/" + toFile.getId();
     }
 
     @PostMapping("/{expoId}/updateReferences")
-    public String postUpdateExpositionReferences(@PathVariable("expoId")String expoID,
-                                             @RequestParam("ref")String[] references) throws NotFoundException{
+    public String postUpdateExpositionReferences(
+            @PathVariable("expoId")String expoID,
+            @RequestParam("ref")String[] references,
+            @RequestParam("deletable")String[] toDelete) throws NotFoundException{
         if (expositionPieceService.findById(Long.valueOf(expoID)) == null){
             throw new NotFoundException("Resource not found");
         }
@@ -180,10 +175,35 @@ public class ExpositionController {
             citationsOnFile.get(i).setRef(references[i]);
         }
 
+        if (toDelete.length != 0){
+            performDeleteReferences(references, toDelete, citationsOnFile);
+        }
+
         ExpositionPiece toFile = expositionPieceService.save(pieceOnFile);
-        log.debug("Exposition piece updated");
+        log.debug("Exposition piece citations updated");
 
         return "redirect:/expositions/" + toFile.getId();
+    }
+
+    private void performDeleteReferences(String[] references, String[] toDelete, List<Citation> citationsOnFile) {
+        // mark checked references for deletion
+        int pairsProcessed = 0;
+        for (int i = 0; i < references.length; i++, pairsProcessed++){
+            if (toDelete[i].equals("on")){
+                citationsOnFile.get(pairsProcessed).setDeletable(true);
+                i++;
+            }
+        }
+
+        // then delete
+        for (int i = citationsOnFile.size() - 1; i >= 0; i--){
+            Citation toBeDeleted;
+            if (citationsOnFile.get(i).isDeletable()){
+                toBeDeleted = citationsOnFile.get(i);
+                citationsOnFile.remove(toBeDeleted);
+                citationService.delete(toBeDeleted);
+            }
+        }
     }
 
     private void writeToResultsOnFile(List<KeyResult> resultsOnFile, List<String> descriptionsOnFile, List<Integer> prioritiesOnFile) {
@@ -224,7 +244,7 @@ public class ExpositionController {
         }
     }
 
-    private void performDeletion(String[] results, List<KeyResult> resultsOnFile) {
+    private void performDeleteResults(String[] results, List<KeyResult> resultsOnFile) {
         // note that there only as many keyResults as there are deletable elements, so iterate through each
         // the order of each result (in pairs) matches the sorted order in pieceOnFile
         // mark for deletion first

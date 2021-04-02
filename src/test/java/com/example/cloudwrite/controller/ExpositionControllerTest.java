@@ -73,11 +73,28 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
     @ParameterizedTest
     void updateReferences(String username, String password) throws Exception {
         String[] refArray = {"update reference"};
+        String[] deleteArray = {"on", "", ""};
 
         mockMvc.perform(post("/expositions/1/updateReferences").with(httpBasic(username, password)).with(csrf())
-                .param("ref", refArray))
+                .param("ref", refArray)
+                .param("deletable", deleteArray))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/expositions/1"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void deleteReferences(String username, String password) throws Exception {
+        String[] refArray = {"update reference"};
+        String[] deleteArray = {"on", ""};
+
+        mockMvc.perform(post("/expositions/1/updateReferences").with(httpBasic(username, password)).with(csrf())
+                .param("ref", refArray)
+                .param("deletable", deleteArray))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expositions/1"));
+
+        assertEquals(0, expositionPieceService.findById(1L).getCitations().size());
     }
 
     // the following tests are best explained by examining the debug output from ExpositionController ===============
