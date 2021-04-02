@@ -106,4 +106,23 @@ class FundamentalControllerTest extends SecurityCredentialsSetup {
         // confirm that that deletion of one concept was followed*
         assertEquals(0, fundamentalPieceService.findById(1L).getConceptList().size());
     }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void getDeleteFundamental(String username, String password) throws Exception {
+        mockMvc.perform(get("/fundamentals/1/delete").with(httpBasic(username, password)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/fundamentals/confirmDelete"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void postDeleteFundamental(String username, String password) throws Exception {
+        mockMvc.perform(post("/fundamentals/1/delete").with(httpBasic(username, password)).with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/authenticated"));
+
+        // removing the Chemistry article leaves one Biology article behind
+        assertEquals(1, fundamentalPieceService.findAll().size());
+    }
 }

@@ -130,6 +130,38 @@ public class FundamentalController {
         return "redirect:/fundamentals/" + toFile.getId();
     }
 
+    @GetMapping("/{id}/delete")
+    public String getDeleteFundamental(@PathVariable("id") String ID, Model model) throws NotFoundException {
+        if (fundamentalPieceService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        FundamentalPiece piece = fundamentalPieceService.findById(Long.valueOf(ID));
+
+        model.addAttribute("fundamental", piece);
+
+        return "/fundamentals/confirmDelete";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String postDeleteFundamental(@PathVariable("id") String ID) throws NotFoundException {
+        if (fundamentalPieceService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        FundamentalPiece pieceOnFile = fundamentalPieceService.findById(Long.valueOf(ID));
+
+        // remove all assoc. Concepts
+        pieceOnFile.getConceptList().forEach(concept -> {
+            concept.setFundamentalPiece(null);
+            conceptService.delete(concept);
+        });
+
+        fundamentalPieceService.delete(pieceOnFile);
+
+        return "redirect:/authenticated";
+    }
+
     private void writeToConceptsOnFile(List<Concept> conceptsOnFile, List<String> descriptionsOnFile, List<String> purposesOnFile, List<Integer> prioritiesOnFile) {
         int i = 0;
         for (Concept concept : conceptsOnFile) {
