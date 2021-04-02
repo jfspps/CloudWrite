@@ -204,6 +204,19 @@ public class ExpositionController {
         return "redirect:/expositions/" + toFile.getId();
     }
 
+    @GetMapping("/{id}/delete")
+    public String getDeleteExposition(@PathVariable("id") String ID, Model model) throws NotFoundException {
+        if (expositionPieceService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        ExpositionPiece piece = expositionPieceService.findById(Long.valueOf(ID));
+
+        model.addAttribute("exposition", piece);
+
+        return "/expositions/confirmDelete";
+    }
+
     private void performDeleteReferences(String[] references, String[] toDelete, List<Citation> citationsOnFile) {
         // mark checked references for deletion
         int pairsProcessed = 0;
