@@ -58,4 +58,52 @@ class FundamentalControllerTest extends SecurityCredentialsSetup {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/fundamentals/1"));
     }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void performConceptListUpdate_noDelete(String username, String password) throws Exception {
+        // arguments represent pairs; concept list for fundamental piece with ID 1 has one concept*
+
+        // to delete the first concept from a list of one expects {""}, and from two expects {"on", "", ""}
+        // to delete the second concept from a list of two expects {"", "on", ""}
+        // i.e. an "on" is always proceeded with an ""
+        String[] deleteArray = {""};
+
+        String[] descriptionArray = {"another new description"};
+        String[] purposeArray = {"another new purpose"};
+        String[] priorityArray = {"7"};
+
+        mockMvc.perform(post("/fundamentals/1/updateConcepts").with(httpBasic(username, password)).with(csrf())
+                .param("priority", priorityArray)
+                .param("description", descriptionArray)
+                .param("purpose", purposeArray)
+                .param("deletable", deleteArray))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/fundamentals/1"));
+
+        // confirm that that deletion of one concept was followed*
+        assertEquals(1, fundamentalPieceService.findById(1L).getConceptList().size());
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void performConceptListUpdate_withDelete(String username, String password) throws Exception {
+        // arguments represent pairs; concept list for fundamental piece with ID 1 has one concept*
+        String[] deleteArray = {"on", ""};
+
+        String[] descriptionArray = {"another new description"};
+        String[] purposeArray = {"another new purpose"};
+        String[] priorityArray = {"7"};
+
+        mockMvc.perform(post("/fundamentals/1/updateConcepts").with(httpBasic(username, password)).with(csrf())
+                .param("priority", priorityArray)
+                .param("description", descriptionArray)
+                .param("purpose", purposeArray)
+                .param("deletable", deleteArray))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/fundamentals/1"));
+
+        // confirm that that deletion of one concept was followed*
+        assertEquals(0, fundamentalPieceService.findById(1L).getConceptList().size());
+    }
 }

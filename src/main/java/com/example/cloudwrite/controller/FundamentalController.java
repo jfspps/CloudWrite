@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -93,5 +94,93 @@ public class FundamentalController {
         conceptService.save(savedConcept);
 
         return "redirect:/fundamentals/" + savedPiece.getId();
+    }
+
+    @PostMapping("/{Id}/updateConcepts")
+    public String postUpdateFundamentalConcepts(@PathVariable("Id")String expoID,
+                                             @RequestParam("deletable")String[] concepts,
+                                             @RequestParam("priority")String[] priorities,
+                                             @RequestParam("description")String[] descriptions,
+                                             @RequestParam("purpose")String[] purposes) throws NotFoundException{
+        if (fundamentalPieceService.findById(Long.valueOf(expoID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        FundamentalPiece pieceOnFile = fundamentalPieceService.findById(Long.valueOf(expoID));
+        List<Concept> conceptsOnFile = pieceOnFile.getConceptList();
+        List<String> descriptionsOnFile = new ArrayList<>();
+        List<String> purposesOnFile = new ArrayList<>();
+        List<Integer> prioritiesOnFile = new ArrayList<>();
+
+        readFromConceptsOnFile(conceptsOnFile, descriptionsOnFile, purposesOnFile, prioritiesOnFile);
+
+        updatePriorities(priorities, prioritiesOnFile);
+        updatePurposes(purposes, purposesOnFile);
+        updateDescriptions(descriptions, descriptionsOnFile);
+
+        writeToConceptsOnFile(conceptsOnFile, descriptionsOnFile, purposesOnFile, prioritiesOnFile);
+
+        if (concepts.length != 0){
+            performDeleteResults(concepts, conceptsOnFile);
+        }
+
+        FundamentalPiece toFile = fundamentalPieceService.save(pieceOnFile);
+        log.debug("Fundamental piece concepts updated");
+
+        return "redirect:/fundamentals/" + toFile.getId();
+    }
+
+    private void writeToConceptsOnFile(List<Concept> conceptsOnFile, List<String> descriptionsOnFile, List<String> purposesOnFile, List<Integer> prioritiesOnFile) {
+        int i = 0;
+        for (Concept concept : conceptsOnFile) {
+            concept.setPriority(prioritiesOnFile.get(i));
+            concept.setDescription(descriptionsOnFile.get(i));
+            concept.setPurpose(purposesOnFile.get(i));
+            i++;
+        }
+    }
+
+    private void readFromConceptsOnFile(List<Concept> conceptsOnFile, List<String> descriptionsOnFile, List<String> purposesOnFile, List<Integer> prioritiesOnFile) {
+        conceptsOnFile.forEach(concept -> {
+            prioritiesOnFile.add(concept.getPriority());
+            purposesOnFile.add(concept.getPurpose());
+            descriptionsOnFile.add(concept.getDescription());
+        });
+    }
+
+    private void updateDescriptions(String[] descriptions, List<String> descriptionsOnFile) {
+        for (int i = 0; i < descriptions.length; i++){
+            descriptionsOnFile.set(i, descriptions[i]);
+        }
+    }
+
+    private void updatePurposes(String[] purposes, List<String> purposesOnFile) {
+        for (int i = 0; i < purposes.length; i++){
+            purposesOnFile.set(i, purposes[i]);
+        }
+    }
+    private void updatePriorities(String[] priorities, List<Integer> prioritiesOnFile) {
+        for (int i = 0; i < priorities.length; i++){
+            prioritiesOnFile.set(i, Integer.valueOf(priorities[i]));
+        }
+    }
+
+    private void performDeleteResults(String[] concepts, List<Concept> conceptsOnFile) {
+        int pairsProcessed = 0;
+        for (int i = 0; i < concepts.length; i++, pairsProcessed++){
+            if (concepts[i].equals("on")){
+                conceptsOnFile.get(pairsProcessed).setDeletable(true);
+                i++;
+            }
+        }
+
+        for (int i = conceptsOnFile.size() - 1; i >= 0; i--){
+            Concept toBeDeleted;
+            if (conceptsOnFile.get(i).isDeletable()){
+                toBeDeleted = conceptsOnFile.get(i);
+                conceptsOnFile.remove(toBeDeleted);
+                conceptService.delete(toBeDeleted);
+            }
+        }
     }
 }
