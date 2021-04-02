@@ -1,8 +1,7 @@
 package com.example.cloudwrite.controller;
 
-import com.example.cloudwrite.service.ExpositionPieceService;
-import com.example.cloudwrite.service.StandfirstService;
-import com.example.cloudwrite.service.UserService;
+import com.example.cloudwrite.model.Concept;
+import com.example.cloudwrite.service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.provider.Arguments;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,12 @@ public abstract class SecurityCredentialsSetup {
 
     @Autowired
     StandfirstService standfirstService;
+
+    @Autowired
+    FundamentalPieceService fundamentalPieceService;
+
+    @Autowired
+    ConceptService conceptService;
 
     protected MockMvc mockMvc;
 

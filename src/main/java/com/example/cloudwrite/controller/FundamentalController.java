@@ -1,9 +1,6 @@
 package com.example.cloudwrite.controller;
 
-import com.example.cloudwrite.model.Citation;
-import com.example.cloudwrite.model.Concept;
-import com.example.cloudwrite.model.ExpositionPiece;
-import com.example.cloudwrite.model.FundamentalPiece;
+import com.example.cloudwrite.model.*;
 import com.example.cloudwrite.service.ConceptService;
 import com.example.cloudwrite.service.FundamentalPieceService;
 import javassist.NotFoundException;
@@ -13,10 +10,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,5 +45,24 @@ public class FundamentalController {
         model.addAttribute("concepts", conceptList);
         model.addAttribute("fundamental", piece);
         return "/fundamentals/fundamentalDetail";
+    }
+
+    @PostMapping("/{id}/update")
+    public String postUpdateFundamental(@ModelAttribute("fundamental") FundamentalPiece piece, @PathVariable("id") String ID) throws NotFoundException{
+        if (fundamentalPieceService.findById(Long.valueOf(ID)) == null){
+            throw new NotFoundException("Resource not found");
+        }
+
+        FundamentalPiece pieceOnFile = fundamentalPieceService.findById(Long.valueOf(ID));
+
+        //allow users to clear field entries by submitting empty string fields
+        pieceOnFile.setTitle(piece.getTitle());
+        pieceOnFile.setKeyword(piece.getKeyword());
+        pieceOnFile.setPrerequisites(piece.getPrerequisites());
+        pieceOnFile.setSummary(piece.getSummary());
+
+        FundamentalPiece updated = fundamentalPieceService.save(pieceOnFile);
+
+        return "redirect:/fundamentals/" + updated.getId();
     }
 }
