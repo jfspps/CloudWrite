@@ -50,4 +50,12 @@ class FundamentalControllerTest extends SecurityCredentialsSetup {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/fundamentals/1"));
     }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void postNewConcept(String username, String password) throws Exception {
+        mockMvc.perform(post("/fundamentals/1/newConcept").with(httpBasic(username, password)).with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/fundamentals/1"));
+    }
 }
