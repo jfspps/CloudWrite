@@ -18,17 +18,17 @@ public class KeyResult implements Serializable, Comparable<KeyResult> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Builder.Default
-    String description = "";
+    private String description = "";
 
     @ManyToOne
-    ExpositionPiece expositionPiece;
+    private ExpositionPiece expositionPiece;
 
     // used to sort key results in the order they should appear in the article
     @Builder.Default
-    Integer priority = 0;
+    private Integer priority = 0;
 
     @Override
     public int compareTo(KeyResult o) {
@@ -39,5 +39,5 @@ public class KeyResult implements Serializable, Comparable<KeyResult> {
 
     // used to delete a result from a list of results
     @Builder.Default
-    boolean deletable = false;
+    private boolean deletable = false;
 }

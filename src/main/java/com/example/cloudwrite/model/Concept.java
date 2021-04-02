@@ -18,18 +18,18 @@ public class Concept implements Serializable, Comparable<Concept> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String purpose;
+    private String purpose;
 
-    String description;
+    private String description;
 
     @ManyToOne
-    FundamentalPiece fundamentalPiece;
+    private FundamentalPiece fundamentalPiece;
 
     // used to sort key results in the order they should appear in the article
     @Builder.Default
-    Integer priority = 0;
+    private Integer priority = 0;
 
     @Override
     public int compareTo(Concept o) {
@@ -40,5 +40,5 @@ public class Concept implements Serializable, Comparable<Concept> {
 
     // used to delete a result from a list of results
     @Builder.Default
-    boolean deletable = false;
+    private boolean deletable = false;
 }

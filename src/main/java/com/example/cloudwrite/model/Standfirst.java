@@ -15,12 +15,12 @@ public class Standfirst implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String rationale;
+    private String rationale;
 
-    String approach;
+    private String approach;
 
     @OneToOne
-    ExpositionPiece expositionPiece;
+    private ExpositionPiece expositionPiece;
 }

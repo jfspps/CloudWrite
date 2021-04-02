@@ -20,27 +20,27 @@ public class ExpositionPiece implements Serializable, Comparable<ExpositionPiece
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String title;
+    private String title;
 
     // for topic search purposes
-    String keyword;
+    private String keyword;
 
     @OneToOne
-    Standfirst standfirst;
+    private Standfirst standfirst;
 
-    String expositionPurpose;
+    private String expositionPurpose;
 
-    String currentProgress;
+    private String currentProgress;
 
     @OneToMany(mappedBy = "piece")
-    List<Citation> citations;
+    private List<Citation> citations;
 
     @OneToMany(mappedBy = "expositionPiece")
-    List<KeyResult> keyResults;
+    private List<KeyResult> keyResults;
 
-    String futureWork;
+    private String futureWork;
 
     @CreationTimestamp
     @Column(updatable = false)

@@ -19,19 +19,19 @@ public class FundamentalPiece implements Serializable, Comparable<FundamentalPie
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String title;
+    private String title;
 
     // for topic search purposes
-    String keyword;
+    private String keyword;
 
-    String prerequisites;
+    private String prerequisites;
 
     @OneToMany(mappedBy = "fundamentalPiece")
-    List<Concept> conceptList;
+    private List<Concept> conceptList;
 
-    String summary;
+    private String summary;
 
     @CreationTimestamp
     @Column(updatable = false)

@@ -6,14 +6,14 @@ This Spring-based application provides authors with a collaborative environment 
 
 The model is broken down into entities, as follows:
 
-+ Article type: research exposition or highlight
++ Article type: research exposition
 + Article standfirst/headline
   + Current issue(s) or limitation(s)
   + How above aspect(s) is/are approached
 + Literature survey(s)
   + Purpose of research
   + Current efforts and contributions
-  + Key results
+  + Key results (these can be listed by priority)
   + Future work
 
 ### Fundamental based articles

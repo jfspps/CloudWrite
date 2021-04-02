@@ -18,13 +18,13 @@ public class Citation implements Serializable, Comparable<Citation> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Builder.Default
-    String ref = "";
+    private String ref = "";
 
     @ManyToOne
-    ExpositionPiece piece;
+    private ExpositionPiece piece;
 
     @Override
     public int compareTo(Citation o) {
@@ -34,5 +34,5 @@ public class Citation implements Serializable, Comparable<Citation> {
     }
 
     @Builder.Default
-    boolean deletable = false;
+    private boolean deletable = false;
 }
