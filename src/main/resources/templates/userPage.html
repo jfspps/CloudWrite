@@ -37,7 +37,7 @@
             <form th:action="@{/userPage/{ID}/reset(ID=${currentUser.getId()})}" method="post">
                 <div>
                     <label>New password: </label>
-                    <input name="newPassword" type="password"/>
+                    <input name="newPassword" type="password" class="rounded bg-light"/>
                 </div>
                 <br>
                 <div>
@@ -56,8 +56,8 @@
         <div class="col">
             <div class="btn-group">
                 <a href="/adminPage" class="btn btn-outline-primary" sec:authorize="hasRole('ADMIN')">Admin page</a>
-                <a href="/authenticated" class="btn btn-outline-secondary">Return to welcome page</a>
-                <a href="/logout" class="btn btn-outline-info">Sign out</a>
+                <a href="/authenticated" class="btn btn-outline-warning">Return to welcome page</a>
+                <a href="/logout" class="btn btn-outline-danger">Sign out</a>
             </div>
         </div>
     </div>

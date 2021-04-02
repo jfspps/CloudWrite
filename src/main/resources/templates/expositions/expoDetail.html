@@ -24,7 +24,7 @@
                 <label><b>Title:</b> </label>
             </div>
             <div class="col-10">
-                <input type="text" class="form-control" th:field="*{title}"/>
+                <input type="text" class="form-control bg-light rounded" th:field="*{title}"/>
             </div>
         </div>
         <div class="row justify-content-start">
@@ -32,7 +32,7 @@
                 <label><b>Keyword:</b> </label>
             </div>
             <div class="col-10">
-                <input type="text" class="form-control" th:field="*{keyword}"/>
+                <input type="text" class="form-control bg-light rounded" th:field="*{keyword}"/>
             </div>
         </div>
         <div class="row justify-content-start">
@@ -40,7 +40,7 @@
                 <label><b>Standfirst rationale:</b> </label>
             </div>
             <div class="col-10">
-                <textarea class="form-control" rows="2" th:field="*{standfirst.rationale}"></textarea>
+                <textarea class="form-control bg-light rounded" rows="2" th:field="*{standfirst.rationale}"></textarea>
             </div>
         </div>
         <div class="row justify-content-start">
@@ -48,7 +48,7 @@
                 <label><b>Standfirst approach:</b> </label>
             </div>
             <div class="col-10">
-                <textarea class="form-control" rows="2" th:field="*{standfirst.approach}"></textarea>
+                <textarea class="form-control bg-light rounded" rows="2" th:field="*{standfirst.approach}"></textarea>
             </div>
         </div>
         <div class="row justify-content-start">
@@ -56,7 +56,7 @@
                 <label><b>Research question/purpose:</b> </label>
             </div>
             <div class="col-10">
-                <textarea class="form-control" rows="2" th:field="*{expositionPurpose}"></textarea>
+                <textarea class="form-control bg-light rounded" rows="2" th:field="*{expositionPurpose}"></textarea>
             </div>
         </div>
         <div class="row justify-content-start">
@@ -64,7 +64,7 @@
                 <label><b>Current status:</b> </label>
             </div>
             <div class="col-10">
-                <textarea class="form-control" rows="2" th:field="*{currentProgress}"></textarea>
+                <textarea class="form-control bg-light rounded" rows="2" th:field="*{currentProgress}"></textarea>
             </div>
         </div>
         <div class="row justify-content-start">
@@ -72,7 +72,7 @@
                 <label><b>Future work:</b> </label>
             </div>
             <div class="col-10">
-                <textarea class="form-control" rows="2" th:field="*{futureWork}"></textarea>
+                <textarea class="form-control bg-light rounded" rows="2" th:field="*{futureWork}"></textarea>
             </div>
         </div>
         <div class="row justify-content-start">
@@ -120,7 +120,7 @@
                                name="priority" th:value="${result.getPriority()}">
                     </div>
                     <div class="col-10">
-                        <textarea class="form-control" name="description" rows="3"
+                        <textarea class="form-control bg-light rounded" name="description" rows="3"
                                   th:text="${result.description}"></textarea>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
                     <input type="hidden" name="deletable">
                 </div>
                 <div class="col-11">
-                    <textarea name="ref" class="form-control" rows="1" th:text="${reference.ref}"></textarea>
+                    <textarea name="ref" class="form-control bg-light rounded" rows="1" th:text="${reference.ref}"></textarea>
                 </div>
             </div>
             <br>
@@ -179,8 +179,8 @@
     <div class="row justify-content-start">
         <div class="col">
             <div class="btn-group">
-                <a href="/authenticated" class="btn btn-outline-secondary">Return to welcome page</a>
-                <a href="/logout" class="btn btn-outline-info">Sign out</a>
+                <a href="/authenticated" class="btn btn-outline-warning">Return to welcome page</a>
+                <a href="/logout" class="btn btn-outline-danger">Sign out</a>
             </div>
         </div>
     </div>

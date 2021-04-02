@@ -49,15 +49,15 @@
             <hr/>
 
             <p>
-                To reset the password, enter a suffix below so that the new password will temporarily be
-                'username+suffix'. The length of 'username+suffix' must be at least eight characters in length.
-                The user should change the password in their account as soon as possible.
+                CloudWrite automatically assigns a password for new users or whenever passwords are reset by saving the juxtaposition of the username and any password suffix entered by the administration.
+                Enter a suffix below. The new password will be 'username+suffix'. Note that the length of 'username+suffix' must be at least eight characters in length.
+                The user should then change the password in their account when they login as soon as possible.
             </p>
             <form th:object="${chosenUser}"
                   th:action="@{/adminPage/{chosenID}/reset(chosenID=${chosenUser.getId()})}" method="post">
                 <div>
                     <label>New password suffix: </label>
-                    <input name="suffix" type="password"/>
+                    <input name="suffix" type="password" class="rounded bg-light"/>
                 </div>
                 <br>
                 <div>
@@ -78,9 +78,11 @@
             <form th:action="@{/adminPage/newUser}" method="post">
                 <h3>New user requirements</h3>
                 <p>
-                    Username must be between 1-255 characters. The password is initially the same as the username with
+                    Username must be between 1-255 characters. CloudWrite automatically assigns a password for new users or
+                    whenever passwords are reset by saving the juxtaposition of the username and any password suffix entered
+                    by the administration. That is, the password is initially the same as the username with
                     the addition of the 'suffix'. The password, equivalent to 'username+suffix', must be at least eight
-                    characters in length.
+                    characters in length. The user should then change the password in their account when they login as soon as possible.
                 </p>
                 <div class="row">
                     <div class="col-2">
@@ -93,10 +95,10 @@
                     </div>
                     <div class="col-10">
                         <div>
-                            <input name="userName" type="text" size="50"/>
+                            <input name="userName" type="text" size="50" class="rounded bg-light"/>
                         </div>
                         <div>
-                            <input name="suffix" type="password" size="50"/>
+                            <input name="suffix" type="password" size="50" class="rounded bg-light"/>
                         </div>
                     </div>
                 </div>
@@ -110,8 +112,8 @@
         <div class="col">
             <div class="btn-group">
                 <a href="/userPage" class="btn btn-outline-primary">Edit account settings</a>
-                <a href="/authenticated" class="btn btn-outline-secondary">Return to welcome page</a>
-                <a href="/logout" class="btn btn-outline-info">Sign out</a>
+                <a href="/authenticated" class="btn btn-outline-warning">Return to welcome page</a>
+                <a href="/logout" class="btn btn-outline-danger">Sign out</a>
             </div>
         </div>
     </div>

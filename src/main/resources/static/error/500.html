@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webjars/font-awesome/5.15.2/css/all.css"/>
     <link rel="stylesheet" href="/css/cloudWriteStyle.css">
-    <title>404 Not Found</title>
+    <title>500 Internal Server Error</title>
 </head>
 <body>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col">
-            <h1>HTTP 404 Not Found</h1>
-            <p>Requested resource not found</p>
+            <h1>HTTP 500 Internal Server Error</h1>
+            <p>An internal server error was encountered</p>
 
             <!--/*@thymesVar id="exception" type="java.lang.Exception"*/-->
             <p th:text="${exception.getMessage()}"></p>
