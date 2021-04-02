@@ -2,6 +2,7 @@ package com.example.cloudwrite.controller;
 
 import com.example.cloudwrite.model.ExpositionPiece;
 import com.example.cloudwrite.model.KeyResult;
+import com.example.cloudwrite.model.Standfirst;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,6 +41,31 @@ class ExpositionControllerTest extends SecurityCredentialsSetup {
                 .andExpect(model().attributeExists("exposition"))
                 .andExpect(model().attributeExists("results"))
                 .andExpect(model().attributeExists("references"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void getNewExposition(String username, String password) throws Exception {
+        mockMvc.perform(get("/expositions/new").with(httpBasic(username, password)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/expositions/newExpo"));
+    }
+
+    @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
+    @ParameterizedTest
+    void postNewExposition(String username, String password) throws Exception {
+        ExpositionPiece piece = ExpositionPiece.builder().build();
+        Standfirst standfirst = Standfirst.builder().build();
+
+        Standfirst savedStandfirst = standfirstService.save(standfirst);
+        piece.setStandfirst(savedStandfirst);
+        ExpositionPiece savedPiece = expositionPieceService.save(piece);
+        savedStandfirst.setExpositionPiece(savedPiece);
+
+        mockMvc.perform(post("/expositions/new").with(httpBasic(username, password)).with(csrf())
+                .flashAttr("exposition", piece))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expositions/" + savedPiece.getId()));
     }
 
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")

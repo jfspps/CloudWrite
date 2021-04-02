@@ -33,6 +33,25 @@ public class ExpositionController {
         dataBinder.setDisallowedFields("id");
     }
 
+    @GetMapping("/new")
+    public String getNewExposition(Model model){
+        ExpositionPiece piece = ExpositionPiece.builder().build();
+
+        model.addAttribute("exposition", piece);
+        return "/expositions/newExpo";
+    }
+
+    @PostMapping("/new")
+    public String postNewExposition(@ModelAttribute("exposition") ExpositionPiece newExpo){
+        Standfirst savedStandfirst = standfirstService.save(newExpo.getStandfirst());
+        newExpo.setStandfirst(savedStandfirst);
+
+        ExpositionPiece savedPiece = expositionPieceService.save(newExpo);
+        savedStandfirst.setExpositionPiece(savedPiece);
+
+        return "redirect:/expositions/" + expositionPieceService.save(savedPiece).getId();
+    }
+
     @GetMapping("/{id}")
     public String getExposition(@PathVariable("id") String ID, Model model) throws NotFoundException {
         if (expositionPieceService.findById(Long.valueOf(ID)) == null){

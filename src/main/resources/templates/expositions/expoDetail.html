@@ -13,7 +13,8 @@
     <form th:action="@{/expositions/{id}/update(id=${exposition.id})}" method="post">
         <div class="row justify-content-start">
             <div class="col">
-                <h1 th:text="${exposition.title}"></h1>
+                <h1 th:if="${!exposition.title.isBlank()}" th:text="${exposition.title}"></h1>
+                <h1 th:unless="${!exposition.title.isBlank()}" th:text="${'(No title on file)'}"></h1>
                 <p th:text="${'Article started: ' + exposition.createdDate.toGMTString() + '. Article last updated: ' + exposition.lastModifiedDate.toGMTString()}"></p>
             </div>
             <br>
@@ -53,7 +54,7 @@
         </div>
         <div class="row justify-content-start">
             <div class="col-2">
-                <label><b>Research question/purpose:</b> </label>
+                <label><b>Purpose:</b> </label>
             </div>
             <div class="col-10">
                 <textarea class="form-control bg-light rounded" rows="2" th:field="*{expositionPurpose}"></textarea>
@@ -107,19 +108,19 @@
         <span th:unless="${results.isEmpty()}">
             <form th:action="@{/expositions/{expoId}/updateResults(expoId=${exposition.id})}" method="post">
                 <div class="row justify-content-start" th:each="result: ${results}">
-                    <div class="col-1">
+                    <div class="col col-1">
                         <label>Delete</label>
                         <!-- For some reason, a hidden checkbox is also required; investigation underway -->
                         <!-- https://frontbackend.com/thymeleaf/spring-boot-bootstrap-thymeleaf-checkbox-tree -->
                         <input type="checkbox" name="deletable" th:checked="${result.deletable}">
                         <input type="hidden" name="deletable">
                     </div>
-                    <div class="col-1">
+                    <div class="col col-sm-3 col-md-2 col-lg-1">
                         <label>Priority</label>
                         <input class="form-control-range" type="number" step="1"
                                name="priority" th:value="${result.getPriority()}">
                     </div>
-                    <div class="col-10">
+                    <div class="col col-sm-8 col-md-9 col-lg-10">
                         <textarea class="form-control bg-light rounded" name="description" rows="3"
                                   th:text="${result.description}"></textarea>
                     </div>

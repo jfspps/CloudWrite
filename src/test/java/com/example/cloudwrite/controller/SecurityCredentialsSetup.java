@@ -1,6 +1,7 @@
 package com.example.cloudwrite.controller;
 
 import com.example.cloudwrite.service.ExpositionPieceService;
+import com.example.cloudwrite.service.StandfirstService;
 import com.example.cloudwrite.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,6 +24,9 @@ public abstract class SecurityCredentialsSetup {
 
     @Autowired
     ExpositionPieceService expositionPieceService;
+
+    @Autowired
+    StandfirstService standfirstService;
 
     protected MockMvc mockMvc;
 
