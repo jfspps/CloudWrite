@@ -18,4 +18,6 @@ public class FundamentalPieceDTO {
     private String prerequisites;
 
     private String summary;
+
+    private ConceptDTOList conceptDTOList;
 }

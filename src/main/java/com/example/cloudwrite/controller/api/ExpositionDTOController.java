@@ -21,13 +21,11 @@ public class ExpositionDTOController {
 
     @GetMapping("/")
     public ResponseEntity<ExpositionPieceDTOList> getAllExpoPieces(){
-        // todo: include all related fields for Exposition pieces
         return new ResponseEntity<>(new ExpositionPieceDTOList(expositionPieceDTOService.findAll().getExpositionPieceDTOS()), HttpStatus.OK);
     }
 
     @GetMapping("/{keyword}/search")
     public ResponseEntity<ExpositionPieceDTOList> getExpoPiecesByKeyword(@PathVariable("keyword") String keyword){
-        // todo: include all related fields for Exposition pieces
         return new ResponseEntity<>(expositionPieceDTOService.findAllByKeyword(keyword), HttpStatus.OK);
     }
 }

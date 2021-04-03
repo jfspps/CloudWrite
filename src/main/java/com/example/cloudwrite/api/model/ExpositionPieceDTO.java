@@ -17,4 +17,8 @@ public class ExpositionPieceDTO {
     private String currentProgress;
 
     private String futureWork;
+
+    private KeyResultDTOList keyResultDTOList;
+
+    private CitationDTOList citationDTOList;
 }

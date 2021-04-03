@@ -6,8 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
-@Mapper
-@Component
+@Mapper(componentModel = "spring")
 public interface KeyResultMapper {
 
     KeyResultMapper INSTANCE = Mappers.getMapper(KeyResultMapper.class);

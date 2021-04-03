@@ -31,6 +31,7 @@ class ExpositionDTOControllerTest {
     @Mock
     ExpositionPieceDTOService expositionPieceDTOService;
 
+    // inject mocks into the controller automatically
     @InjectMocks
     ExpositionDTOController expositionDTOController;
 
