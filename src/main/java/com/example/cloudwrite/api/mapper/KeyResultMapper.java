@@ -4,8 +4,8 @@ import com.example.cloudwrite.api.model.KeyResultDTO;
 import com.example.cloudwrite.model.KeyResult;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
 
+// note that changing the annotation to @Mapper and @Component causes the context to fail on loading
 @Mapper(componentModel = "spring")
 public interface KeyResultMapper {
 

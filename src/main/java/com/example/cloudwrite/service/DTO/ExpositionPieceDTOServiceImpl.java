@@ -1,17 +1,11 @@
 package com.example.cloudwrite.service.DTO;
 
-import com.example.cloudwrite.JPARepository.CitationRepo;
 import com.example.cloudwrite.JPARepository.ExpositionPieceRepo;
-import com.example.cloudwrite.JPARepository.KeyResultRepo;
 import com.example.cloudwrite.api.mapper.CitationMapper;
 import com.example.cloudwrite.api.mapper.ExpositionPieceMapper;
 import com.example.cloudwrite.api.mapper.KeyResultMapper;
 import com.example.cloudwrite.api.model.*;
-import com.example.cloudwrite.model.Citation;
 import com.example.cloudwrite.model.ExpositionPiece;
-import com.example.cloudwrite.model.KeyResult;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

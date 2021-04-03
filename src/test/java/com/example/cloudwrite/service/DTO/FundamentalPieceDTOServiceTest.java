@@ -1,8 +1,11 @@
 package com.example.cloudwrite.service.DTO;
 
 import com.example.cloudwrite.JPARepository.FundamentalPieceRepo;
+import com.example.cloudwrite.api.mapper.ConceptMapper;
 import com.example.cloudwrite.api.mapper.FundamentalPieceMapper;
 import com.example.cloudwrite.api.model.FundamentalPieceDTO;
+import com.example.cloudwrite.api.model.FundamentalPieceDTOList;
+import com.example.cloudwrite.model.Concept;
 import com.example.cloudwrite.model.FundamentalPiece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,36 +28,43 @@ class FundamentalPieceDTOServiceTest {
 
     private FundamentalPieceDTOService fundamentalPieceDTOService;
     private FundamentalPiece fundamentalPiece;
+    private Concept concept;
 
     @Mock
     private FundamentalPieceRepo fundamentalPieceRepo;
 
     @BeforeEach
     void setUp() {
-        fundamentalPieceDTOService = new FundamentalPieceDTOServiceImpl(fundamentalPieceRepo, FundamentalPieceMapper.INSTANCE);
-        fundamentalPiece = FundamentalPiece.builder().keyword("magicWords").build();
+        concept = Concept.builder().description("some new concept").build();
+        fundamentalPiece = FundamentalPiece.builder()
+                .keyword("magicWords")
+                .conceptList(Collections.singletonList(concept))
+                .build();
+
+        fundamentalPieceDTOService = new FundamentalPieceDTOServiceImpl(fundamentalPieceRepo, FundamentalPieceMapper.INSTANCE, ConceptMapper.INSTANCE);
     }
 
     @Test
     void findAll() {
         // define what is returned through JPA repo (given)
-        List<FundamentalPiece> fundamentalPieces = Arrays.asList(new FundamentalPiece(), new FundamentalPiece());
+        List<FundamentalPiece> fundamentalPieces = Collections.singletonList(fundamentalPiece);
         when(fundamentalPieceRepo.findAll()).thenReturn(fundamentalPieces);
 
         // call the DTO service interface (when) as defined by its implementation class
-        List<FundamentalPieceDTO> fundamentalPieceDTOS = fundamentalPieceDTOService.findAll();
+        FundamentalPieceDTOList fundamentalPieceDTOS = fundamentalPieceDTOService.findAll();
 
         // check mapping (then)
-        assertEquals(2, fundamentalPieceDTOS.size());
+        assertEquals(1, fundamentalPieceDTOS.getFundamentalPieceDTOS().size());
     }
 
     @Test
     void findAllByKeyword() {
-        when(fundamentalPieceRepo.findAllByKeywordContainingIgnoreCase(anyString())).thenReturn(Arrays.asList(fundamentalPiece, new FundamentalPiece()));
+        List<FundamentalPiece> fundamentalPieces = Collections.singletonList(fundamentalPiece);
+        when(fundamentalPieceRepo.findAllByKeywordContainingIgnoreCase(anyString())).thenReturn(Collections.singletonList(fundamentalPiece));
 
-        List<FundamentalPieceDTO> found = fundamentalPieceDTOService.findAllByKeyword("lafjdlfkj");
+        FundamentalPieceDTOList found = fundamentalPieceDTOService.findAllByKeyword("lafjdlfkj");
 
-        assertEquals(2, found.size());
+        assertEquals(1, found.getFundamentalPieceDTOS().size());
     }
 
     @Test

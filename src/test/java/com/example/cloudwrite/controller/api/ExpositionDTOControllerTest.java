@@ -37,23 +37,25 @@ class ExpositionDTOControllerTest {
 
     MockMvc mockMvc;
 
+    ExpositionPieceDTO expositionPieceDTO1 = new ExpositionPieceDTO();
+    ExpositionPieceDTO expositionPieceDTO2 = new ExpositionPieceDTO();
+    ExpositionPieceDTOList pieceDTOS;
+
+
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(expositionDTOController).build();
+
+        expositionPieceDTO1.setId(1L);
+        expositionPieceDTO1.setKeyword(KEYWORD);
+
+        expositionPieceDTO2.setId(2L);
+        expositionPieceDTO2.setKeyword(KEYWORD + "sss");
+        pieceDTOS = new ExpositionPieceDTOList(Arrays.asList(expositionPieceDTO1, expositionPieceDTO2));
     }
 
     @Test
     void getAllExpoPieces() throws Exception {
-        ExpositionPieceDTO expositionPieceDTO1 = new ExpositionPieceDTO();
-        expositionPieceDTO1.setId(1L);
-        expositionPieceDTO1.setKeyword(KEYWORD);
-
-        ExpositionPieceDTO expositionPieceDTO2 = new ExpositionPieceDTO();
-        expositionPieceDTO2.setId(2L);
-        expositionPieceDTO2.setKeyword(KEYWORD + "sss");
-
-        ExpositionPieceDTOList pieceDTOS = new ExpositionPieceDTOList(Arrays.asList(expositionPieceDTO1, expositionPieceDTO2));
-
         when(expositionPieceDTOService.findAll()).thenReturn(pieceDTOS);
 
         mockMvc.perform(get("/api/expositions/")
@@ -64,17 +66,11 @@ class ExpositionDTOControllerTest {
 
     @Test
     void getExpoPiecesByKeyword() throws Exception {
-        ExpositionPieceDTO expositionPieceDTO1 = new ExpositionPieceDTO();
-        expositionPieceDTO1.setId(1L);
-        expositionPieceDTO1.setKeyword(KEYWORD);
-
-        ExpositionPieceDTOList pieceDTOS = new ExpositionPieceDTOList(Collections.singletonList(expositionPieceDTO1));
-
         when(expositionPieceDTOService.findAllByKeyword(anyString())).thenReturn(pieceDTOS);
 
         mockMvc.perform(get("/api/expositions/cocoa/search")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.expositionPieceDTOS", hasSize(1)));
+                .andExpect(jsonPath("$.expositionPieceDTOS", hasSize(2)));
     }
 }
