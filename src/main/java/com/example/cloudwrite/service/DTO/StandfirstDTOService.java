@@ -8,4 +8,6 @@ import java.util.List;
 public interface StandfirstDTOService {
 
     List<StandfirstDTO> findAll();
+
+    StandfirstDTO findById(Long id);
 }

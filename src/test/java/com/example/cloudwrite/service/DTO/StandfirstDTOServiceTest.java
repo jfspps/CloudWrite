@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +30,17 @@ class StandfirstDTOServiceTest {
     @BeforeEach
     void setUp() {
         standfirstDTOService = new StandfirstDTOServiceImpl(StandfirstMapper.INSTANCE, standfirstRepo);
+    }
+
+    @Test
+    void findById() {
+        when(standfirstRepo.findById(anyLong())).thenReturn(Optional.of(Standfirst.builder().approach("an approach").build()));
+
+        // call the DTO service interface (when) as defined by its implementation class
+        StandfirstDTO found = standfirstDTOService.findById(3L);
+
+        // check mapping (then)
+        assertEquals("an approach", found.getApproach());
     }
 
     @Test
