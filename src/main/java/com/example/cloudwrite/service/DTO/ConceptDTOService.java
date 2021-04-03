@@ -7,5 +7,5 @@ import java.util.List;
 public interface ConceptDTOService {
     List<ConceptDTO> findAll();
 
-    ConceptDTO findById(String id);
+    ConceptDTO findById(Long id);
 }

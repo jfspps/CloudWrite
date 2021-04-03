@@ -28,7 +28,7 @@ public class StandfirstDTOServiceImpl implements StandfirstDTOService{
 
     @Override
     public StandfirstDTO findById(Long id) {
-        return standfirstRepo.findById(Long.valueOf(id))
+        return standfirstRepo.findById(id)
                 .map(standfirstMapper::standfirstToStandfirstDTO)
                 .orElse(null);
     }

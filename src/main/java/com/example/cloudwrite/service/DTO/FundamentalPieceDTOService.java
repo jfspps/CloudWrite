@@ -9,5 +9,5 @@ public interface FundamentalPieceDTOService {
 
     List<FundamentalPieceDTO> findAllByKeyword(String keyword);
 
-    FundamentalPieceDTO findById(String id);
+    FundamentalPieceDTO findById(Long id);
 }

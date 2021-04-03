@@ -7,5 +7,5 @@ import java.util.List;
 public interface CitationDTOService {
     List<CitationDTO> findAll();
 
-    CitationDTO findById(String id);
+    CitationDTO findById(Long id);
 }

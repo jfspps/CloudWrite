@@ -25,7 +25,7 @@ class StandfirstDTOServiceTest {
     private StandfirstDTOService standfirstDTOService;
 
     @Mock
-    StandfirstRepo standfirstRepo;
+    private StandfirstRepo standfirstRepo;
 
     @BeforeEach
     void setUp() {

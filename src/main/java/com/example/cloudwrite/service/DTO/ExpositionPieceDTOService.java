@@ -9,5 +9,5 @@ public interface ExpositionPieceDTOService {
 
     List<ExpositionPieceDTO> findAllByKeyword(String keyword);
 
-    ExpositionPieceDTO findById(String id);
+    ExpositionPieceDTO findById(Long id);
 }
