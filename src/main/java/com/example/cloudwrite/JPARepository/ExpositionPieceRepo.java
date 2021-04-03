@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface ExpositionPieceRepo extends JpaRepository<ExpositionPiece, Long> {
 
-    Set<ExpositionPiece> findAllByTitle(String title);
+    List<ExpositionPiece> findAllByTitle(String title);
 
-    Set<ExpositionPiece> findAllByKeyword(String keyword);
+    List<ExpositionPiece> findAllByKeywordContainingIgnoreCase(String keyword);
 }

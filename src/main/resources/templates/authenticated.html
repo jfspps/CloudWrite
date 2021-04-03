@@ -20,6 +20,20 @@
             </p>
         </div>
     </div>
+    <form th:action="@{/authenticated/search}" method="get">
+        <div class="row justify-content-start">
+            <div class="col-2">
+                <p>Search by keyword</p>
+            </div>
+            <div class="col-9">
+                <input class="form-control" type="text" name="keyWord" placeholder="Enter keyword here" aria-describedby="searchHelp">
+                <small id="searchHelp" class="form-text text-light">Enter all or part of the keyword. Case insensitive. Blank fields return all records on file.</small>
+            </div>
+            <div class="col-1">
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+            </div>
+        </div>
+    </form>
     <hr/>
 
     <div class="row justify-content-start">

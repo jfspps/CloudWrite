@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -50,12 +51,12 @@ public class FundamentalSDjpa implements FundamentalPieceService {
     }
 
     @Override
-    public Set<ExpositionPiece> findAllByKeyword(String keyword) {
-        return fundamentalPieceRepo.findAllByKeyword(keyword);
+    public List<FundamentalPiece> findAllByKeyword(String keyword) {
+        return fundamentalPieceRepo.findAllByKeywordContainingIgnoreCase(keyword);
     }
 
     @Override
-    public Set<ExpositionPiece> findAllByTitle(String title) {
+    public List<FundamentalPiece> findAllByTitle(String title) {
         return fundamentalPieceRepo.findAllByTitle(title);
     }
 }

@@ -85,11 +85,34 @@ class UserControllerTest extends SecurityCredentialsSetup {
 
     @MethodSource("streamAllUsers")
     @ParameterizedTest
-    void getRedirectedToLogin_authenticated(String username, String password) throws Exception {
-        mockMvc.perform(get("/authenticated").with(httpBasic(username, password)).with(csrf()))
+    void getAuthenticated(String username, String password) throws Exception {
+        mockMvc.perform(get("/authenticated").with(httpBasic(username, password)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("authenticated"))
-                .andExpect(model().attributeExists("user"));
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeExists("expositions"))
+                .andExpect(model().attributeExists("fundamentals"));
+    }
+
+    @MethodSource("streamAllUsers")
+    @ParameterizedTest
+    void getAuthenticated_searchByKeyword(String username, String password) throws Exception {
+        mockMvc.perform(get("/authenticated/search").with(httpBasic(username, password))
+                .param("keyWord", "sdlfjsdjfkds"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("authenticated"))
+                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeExists("expositions"))
+                .andExpect(model().attributeExists("fundamentals"));
+    }
+
+    @MethodSource("streamAllUsers")
+    @ParameterizedTest
+    void getAuthenticated_searchByKeyword_blank(String username, String password) throws Exception {
+        mockMvc.perform(get("/authenticated/search").with(httpBasic(username, password))
+                .param("keyWord", ""))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/authenticated"));
     }
 
     @Test

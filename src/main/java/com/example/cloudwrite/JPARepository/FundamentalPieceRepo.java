@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface FundamentalPieceRepo extends JpaRepository<FundamentalPiece, Long> {
 
-    Set<ExpositionPiece> findAllByTitle(String title);
+    List<FundamentalPiece> findAllByTitle(String title);
 
-    Set<ExpositionPiece> findAllByKeyword(String keyword);
+    List<FundamentalPiece> findAllByKeywordContainingIgnoreCase(String keyword);
 }

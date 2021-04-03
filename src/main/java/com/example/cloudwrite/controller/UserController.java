@@ -17,10 +17,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,6 +53,24 @@ public class UserController {
         model.addAttribute("expositions", expositionPieces);
 
         List<FundamentalPiece> fundamentalPieces = new ArrayList<>(fundamentalPieceService.findAll());
+        Collections.sort(fundamentalPieces);
+        model.addAttribute("fundamentals", fundamentalPieces);
+
+        model.addAttribute("user", getUsername());
+        return "authenticated";
+    }
+
+    @GetMapping("/authenticated/search")
+    public String getAuthenticatedPage_searchByKeyword(@RequestParam("keyWord") String keyword, Model model){
+        if (keyword.isBlank()){
+            return "redirect:/authenticated";
+        }
+
+        List<ExpositionPiece> expositionPieces = new ArrayList<>(expositionPieceService.findAllByKeyword(keyword));
+        Collections.sort(expositionPieces);
+        model.addAttribute("expositions", expositionPieces);
+
+        List<FundamentalPiece> fundamentalPieces = new ArrayList<>(fundamentalPieceService.findAllByKeyword(keyword));
         Collections.sort(fundamentalPieces);
         model.addAttribute("fundamentals", fundamentalPieces);
 
