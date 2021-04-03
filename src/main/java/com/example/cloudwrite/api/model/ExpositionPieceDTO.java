@@ -2,12 +2,8 @@ package com.example.cloudwrite.api.model;
 
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 public class ExpositionPieceDTO {
 
     private Long id;

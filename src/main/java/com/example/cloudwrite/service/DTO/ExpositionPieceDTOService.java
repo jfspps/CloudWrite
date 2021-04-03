@@ -1,13 +1,14 @@
 package com.example.cloudwrite.service.DTO;
 
 import com.example.cloudwrite.api.model.ExpositionPieceDTO;
+import com.example.cloudwrite.api.model.ExpositionPieceDTOList;
 
 import java.util.List;
 
 public interface ExpositionPieceDTOService {
-    List<ExpositionPieceDTO> findAll();
+    ExpositionPieceDTOList findAll();
 
-    List<ExpositionPieceDTO> findAllByKeyword(String keyword);
+    ExpositionPieceDTOList findAllByKeyword(String keyword);
 
     ExpositionPieceDTO findById(Long id);
 }

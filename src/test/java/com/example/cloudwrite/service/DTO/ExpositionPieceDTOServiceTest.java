@@ -3,6 +3,7 @@ package com.example.cloudwrite.service.DTO;
 import com.example.cloudwrite.JPARepository.ExpositionPieceRepo;
 import com.example.cloudwrite.api.mapper.ExpositionPieceMapper;
 import com.example.cloudwrite.api.model.ExpositionPieceDTO;
+import com.example.cloudwrite.api.model.ExpositionPieceDTOList;
 import com.example.cloudwrite.model.ExpositionPiece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,19 +42,19 @@ class ExpositionPieceDTOServiceTest {
         when(expositionPieceRepo.findAll()).thenReturn(expositionPieces);
 
         // call the DTO service interface (when) as defined by its implementation class
-        List<ExpositionPieceDTO> expositionPieceDTOS = expositionPieceDTOService.findAll();
+        ExpositionPieceDTOList expositionPieceDTOS = expositionPieceDTOService.findAll();
 
         // check mapping (then)
-        assertEquals(2, expositionPieceDTOS.size());
+        assertEquals(2, expositionPieceDTOS.getExpositionPieceDTOS().size());
     }
 
     @Test
     void findAllByKeyword() {
         when(expositionPieceRepo.findAllByKeywordContainingIgnoreCase(anyString())).thenReturn(Arrays.asList(expositionPiece, new ExpositionPiece()));
 
-        List<ExpositionPieceDTO> expositionPieceDTOS = expositionPieceDTOService.findAllByKeyword("lafjdlfkj");
+        ExpositionPieceDTOList expositionPieceDTOS = expositionPieceDTOService.findAllByKeyword("lafjdlfkj");
 
-        assertEquals(2, expositionPieceDTOS.size());
+        assertEquals(2, expositionPieceDTOS.getExpositionPieceDTOS().size());
     }
 
     @Test
