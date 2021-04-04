@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 // @RestController does away with returning ResponseEntity<> and is a more modern and cleaner
 // implementation cf. @Controller for REST APIs (refactored below)
+// @Controller + @ResponseBody = @RestController (needed for Swagger to recognise FundamentalPieceDTO with http://localhost:5000/swagger-ui.html
 @RestController
+@ResponseBody
 @RequestMapping(FundamentalDTOController.ROOT_URL)
 public class FundamentalDTOController {
 
