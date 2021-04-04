@@ -5,27 +5,40 @@ import com.example.cloudwrite.service.DTO.FundamentalPieceDTOService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/api/fundamentals")
+// @RestController does away with returning ResponseEntity<> and is a more modern and cleaner
+// implementation cf. @Controller for REST APIs (refactored below)
+@RestController
+@RequestMapping(FundamentalDTOController.ROOT_URL)
 public class FundamentalDTOController {
 
     private final FundamentalPieceDTOService fundamentalPieceDTOService;
+
+    public static final String ROOT_URL = "/api/fundamentals";
 
     public FundamentalDTOController(FundamentalPieceDTOService fundamentalPieceDTOService) {
         this.fundamentalPieceDTOService = fundamentalPieceDTOService;
     }
 
+    /**
+     * Retrieves all fundamental pieces on file, including concepts
+     * @return  JSON formatted list, by default
+     */
     @GetMapping("/")
-    public ResponseEntity<FundamentalPieceDTOList> getAllFunPieces(){
-        return new ResponseEntity<>(new FundamentalPieceDTOList(fundamentalPieceDTOService.findAll().getFundamentalPieceDTOS()), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public FundamentalPieceDTOList getAllFunPieces(){
+        return new FundamentalPieceDTOList(fundamentalPieceDTOService.findAll().getFundamentalPieceDTOS());
     }
 
+    /**
+     * Retrieves all fundamental pieces on file (including concepts) by keyword
+     * @param keyword   Search parameter (case insensitive substring of keywords on file)
+     * @return  JSON formatted list, by default
+     */
     @GetMapping("/{keyword}/search")
-    public ResponseEntity<FundamentalPieceDTOList> getFunPiecesByKeyword(@PathVariable("keyword") String keyword){
-        return new ResponseEntity<>(fundamentalPieceDTOService.findAllByKeyword(keyword), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public FundamentalPieceDTOList getFunPiecesByKeyword(@PathVariable("keyword") String keyword){
+        return new FundamentalPieceDTOList(fundamentalPieceDTOService.findAllByKeyword(keyword).getFundamentalPieceDTOS());
     }
 }
