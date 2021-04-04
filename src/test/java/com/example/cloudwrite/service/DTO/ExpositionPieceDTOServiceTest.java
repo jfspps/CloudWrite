@@ -4,6 +4,7 @@ import com.example.cloudwrite.JPARepository.ExpositionPieceRepo;
 import com.example.cloudwrite.api.mapper.CitationMapper;
 import com.example.cloudwrite.api.mapper.ExpositionPieceMapper;
 import com.example.cloudwrite.api.mapper.KeyResultMapper;
+import com.example.cloudwrite.api.mapper.StandfirstMapper;
 import com.example.cloudwrite.api.model.ExpositionPieceDTO;
 import com.example.cloudwrite.api.model.ExpositionPieceDTOList;
 import com.example.cloudwrite.model.Citation;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +47,7 @@ class ExpositionPieceDTOServiceTest {
                 .build();
 
         expositionPieceDTOService = new ExpositionPieceDTOServiceImpl(
-                ExpositionPieceMapper.INSTANCE, KeyResultMapper.INSTANCE, CitationMapper.INSTANCE, expositionPieceRepo);
+                ExpositionPieceMapper.INSTANCE, KeyResultMapper.INSTANCE, CitationMapper.INSTANCE, StandfirstMapper.INSTANCE, expositionPieceRepo);
     }
 
     @Test

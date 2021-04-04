@@ -2,6 +2,8 @@ package com.example.cloudwrite.controller.api;
 
 import com.example.cloudwrite.api.model.FundamentalPieceDTOList;
 import com.example.cloudwrite.service.DTO.FundamentalPieceDTOService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @ResponseBody
 @RequestMapping(FundamentalDTOController.ROOT_URL)
+@Tag(name = "fundamentals-controller", description = "Manages fundamental piece CRUD ops")
 public class FundamentalDTOController {
 
     private final FundamentalPieceDTOService fundamentalPieceDTOService;
@@ -27,6 +30,7 @@ public class FundamentalDTOController {
      * Retrieves all fundamental pieces on file, including concepts
      * @return  JSON formatted list, by default
      */
+    @Operation(summary = "Lists all fundamental pieces")
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getAllFunPieces(){
@@ -38,6 +42,7 @@ public class FundamentalDTOController {
      * @param keyword   Search parameter (case insensitive substring of keywords on file)
      * @return  JSON formatted list, by default
      */
+    @Operation(summary = "Lists all fundamental pieces with the given keyword", description = "Returns pieces where the provided keyword is a substring of the keyword on file. Case-insensitive.")
     @GetMapping("/{keyword}/search")
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getFunPiecesByKeyword(@PathVariable("keyword") String keyword){

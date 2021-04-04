@@ -4,8 +4,10 @@ import com.example.cloudwrite.JPARepository.ExpositionPieceRepo;
 import com.example.cloudwrite.api.mapper.CitationMapper;
 import com.example.cloudwrite.api.mapper.ExpositionPieceMapper;
 import com.example.cloudwrite.api.mapper.KeyResultMapper;
+import com.example.cloudwrite.api.mapper.StandfirstMapper;
 import com.example.cloudwrite.api.model.*;
 import com.example.cloudwrite.model.ExpositionPiece;
+import com.example.cloudwrite.model.Standfirst;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +19,18 @@ public class ExpositionPieceDTOServiceImpl implements ExpositionPieceDTOService{
     private final ExpositionPieceMapper expositionPieceMapper;
     private final KeyResultMapper keyResultMapper;
     private final CitationMapper citationMapper;
+    private final StandfirstMapper standfirstMapper;
     private final ExpositionPieceRepo expositionPieceRepo;
 
-    public ExpositionPieceDTOServiceImpl(ExpositionPieceMapper expositionPieceMapper, KeyResultMapper keyResultMapper, CitationMapper citationMapper, ExpositionPieceRepo expositionPieceRepo) {
+    public ExpositionPieceDTOServiceImpl(ExpositionPieceMapper expositionPieceMapper,
+                                         KeyResultMapper keyResultMapper,
+                                         CitationMapper citationMapper,
+                                         StandfirstMapper standfirstMapper,
+                                         ExpositionPieceRepo expositionPieceRepo) {
         this.expositionPieceMapper = expositionPieceMapper;
         this.keyResultMapper = keyResultMapper;
         this.citationMapper = citationMapper;
+        this.standfirstMapper = standfirstMapper;
         this.expositionPieceRepo = expositionPieceRepo;
     }
 
@@ -71,6 +79,7 @@ public class ExpositionPieceDTOServiceImpl implements ExpositionPieceDTOService{
     private ExpositionPieceDTOList buildExpoPieceDTOList(List<ExpositionPiece> piecesOnDB, List<ExpositionPieceDTO> pieceDTOList) {
         for (int pieceID = 0; pieceID < piecesOnDB.size(); pieceID++){
             ExpositionPiece currentPiece = piecesOnDB.get(pieceID);
+            ExpositionPieceDTO currentPieceDTO = pieceDTOList.get(pieceID);
 
             List<KeyResultDTO> keyResultDTOS = currentPiece.getKeyResults()
                     .stream()
@@ -81,8 +90,9 @@ public class ExpositionPieceDTOServiceImpl implements ExpositionPieceDTOService{
                     .map(citationMapper::citationToCitationDTO)
                     .collect(Collectors.toList());
 
-            pieceDTOList.get(pieceID).setKeyResultDTOList(new KeyResultDTOList(keyResultDTOS));
-            pieceDTOList.get(pieceID).setCitationDTOList(new CitationDTOList(citationDTOS));
+            currentPieceDTO.setStandfirstDTO(standfirstMapper.standfirstToStandfirstDTO(currentPiece.getStandfirst()));
+            currentPieceDTO.setKeyResultDTOList(new KeyResultDTOList(keyResultDTOS));
+            currentPieceDTO.setCitationDTOList(new CitationDTOList(citationDTOS));
         }
 
         return new ExpositionPieceDTOList(pieceDTOList);

@@ -2,6 +2,8 @@ package com.example.cloudwrite.controller.api;
 
 import com.example.cloudwrite.api.model.ExpositionPieceDTOList;
 import com.example.cloudwrite.service.DTO.ExpositionPieceDTOService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @ResponseBody
 @RequestMapping(ExpositionDTOController.ROOT_URL)
+@Tag(name = "exposition-controller", description = "Manages exposition piece CRUD ops")
 public class ExpositionDTOController {
 
     private final ExpositionPieceDTOService expositionPieceDTOService;
@@ -27,6 +30,7 @@ public class ExpositionDTOController {
      * Retrieves all exposition pieces on file, including key results and citations
      * @return  JSON formatted list, by default
      */
+    @Operation(summary = "Lists all exposition pieces")
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public ExpositionPieceDTOList getAllExpoPieces(){
@@ -38,6 +42,7 @@ public class ExpositionDTOController {
      * @param keyword   Search parameter (case insensitive substring of keywords on file)
      * @return  JSON formatted list, by default
      */
+    @Operation(summary = "Lists all exposition pieces with the given keyword", description = "Returns pieces where the provided keyword is a substring of the keyword on file. Case-insensitive.")
     @GetMapping("/{keyword}/search")
     @ResponseStatus(HttpStatus.OK)
     public ExpositionPieceDTOList getExpoPiecesByKeyword(@PathVariable("keyword") String keyword){

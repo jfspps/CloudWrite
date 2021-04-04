@@ -2,7 +2,7 @@
 
 This Spring-based application provides authors with a collaborative environment from which to plan research expositions and educational articles.
 
-Access to the RESTapi is provided by OpenAPI (formerly Swagger), at [http://localhost:5000/swagger-ui.html](http://localhost:8080/swagger-ui.html). The port number by default is 8080 but was changed to 5000 in preparation for AWS deployment.
+Access to the RESTapi is provided by OpenAPI (formerly Swagger), at [http://localhost:5000/swagger-ui.html](http://localhost:5000/swagger-ui.html). The port number by default is 8080 but was changed to 5000 in preparation for AWS deployment.
 
 ### Research themed articles
 
