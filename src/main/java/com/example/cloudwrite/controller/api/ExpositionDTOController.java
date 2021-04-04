@@ -28,7 +28,7 @@ public class ExpositionDTOController {
 
     /**
      * Retrieves all exposition pieces on file, including key results and citations
-     * @return  JSON formatted list, by default
+     * @return  XML formatted list, by default
      */
     @Operation(summary = "Lists all exposition pieces")
     @GetMapping("/")
@@ -40,7 +40,7 @@ public class ExpositionDTOController {
     /**
      * Retrieves all expositions pieces on file (including key results and citations) by keyword
      * @param keyword   Search parameter (case insensitive substring of keywords on file)
-     * @return  JSON formatted list, by default
+     * @return  XML formatted list, by default
      */
     @Operation(summary = "Lists all exposition pieces with the given keyword", description = "Returns pieces where the provided keyword is a substring of the keyword on file. Case-insensitive.")
     @GetMapping("/{keyword}/search")

@@ -56,11 +56,14 @@ class FundamentalDTOControllerTest {
         pieceDTOS_short = new FundamentalPieceDTOList(Collections.singletonList(fundamentalPieceDTO));
     }
 
+    // these test expect JSON returns instead of XML returns
+
     @Test
     void getAllFunPieces() throws Exception {
         when(fundamentalPieceDTOService.findAll()).thenReturn(pieceDTOS_long);
 
         mockMvc.perform(get("/api/fundamentals/")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fundamentalPieceDTOS", hasSize(2))); // $ is root, followed by DTO properties
@@ -71,6 +74,7 @@ class FundamentalDTOControllerTest {
         when(fundamentalPieceDTOService.findAllByKeyword(anyString())).thenReturn(pieceDTOS_short);
 
         mockMvc.perform(get("/api/fundamentals/cocoa/search")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fundamentalPieceDTOS", hasSize(1)));

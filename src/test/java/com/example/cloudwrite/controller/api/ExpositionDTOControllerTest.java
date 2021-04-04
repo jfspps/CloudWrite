@@ -54,11 +54,14 @@ class ExpositionDTOControllerTest {
         pieceDTOS = new ExpositionPieceDTOList(Arrays.asList(expositionPieceDTO1, expositionPieceDTO2));
     }
 
+    // these test expect JSON returns instead of XML returns
+
     @Test
     void getAllExpoPieces() throws Exception {
         when(expositionPieceDTOService.findAll()).thenReturn(pieceDTOS);
 
         mockMvc.perform(get("/api/expositions/")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.expositionPieceDTOS", hasSize(2))); // $ is root, followed by DTO properties
@@ -69,6 +72,7 @@ class ExpositionDTOControllerTest {
         when(expositionPieceDTOService.findAllByKeyword(anyString())).thenReturn(pieceDTOS);
 
         mockMvc.perform(get("/api/expositions/cocoa/search")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.expositionPieceDTOS", hasSize(2)));

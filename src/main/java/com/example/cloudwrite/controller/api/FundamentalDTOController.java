@@ -28,7 +28,7 @@ public class FundamentalDTOController {
 
     /**
      * Retrieves all fundamental pieces on file, including concepts
-     * @return  JSON formatted list, by default
+     * @return  XML formatted list, by default
      */
     @Operation(summary = "Lists all fundamental pieces")
     @GetMapping("/")
@@ -40,7 +40,7 @@ public class FundamentalDTOController {
     /**
      * Retrieves all fundamental pieces on file (including concepts) by keyword
      * @param keyword   Search parameter (case insensitive substring of keywords on file)
-     * @return  JSON formatted list, by default
+     * @return  XML formatted list, by default
      */
     @Operation(summary = "Lists all fundamental pieces with the given keyword", description = "Returns pieces where the provided keyword is a substring of the keyword on file. Case-insensitive.")
     @GetMapping("/{keyword}/search")
