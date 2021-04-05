@@ -4,7 +4,7 @@
 
     <xs:complexType name="Standfirst">
         <xs:sequence>
-            <xs:element type="xs:byte" name="id"/>
+            <xs:element type="xs:long" name="id"/>
             <xs:element type="xs:string" name="rationale"/>
             <xs:element type="xs:string" name="approach"/>
         </xs:sequence>
@@ -17,9 +17,9 @@
     </xs:complexType>
     <xs:complexType name="KeyResult">
         <xs:sequence>
-            <xs:element type="xs:byte" name="id"/>
+            <xs:element type="xs:long" name="id"/>
             <xs:element type="xs:string" name="description"/>
-            <xs:element type="xs:byte" name="priority"/>
+            <xs:element type="xs:int" name="priority"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -30,7 +30,7 @@
     </xs:complexType>
     <xs:complexType name="Citation">
         <xs:sequence>
-            <xs:element type="xs:byte" name="id"/>
+            <xs:element type="xs:long" name="id"/>
             <xs:element type="xs:string" name="ref"/>
         </xs:sequence>
     </xs:complexType>
@@ -42,7 +42,7 @@
     </xs:complexType>
     <xs:complexType name="ExpositionPiece">
         <xs:sequence>
-            <xs:element type="xs:byte" name="id"/>
+            <xs:element type="xs:long" name="id"/>
             <xs:element type="xs:string" name="title"/>
             <xs:element type="xs:string" name="keyword"/>
             <xs:element type="xs:string" name="expositionPurpose"/>

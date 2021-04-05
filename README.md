@@ -2,21 +2,20 @@
 
 This Spring-based application provides authors with a collaborative environment from which to plan research expositions and educational articles.
 
-Access to the RESTapi is provided by OpenAPI (formerly Swagger), at [http://localhost:5000/swagger-ui.html](http://localhost:5000/swagger-ui.html). The port number by default is 8080 but was changed to 5000 in preparation for AWS deployment.
-
 ### Research themed articles
 
 The model is broken down into entities, as follows:
 
 + Article type: research exposition
 + Article standfirst/headline
-  + Current issue(s) or limitation(s)
+  + Reasons/rationale for research
   + How above aspect(s) is/are approached
 + Literature survey(s)
   + Purpose of research
   + Current efforts and contributions
   + Key results (these can be listed by priority)
   + Future work
++ Citations (literature references)  
 
 ### Fundamental based articles
 
@@ -26,15 +25,28 @@ The model is broken down into entities, as follows:
 + Prerequisite knowledge
 + Subtopic 
   + General justification/purpose/problem area 
-  + Concept 
+  + Concept(s)
   + Summary/future outlook 
     
 ### Spring Web App features
 
-Current ongoing plans for the app:
+Currently features available:
 
-+ Spring security authentication (all users have equal roles)
++ Spring security authentication (admin in place to add/remove/edit user accounts; all users can edit all articles)
 + H2 in-memory and MySQL persistence  
 + Thymeleaf and Bootstrap templating
-+ REST API (JSON), with OpenAPI documentation
-+ DOCX file formatter (independent microservice)
++ REST API (JSON and XML), with OpenAPI (formerly Swagger) documentation
+
+### RESTful API
+
+Access to the RESTapi is provided by OpenAPI (formerly Swagger), at 
+[http://localhost:5000/swagger-ui.html](http://localhost:5000/swagger-ui.html). The port number by default is 8080 but
+was changed to 5000 in preparation for potential AWS deployment. The port number can be changed in application.properties.
+
+XML schema files (XSD) were initially generated from XML GET requests and converted with online XSD generators,
+([https://www.freeformatter.com/xsd-generator.html](FreeFormatter), to XSD formats before manual refinement. The
+XSD files can be used by other frameworks and languages to generate classes which align with CloudWrite's classes and 
+allow other REST clients to consume XML returns from CloudWrite.
+
+The conversion of Java object data to XML is referred to as 'marshalling'. The conversion of XML data to Java object data 
+employed by REST clients is referred to as 'un-marshalling'.
