@@ -10,6 +10,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
 // see UserController and related @Secured
@@ -48,5 +51,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMeCookieName("CloudWriteLoginRememberMe").tokenValiditySeconds(3600)
                 //maximum of one session per user
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS).maximumSessions(1);
+    }
+
+    // required for AWS or other systems that require explicit template resolvers
+    @Bean
+    public ClassLoaderTemplateResolver templateResolver() {
+        ClassLoaderTemplateResolver templateResolver =
+                new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("/templates/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setCharacterEncoding("UTF-8");
+
+        return templateResolver;
+    }
+
+    // required for AWS
+    @Bean
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver());
+
+        // add support for Spring Security dialect
+        // https://www.baeldung.com/spring-security-thymeleaf
+        templateEngine.addDialect(new SpringSecurityDialect());
+        return templateEngine;
     }
 }
