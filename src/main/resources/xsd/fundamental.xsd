@@ -2,7 +2,7 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="FundamentalPieceDTOList" type="FundamentalPieceList"/>
 
-    <xs:complexType name="concept">
+    <xs:complexType name="Concept">
         <xs:sequence>
             <xs:element type="xs:long" name="id" minOccurs="0"/>
             <xs:element type="xs:string" name="purpose" minOccurs="0"/>
@@ -10,26 +10,26 @@
             <xs:element type="xs:int" name="priority" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="conceptList">
+    <xs:complexType name="ConceptList">
         <xs:sequence>
-            <xs:element type="concept" name="concepts" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="Concept" name="concepts" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="fundamentalPiece">
+    <xs:complexType name="FundamentalPiece">
         <xs:sequence>
             <xs:element type="xs:long" name="id" minOccurs="0"/>
             <xs:element type="xs:string" name="title" minOccurs="0"/>
             <xs:element type="xs:string" name="keyword" minOccurs="0"/>
             <xs:element type="xs:string" name="prerequisites" minOccurs="0"/>
             <xs:element type="xs:string" name="summary" minOccurs="0"/>
-            <xs:element type="conceptList" name="concepts" minOccurs="0"/>
+            <xs:element type="ConceptList" name="concepts" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="FundamentalPieceList">
         <xs:sequence>
-            <xs:element type="fundamentalPiece" name="fundamentalPieces" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="FundamentalPiece" name="fundamentalPieces" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
