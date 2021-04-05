@@ -1,0 +1,64 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="id" type="xs:byte"/>
+    <xs:element name="rationale" type="xs:string"/>
+    <xs:element name="approach" type="xs:string"/>
+    <xs:element name="description" type="xs:string"/>
+    <xs:element name="priority" type="xs:byte"/>
+    <xs:element name="keyResultDTOList">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element ref="id" minOccurs="0"/>
+                <xs:element ref="description" minOccurs="0"/>
+                <xs:element ref="priority" minOccurs="0"/>
+                <xs:element ref="keyResultDTOList" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ref" type="xs:string"/>
+    <xs:element name="citationDTOList">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="id" minOccurs="0"/>
+                <xs:element ref="ref" minOccurs="0"/>
+                <xs:element ref="citationDTOList" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="title" type="xs:string"/>
+    <xs:element name="keyword" type="xs:string"/>
+    <xs:element name="standfirstDTO">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="id"/>
+                <xs:element ref="rationale"/>
+                <xs:element ref="approach"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="expositionPurpose" type="xs:string"/>
+    <xs:element name="currentProgress" type="xs:string"/>
+    <xs:element name="futureWork" type="xs:string"/>
+    <xs:element name="expositionPieceDTOS">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="id" minOccurs="0"/>
+                <xs:element ref="title" minOccurs="0"/>
+                <xs:element ref="keyword" minOccurs="0"/>
+                <xs:element ref="standfirstDTO" minOccurs="0"/>
+                <xs:element ref="expositionPurpose" minOccurs="0"/>
+                <xs:element ref="currentProgress" minOccurs="0"/>
+                <xs:element ref="futureWork" minOccurs="0"/>
+                <xs:element ref="keyResultDTOList" minOccurs="0"/>
+                <xs:element ref="citationDTOList" minOccurs="0"/>
+                <xs:element ref="expositionPieceDTOS" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ExpositionPieceDTOList">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="expositionPieceDTOS"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
