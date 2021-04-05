@@ -203,3 +203,6 @@ local.properties
 ######################
 .gradle/
 /build/
+
+#Leave the fat JAR for demo purposes
+!JAR/*.jar
