@@ -1,29 +1,35 @@
 <!--https://www.freeformatter.com/xsd-generator.html with Venetian Blind styling-->
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="FundamentalPieceDTOList" type="FundamentalPieceDTOListType"/>
-    <xs:complexType name="conceptDTOListType">
+    <xs:element name="FundamentalPieceDTOList" type="FundamentalPieceList"/>
+
+    <xs:complexType name="concept">
         <xs:sequence>
-            <xs:element type="xs:byte" name="id" minOccurs="0"/>
-            <xs:element type="xs:string" name="purpose" minOccurs="0"/>
-            <xs:element type="xs:string" name="description" minOccurs="0"/>
-            <xs:element type="xs:byte" name="priority" minOccurs="0"/>
-            <xs:element type="conceptDTOListType" name="conceptDTOList" minOccurs="0"/>
+            <xs:element type="xs:byte" name="id"/>
+            <xs:element type="xs:string" name="purpose"/>
+            <xs:element type="xs:string" name="description"/>
+            <xs:element type="xs:byte" name="priority"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="fundamentalPieceDTOSType">
+    <xs:complexType name="conceptList">
         <xs:sequence>
-            <xs:element type="xs:byte" name="id" minOccurs="0"/>
-            <xs:element type="xs:string" name="title" minOccurs="0"/>
-            <xs:element type="xs:string" name="keyword" minOccurs="0"/>
-            <xs:element type="xs:string" name="prerequisites" minOccurs="0"/>
-            <xs:element type="xs:string" name="summary" minOccurs="0"/>
-            <xs:element type="conceptDTOListType" name="conceptDTOList" minOccurs="0"/>
-            <xs:element type="fundamentalPieceDTOSType" name="fundamentalPieceDTOS" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="concept" name="concepts" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="FundamentalPieceDTOListType">
+
+    <xs:complexType name="fundamentalPiece">
         <xs:sequence>
-            <xs:element type="fundamentalPieceDTOSType" name="fundamentalPieceDTOS"/>
+            <xs:element type="xs:byte" name="id"/>
+            <xs:element type="xs:string" name="title"/>
+            <xs:element type="xs:string" name="keyword"/>
+            <xs:element type="xs:string" name="prerequisites"/>
+            <xs:element type="xs:string" name="summary"/>
+            <xs:element type="conceptList" name="concepts"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FundamentalPieceList">
+        <xs:sequence>
+            <xs:element type="fundamentalPiece" name="fundamentalPieces" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
