@@ -2,6 +2,8 @@
 
 This Spring-based application provides authors with a collaborative environment from which to plan research expositions and educational articles.
 
+The packaged jar file is included [here](./JAR/) for demonstration purposes.
+
 ### Research themed articles
 
 The model is broken down into entities, as follows:

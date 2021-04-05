@@ -4,10 +4,10 @@
 
     <xs:complexType name="concept">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="purpose"/>
-            <xs:element type="xs:string" name="description"/>
-            <xs:element type="xs:int" name="priority"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="purpose" minOccurs="0"/>
+            <xs:element type="xs:string" name="description" minOccurs="0"/>
+            <xs:element type="xs:int" name="priority" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="conceptList">
@@ -18,12 +18,12 @@
 
     <xs:complexType name="fundamentalPiece">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="title"/>
-            <xs:element type="xs:string" name="keyword"/>
-            <xs:element type="xs:string" name="prerequisites"/>
-            <xs:element type="xs:string" name="summary"/>
-            <xs:element type="conceptList" name="concepts"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="title" minOccurs="0"/>
+            <xs:element type="xs:string" name="keyword" minOccurs="0"/>
+            <xs:element type="xs:string" name="prerequisites" minOccurs="0"/>
+            <xs:element type="xs:string" name="summary" minOccurs="0"/>
+            <xs:element type="conceptList" name="concepts" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 

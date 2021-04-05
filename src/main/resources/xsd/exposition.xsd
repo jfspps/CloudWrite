@@ -4,9 +4,9 @@
 
     <xs:complexType name="Standfirst">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="rationale"/>
-            <xs:element type="xs:string" name="approach"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="rationale" minOccurs="0"/>
+            <xs:element type="xs:string" name="approach" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -17,9 +17,9 @@
     </xs:complexType>
     <xs:complexType name="KeyResult">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="description"/>
-            <xs:element type="xs:int" name="priority"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="description" minOccurs="0"/>
+            <xs:element type="xs:int" name="priority" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -30,8 +30,8 @@
     </xs:complexType>
     <xs:complexType name="Citation">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="ref"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="ref" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -42,15 +42,15 @@
     </xs:complexType>
     <xs:complexType name="ExpositionPiece">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="title"/>
-            <xs:element type="xs:string" name="keyword"/>
-            <xs:element type="xs:string" name="expositionPurpose"/>
-            <xs:element type="xs:string" name="currentProgress"/>
-            <xs:element type="xs:string" name="futureWork"/>
-            <xs:element type="Standfirst" name="standfirst"/>
-            <xs:element type="CitationList" name="citationList"/>
-            <xs:element type="KeyResultList" name="keyResultList"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="title" minOccurs="0"/>
+            <xs:element type="xs:string" name="keyword" minOccurs="0"/>
+            <xs:element type="xs:string" name="expositionPurpose" minOccurs="0"/>
+            <xs:element type="xs:string" name="currentProgress" minOccurs="0"/>
+            <xs:element type="xs:string" name="futureWork" minOccurs="0"/>
+            <xs:element type="Standfirst" name="standfirst" minOccurs="0"/>
+            <xs:element type="CitationList" name="citationList" minOccurs="0"/>
+            <xs:element type="KeyResultList" name="keyResultList" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
