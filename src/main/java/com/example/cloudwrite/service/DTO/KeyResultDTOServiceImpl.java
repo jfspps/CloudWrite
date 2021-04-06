@@ -3,10 +3,12 @@ package com.example.cloudwrite.service.DTO;
 import com.example.cloudwrite.JPARepository.KeyResultRepo;
 import com.example.cloudwrite.api.mapper.KeyResultMapper;
 import com.example.cloudwrite.api.model.KeyResultDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class KeyResultDTOServiceImpl implements KeyResultDTOService{
 
     private final KeyResultMapper keyResultMapper;

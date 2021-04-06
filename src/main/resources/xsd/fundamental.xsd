@@ -1,33 +1,38 @@
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="FundamentalPieceDTOList" type="FundamentalPieceDTOList"/>
 
-    <xs:complexType name="FundamentalPieceDTO">
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="fundamentalPieceDTOList" type="FundamentalPieceDTOList"/>
+
+    <xs:complexType name="Concept">
         <xs:sequence>
-            <xs:element type="xs:long" name="id" minOccurs="0"/>
-            <xs:element type="xs:string" name="title" minOccurs="0"/>
-            <xs:element type="xs:string" name="keyword" minOccurs="0"/>
-            <xs:element type="xs:string" name="prerequisites" minOccurs="0"/>
-            <xs:element type="xs:string" name="summary" minOccurs="0"/>
-            <xs:element type="ConceptDTOList" name="conceptDTOs" minOccurs="0"/>
+            <xs:element type="xs:long" name="id"/>
+            <xs:element type="xs:string" name="purpose"/>
+            <xs:element type="xs:string" name="description"/>
+            <xs:element type="xs:int" name="priority"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="Concepts">
+        <xs:sequence>
+            <xs:element type="Concept" name="Concept" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FundamentalPiece">
+        <xs:sequence>
+            <xs:element type="xs:long" name="id"/>
+            <xs:element type="xs:string" name="title"/>
+            <xs:element type="xs:string" name="keyword"/>
+            <xs:element type="xs:string" name="prerequisites"/>
+            <xs:element type="Concepts" name="concepts"/>
+            <xs:element type="xs:string" name="summary"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="FundamentalPieceDTOList">
         <xs:sequence>
-            <xs:element type="FundamentalPieceDTO" name="fundamentalPieceDTOs" maxOccurs="unbounded" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="ConceptDTO">
-        <xs:sequence>
-            <xs:element type="xs:long" name="id" minOccurs="0"/>
-            <xs:element type="xs:string" name="purpose" minOccurs="0"/>
-            <xs:element type="xs:string" name="description" minOccurs="0"/>
-            <xs:element type="xs:int" name="priority" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="ConceptDTOList">
-        <xs:sequence>
-            <xs:element type="ConceptDTO" name="getConceptDTOs" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="FundamentalPiece" name="fundamentalPiece" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
+

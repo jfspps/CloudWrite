@@ -64,7 +64,7 @@ class ExpositionDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.expositionPieceDTOs", hasSize(2))); // $ is root, followed by DTO properties
+                .andExpect(jsonPath("$.expositionPieces", hasSize(2))); // $ is root, followed by DTO properties
     }
 
     @Test
@@ -75,6 +75,6 @@ class ExpositionDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.expositionPieceDTOs", hasSize(2)));
+                .andExpect(jsonPath("$.expositionPieces", hasSize(2)));
     }
 }

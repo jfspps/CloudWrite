@@ -3,10 +3,12 @@ package com.example.cloudwrite.service.DTO;
 import com.example.cloudwrite.JPARepository.StandfirstRepo;
 import com.example.cloudwrite.api.mapper.StandfirstMapper;
 import com.example.cloudwrite.api.model.StandfirstDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class StandfirstDTOServiceImpl implements StandfirstDTOService{
 
     private final StandfirstMapper standfirstMapper;
