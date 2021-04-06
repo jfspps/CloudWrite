@@ -207,9 +207,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- The package of your generated sources -->
-                    <packageName>com.example.cloudwrite.api.model</packageName>
-                    <!-- Define the directory where we should find the DTD files -->
+                    <!-- https://www.mojohaus.org/jaxb2-maven-plugin/Documentation/v2.2/example_xjc_basic.html-->
+                    <!-- The package where generated classes go -->
+                    <packageName>com.example.cloudwrite.JAXBModel</packageName>
+
+                    <!-- Define the directory where we should find the XSD files -->
                     <sources>
                         <source>src/main/resources/xsd</source>
                     </sources>

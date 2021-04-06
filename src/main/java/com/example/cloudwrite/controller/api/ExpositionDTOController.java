@@ -5,8 +5,6 @@ import com.example.cloudwrite.service.DTO.ExpositionPieceDTOService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 // @RestController does away with returning ResponseEntity<> and is a more modern and cleaner
@@ -34,7 +32,7 @@ public class ExpositionDTOController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public ExpositionPieceDTOList getAllExpoPieces(){
-        return new ExpositionPieceDTOList(expositionPieceDTOService.findAll().getExpositionPieceDTOS());
+        return new ExpositionPieceDTOList(expositionPieceDTOService.findAll().getExpositionPieceDTOs());
     }
 
     /**
@@ -46,6 +44,6 @@ public class ExpositionDTOController {
     @GetMapping("/{keyword}/search")
     @ResponseStatus(HttpStatus.OK)
     public ExpositionPieceDTOList getExpoPiecesByKeyword(@PathVariable("keyword") String keyword){
-        return new ExpositionPieceDTOList(expositionPieceDTOService.findAllByKeyword(keyword).getExpositionPieceDTOS());
+        return new ExpositionPieceDTOList(expositionPieceDTOService.findAllByKeyword(keyword).getExpositionPieceDTOs());
     }
 }

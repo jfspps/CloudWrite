@@ -66,7 +66,7 @@ class FundamentalDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fundamentalPieceDTOS", hasSize(2))); // $ is root, followed by DTO properties
+                .andExpect(jsonPath("$.fundamentalPieceDTOs", hasSize(2))); // $ is root, followed by DTO properties
     }
 
     @Test
@@ -77,6 +77,6 @@ class FundamentalDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fundamentalPieceDTOS", hasSize(1)));
+                .andExpect(jsonPath("$.fundamentalPieceDTOs", hasSize(1)));
     }
 }

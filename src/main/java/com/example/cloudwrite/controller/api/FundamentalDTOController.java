@@ -5,8 +5,6 @@ import com.example.cloudwrite.service.DTO.FundamentalPieceDTOService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 // @RestController does away with returning ResponseEntity<> and is a more modern and cleaner
@@ -34,7 +32,7 @@ public class FundamentalDTOController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getAllFunPieces(){
-        return new FundamentalPieceDTOList(fundamentalPieceDTOService.findAll().getFundamentalPieceDTOS());
+        return new FundamentalPieceDTOList(fundamentalPieceDTOService.findAll().getFundamentalPieceDTOs());
     }
 
     /**
@@ -46,6 +44,6 @@ public class FundamentalDTOController {
     @GetMapping("/{keyword}/search")
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getFunPiecesByKeyword(@PathVariable("keyword") String keyword){
-        return new FundamentalPieceDTOList(fundamentalPieceDTOService.findAllByKeyword(keyword).getFundamentalPieceDTOS());
+        return new FundamentalPieceDTOList(fundamentalPieceDTOService.findAllByKeyword(keyword).getFundamentalPieceDTOs());
     }
 }

@@ -7,7 +7,6 @@ import com.example.cloudwrite.api.mapper.KeyResultMapper;
 import com.example.cloudwrite.api.mapper.StandfirstMapper;
 import com.example.cloudwrite.api.model.*;
 import com.example.cloudwrite.model.ExpositionPiece;
-import com.example.cloudwrite.model.Standfirst;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -91,8 +90,8 @@ public class ExpositionPieceDTOServiceImpl implements ExpositionPieceDTOService{
                     .collect(Collectors.toList());
 
             currentPieceDTO.setStandfirstDTO(standfirstMapper.standfirstToStandfirstDTO(currentPiece.getStandfirst()));
-            currentPieceDTO.setKeyResultDTOList(new KeyResultDTOList(keyResultDTOS));
-            currentPieceDTO.setCitationDTOList(new CitationDTOList(citationDTOS));
+            currentPieceDTO.setKeyResultDTOs(new KeyResultDTOList(keyResultDTOS));
+            currentPieceDTO.setCitationDTOs(new CitationDTOList(citationDTOS));
         }
 
         return new ExpositionPieceDTOList(pieceDTOList);

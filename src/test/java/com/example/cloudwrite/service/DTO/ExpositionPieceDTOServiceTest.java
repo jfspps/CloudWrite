@@ -60,7 +60,7 @@ class ExpositionPieceDTOServiceTest {
         ExpositionPieceDTOList expositionPieceDTOS = expositionPieceDTOService.findAll();
 
         // check mapping (then)
-        assertEquals(1, expositionPieceDTOS.getExpositionPieceDTOS().size());
+        assertEquals(1, expositionPieceDTOS.getExpositionPieceDTOs().size());
     }
 
     @Test
@@ -70,7 +70,7 @@ class ExpositionPieceDTOServiceTest {
 
         ExpositionPieceDTOList expositionPieceDTOS = expositionPieceDTOService.findAllByKeyword("lafjdlfkj");
 
-        assertEquals(1, expositionPieceDTOS.getExpositionPieceDTOS().size());
+        assertEquals(1, expositionPieceDTOS.getExpositionPieceDTOs().size());
     }
 
     @Test

@@ -77,7 +77,7 @@ public class FundamentalPieceDTOServiceImpl implements FundamentalPieceDTOServic
                     .map(conceptMapper::conceptToConceptDTO)
                     .collect(Collectors.toList());
 
-            pieceDTOList.get(pieceID).setConceptDTOList(new ConceptDTOList(conceptDTOS));
+            pieceDTOList.get(pieceID).setConceptDTOs(new ConceptDTOList(conceptDTOS));
         }
 
         return new FundamentalPieceDTOList(pieceDTOList);

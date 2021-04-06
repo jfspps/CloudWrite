@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +53,7 @@ class FundamentalPieceDTOServiceTest {
         FundamentalPieceDTOList fundamentalPieceDTOS = fundamentalPieceDTOService.findAll();
 
         // check mapping (then)
-        assertEquals(1, fundamentalPieceDTOS.getFundamentalPieceDTOS().size());
+        assertEquals(1, fundamentalPieceDTOS.getFundamentalPieceDTOs().size());
     }
 
     @Test
@@ -64,7 +63,7 @@ class FundamentalPieceDTOServiceTest {
 
         FundamentalPieceDTOList found = fundamentalPieceDTOService.findAllByKeyword("lafjdlfkj");
 
-        assertEquals(1, found.getFundamentalPieceDTOS().size());
+        assertEquals(1, found.getFundamentalPieceDTOs().size());
     }
 
     @Test

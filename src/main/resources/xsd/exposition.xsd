@@ -1,57 +1,55 @@
-<!--https://www.freeformatter.com/xsd-generator.html with Venetian Blind styling-->
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="ExpositionPieceDTOList" type="ExpositionPieceList"/>
+    <xs:element name="ExpositionPieceDTOs" type="ExpositionPieceDTOList"/>
+    <xs:complexType name="ExpositionPieceDTOList">
+        <xs:sequence>
+            <xs:element type="expositionPieceDTO" name="expositionPieceDTOs" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xs:complexType name="Standfirst">
+    <xs:complexType name="expositionPieceDTO">
         <xs:sequence>
             <xs:element type="xs:long" name="id" minOccurs="0"/>
-            <xs:element type="xs:string" name="rationale" minOccurs="0"/>
-            <xs:element type="xs:string" name="approach" minOccurs="0"/>
+            <xs:element type="xs:string" name="title" minOccurs="0"/>
+            <xs:element type="xs:string" name="keyword" minOccurs="0"/>
+            <xs:element type="StandfirstDTO" name="standfirstDTO" minOccurs="0"/>
+            <xs:element type="xs:string" name="expositionPurpose" minOccurs="0"/>
+            <xs:element type="xs:string" name="currentProgress" minOccurs="0"/>
+            <xs:element type="xs:string" name="futureWork" minOccurs="0"/>
+            <xs:element type="KeyResultDTOList" name="keyResultDTOs" minOccurs="0"/>
+            <xs:element type="CitationDTOList" name="citationDTOs" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="KeyResultList">
+    <xs:complexType name="StandfirstDTO">
         <xs:sequence>
-            <xs:element type="KeyResult" name="keyResults" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="xs:long" name="id"/>
+            <xs:element type="xs:string" name="rationale"/>
+            <xs:element type="xs:string" name="approach"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="KeyResult">
+
+    <xs:complexType name="KeyResultDTO">
         <xs:sequence>
             <xs:element type="xs:long" name="id" minOccurs="0"/>
             <xs:element type="xs:string" name="description" minOccurs="0"/>
             <xs:element type="xs:int" name="priority" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-
-    <xs:complexType name="CitationList">
+    <xs:complexType name="KeyResultDTOList">
         <xs:sequence>
-            <xs:element type="Citation" name="citations" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="KeyResultDTO" name="keyResultDTOs" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="Citation">
+
+    <xs:complexType name="CitationDTO">
         <xs:sequence>
             <xs:element type="xs:long" name="id" minOccurs="0"/>
             <xs:element type="xs:string" name="ref" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-
-    <xs:complexType name="ExpositionPieceList">
+    <xs:complexType name="CitationDTOList">
         <xs:sequence>
-            <xs:element type="ExpositionPiece" name="expositionPieces" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="CitationDTO" name="citationDTOs" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="ExpositionPiece">
-        <xs:sequence>
-            <xs:element type="xs:long" name="id" minOccurs="0"/>
-            <xs:element type="xs:string" name="title" minOccurs="0"/>
-            <xs:element type="xs:string" name="keyword" minOccurs="0"/>
-            <xs:element type="xs:string" name="expositionPurpose" minOccurs="0"/>
-            <xs:element type="xs:string" name="currentProgress" minOccurs="0"/>
-            <xs:element type="xs:string" name="futureWork" minOccurs="0"/>
-            <xs:element type="Standfirst" name="standfirst" minOccurs="0"/>
-            <xs:element type="CitationList" name="citationList" minOccurs="0"/>
-            <xs:element type="KeyResultList" name="keyResultList" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
 </xs:schema>
