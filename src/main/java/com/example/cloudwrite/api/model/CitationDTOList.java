@@ -1,5 +1,6 @@
 package com.example.cloudwrite.api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlType(namespace = "http://cloudwrite.com/citationList",
-        propOrder = {"citationDTOs"})
-@XmlAccessorType(XmlAccessType.FIELD)
 public class CitationDTOList {
 
-    @XmlElementWrapper(name = "citationDTOList", nillable = true)
-    @XmlElement(name = "citationDTO")
+    @JsonProperty("citations")
     private List<CitationDTO> citationDTOs;
 }

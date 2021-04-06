@@ -1,23 +1,26 @@
 package com.example.cloudwrite.api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-
-import javax.xml.bind.annotation.*;
 
 /**
  * A citation as part of an exposition piece
  */
-@XmlType(namespace = "http://cloudwrite.com/citation",
-        propOrder = {"id", "ref"})
-@XmlAccessorType(XmlAccessType.FIELD)
 @Data
+@JsonTypeName("Citation")
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonPropertyOrder({"id", "ref"})
 public class CitationDTO {
 
-    @XmlTransient
     private Long id;
 
-    @XmlElement(defaultValue = "")
+    @JsonProperty("references")
     @Schema(description = "Citation used as part of the exposition article/piece")
     private String ref;
 }
+
+// https://stackoverflow.com/questions/36746223/spring-boot-json-root-name for custom root names
