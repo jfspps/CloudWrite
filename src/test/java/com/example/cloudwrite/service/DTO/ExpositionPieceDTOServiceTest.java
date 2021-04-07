@@ -1,12 +1,12 @@
 package com.example.cloudwrite.service.DTO;
 
+import com.example.cloudwrite.JAXBModel.ExpositionPieceDTO;
+import com.example.cloudwrite.JAXBModel.ExpositionPieceDTOList;
 import com.example.cloudwrite.JPARepository.ExpositionPieceRepo;
 import com.example.cloudwrite.api.mapper.CitationMapper;
 import com.example.cloudwrite.api.mapper.ExpositionPieceMapper;
 import com.example.cloudwrite.api.mapper.KeyResultMapper;
 import com.example.cloudwrite.api.mapper.StandfirstMapper;
-import com.example.cloudwrite.api.model.ExpositionPieceDTO;
-import com.example.cloudwrite.api.model.ExpositionPieceDTOList;
 import com.example.cloudwrite.model.Citation;
 import com.example.cloudwrite.model.ExpositionPiece;
 import com.example.cloudwrite.model.KeyResult;
@@ -39,7 +39,7 @@ class ExpositionPieceDTOServiceTest {
     @BeforeEach
     void setUp() {
         keyResult = KeyResult.builder().description("key result desc.").build();
-        citation = Citation.builder().ref("some citation").build();
+        citation = Citation.builder().reference("some citation").build();
         expositionPiece = ExpositionPiece.builder()
                 .keyword("magicWords")
                 .keyResults(Collections.singletonList(keyResult))
@@ -60,7 +60,7 @@ class ExpositionPieceDTOServiceTest {
         ExpositionPieceDTOList expositionPieceDTOS = expositionPieceDTOService.findAll();
 
         // check mapping (then)
-        assertEquals(1, expositionPieceDTOS.getExpositionPieceDTOs().size());
+        assertEquals(1, expositionPieceDTOS.getExpositionPiece().size());
     }
 
     @Test
@@ -70,7 +70,7 @@ class ExpositionPieceDTOServiceTest {
 
         ExpositionPieceDTOList expositionPieceDTOS = expositionPieceDTOService.findAllByKeyword("lafjdlfkj");
 
-        assertEquals(1, expositionPieceDTOS.getExpositionPieceDTOs().size());
+        assertEquals(1, expositionPieceDTOS.getExpositionPiece().size());
     }
 
     @Test

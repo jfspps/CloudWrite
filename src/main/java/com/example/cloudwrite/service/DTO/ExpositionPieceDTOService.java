@@ -1,7 +1,8 @@
 package com.example.cloudwrite.service.DTO;
 
-import com.example.cloudwrite.api.model.ExpositionPieceDTO;
-import com.example.cloudwrite.api.model.ExpositionPieceDTOList;
+
+import com.example.cloudwrite.JAXBModel.ExpositionPieceDTO;
+import com.example.cloudwrite.JAXBModel.ExpositionPieceDTOList;
 
 public interface ExpositionPieceDTOService {
     ExpositionPieceDTOList findAll();

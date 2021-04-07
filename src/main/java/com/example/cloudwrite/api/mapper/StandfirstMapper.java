@@ -1,12 +1,12 @@
 package com.example.cloudwrite.api.mapper;
 
-import com.example.cloudwrite.api.model.StandfirstDTO;
+import com.example.cloudwrite.JAXBModel.StandfirstDTO;
 import com.example.cloudwrite.model.Standfirst;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-// note that changing the annotation to @Mapper and @Component causes the context to fail on loading
-@Mapper(componentModel = "spring")
+// see application.properties
+@Mapper
 public interface StandfirstMapper {
 
     StandfirstMapper INSTANCE = Mappers.getMapper(StandfirstMapper.class);

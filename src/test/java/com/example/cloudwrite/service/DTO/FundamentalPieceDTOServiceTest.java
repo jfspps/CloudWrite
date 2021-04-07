@@ -1,10 +1,10 @@
 package com.example.cloudwrite.service.DTO;
 
+import com.example.cloudwrite.JAXBModel.FundamentalPieceDTO;
+import com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList;
 import com.example.cloudwrite.JPARepository.FundamentalPieceRepo;
 import com.example.cloudwrite.api.mapper.ConceptMapper;
 import com.example.cloudwrite.api.mapper.FundamentalPieceMapper;
-import com.example.cloudwrite.api.model.FundamentalPieceDTO;
-import com.example.cloudwrite.api.model.FundamentalPieceDTOList;
 import com.example.cloudwrite.model.Concept;
 import com.example.cloudwrite.model.FundamentalPiece;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,10 +50,11 @@ class FundamentalPieceDTOServiceTest {
         when(fundamentalPieceRepo.findAll()).thenReturn(fundamentalPieces);
 
         // call the DTO service interface (when) as defined by its implementation class
-        FundamentalPieceDTOList fundamentalPieceDTOS = fundamentalPieceDTOService.findAll();
+        FundamentalPieceDTOList fundamentalPieceDTOList;
+        fundamentalPieceDTOList = fundamentalPieceDTOService.findAll();
 
         // check mapping (then)
-        assertEquals(1, fundamentalPieceDTOS.getFundamentalPieceDTOs().size());
+        assertEquals(1, fundamentalPieceDTOList.getFundamentalPiece().size());
     }
 
     @Test
@@ -63,7 +64,7 @@ class FundamentalPieceDTOServiceTest {
 
         FundamentalPieceDTOList found = fundamentalPieceDTOService.findAllByKeyword("lafjdlfkj");
 
-        assertEquals(1, found.getFundamentalPieceDTOs().size());
+        assertEquals(1, found.getFundamentalPiece().size());
     }
 
     @Test

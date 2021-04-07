@@ -97,7 +97,7 @@ public class DataLoader implements CommandLineRunner {
         KeyResult someResult2 = KeyResult.builder().description("Some second description").priority(2).build();
 
         Standfirst standfirst = Standfirst.builder().rationale("What's wrong?").approach("The approach").build();
-        Citation citation = Citation.builder().ref("The Journal of this and that").build();
+        Citation citation = Citation.builder().reference("The Journal of this and that").build();
         Standfirst savedStandfirst = standfirstService.save(standfirst);
 
         KeyResult savedResult = keyResultService.save(someResult);

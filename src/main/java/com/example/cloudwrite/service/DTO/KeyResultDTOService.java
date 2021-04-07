@@ -1,6 +1,7 @@
 package com.example.cloudwrite.service.DTO;
 
-import com.example.cloudwrite.api.model.KeyResultDTO;
+
+import com.example.cloudwrite.JAXBModel.KeyResultDTO;
 
 import java.util.List;
 

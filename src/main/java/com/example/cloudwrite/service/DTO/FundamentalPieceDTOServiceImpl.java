@@ -1,12 +1,10 @@
 package com.example.cloudwrite.service.DTO;
 
+import com.example.cloudwrite.JAXBModel.FundamentalPieceDTO;
+import com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList;
 import com.example.cloudwrite.JPARepository.FundamentalPieceRepo;
 import com.example.cloudwrite.api.mapper.ConceptMapper;
 import com.example.cloudwrite.api.mapper.FundamentalPieceMapper;
-import com.example.cloudwrite.api.model.ConceptDTO;
-import com.example.cloudwrite.api.model.ConceptDTOList;
-import com.example.cloudwrite.api.model.FundamentalPieceDTO;
-import com.example.cloudwrite.api.model.FundamentalPieceDTOList;
 import com.example.cloudwrite.model.FundamentalPiece;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +37,10 @@ public class FundamentalPieceDTOServiceImpl implements FundamentalPieceDTOServic
                 .map(fundamentalPieceMapper::funPieceToFunPieceDTO)
                 .collect(Collectors.toList());
 
-        // sync DTO with POJOs and return
-        return buildFundamentalPieceDTOList(piecesOnDB, pieceDTOList);
+        FundamentalPieceDTOList list = new FundamentalPieceDTOList();
+        list.getFundamentalPiece().addAll(pieceDTOList);
+
+        return list;
     }
 
     @Override
@@ -56,8 +56,10 @@ public class FundamentalPieceDTOServiceImpl implements FundamentalPieceDTOServic
                 .map(fundamentalPieceMapper::funPieceToFunPieceDTO)
                 .collect(Collectors.toList());
 
-        // sync DTO with POJOs and return
-        return buildFundamentalPieceDTOList(piecesOnDB, pieceDTOList);
+        FundamentalPieceDTOList list = new FundamentalPieceDTOList();
+        list.getFundamentalPiece().addAll(pieceDTOList);
+
+        return list;
     }
 
     @Override
@@ -66,20 +68,5 @@ public class FundamentalPieceDTOServiceImpl implements FundamentalPieceDTOServic
                 .findById(id)
                 .map(fundamentalPieceMapper::funPieceToFunPieceDTO)
                 .orElse(null);
-    }
-
-    private FundamentalPieceDTOList buildFundamentalPieceDTOList(List<FundamentalPiece> piecesOnDB, List<FundamentalPieceDTO> pieceDTOList) {
-        for (int pieceID = 0; pieceID < piecesOnDB.size(); pieceID++){
-            FundamentalPiece currentPiece = piecesOnDB.get(pieceID);
-
-            List<ConceptDTO> conceptDTOS = currentPiece.getConceptList()
-                    .stream()
-                    .map(conceptMapper::conceptToConceptDTO)
-                    .collect(Collectors.toList());
-
-            pieceDTOList.get(pieceID).setConceptDTOs(new ConceptDTOList(conceptDTOS));
-        }
-
-        return new FundamentalPieceDTOList(pieceDTOList);
     }
 }

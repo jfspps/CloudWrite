@@ -21,15 +21,15 @@ public class Citation implements Serializable, Comparable<Citation> {
     private Long id;
 
     @Builder.Default
-    private String ref = "";
+    private String reference = "";
 
     @ManyToOne
     private ExpositionPiece piece;
 
     @Override
     public int compareTo(Citation o) {
-        String thisRef = this.ref;
-        String inputRef = o.ref;
+        String thisRef = this.reference;
+        String inputRef = o.reference;
         return thisRef.compareTo(inputRef);
     }
 

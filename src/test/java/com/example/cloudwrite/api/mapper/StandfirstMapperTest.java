@@ -1,11 +1,10 @@
 package com.example.cloudwrite.api.mapper;
 
-import com.example.cloudwrite.api.model.StandfirstDTO;
+import com.example.cloudwrite.JAXBModel.StandfirstDTO;
 import com.example.cloudwrite.model.Standfirst;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StandfirstMapperTest {
 

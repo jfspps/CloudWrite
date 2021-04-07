@@ -1,6 +1,6 @@
 package com.example.cloudwrite.controller.api;
 
-import com.example.cloudwrite.api.model.ExpositionPieceDTOList;
+import com.example.cloudwrite.JAXBModel.ExpositionPieceDTOList;
 import com.example.cloudwrite.service.DTO.ExpositionPieceDTOService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,7 +32,10 @@ public class ExpositionDTOController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public ExpositionPieceDTOList getAllExpoPieces(){
-        return new ExpositionPieceDTOList(expositionPieceDTOService.findAll().getExpositionPieceDTOs());
+        ExpositionPieceDTOList list = new ExpositionPieceDTOList();
+        list.getExpositionPiece().addAll(expositionPieceDTOService.findAll().getExpositionPiece());
+
+        return list;
     }
 
     /**
@@ -44,6 +47,9 @@ public class ExpositionDTOController {
     @GetMapping("/{keyword}/search")
     @ResponseStatus(HttpStatus.OK)
     public ExpositionPieceDTOList getExpoPiecesByKeyword(@PathVariable("keyword") String keyword){
-        return new ExpositionPieceDTOList(expositionPieceDTOService.findAllByKeyword(keyword).getExpositionPieceDTOs());
+        ExpositionPieceDTOList list = new ExpositionPieceDTOList();
+        list.getExpositionPiece().addAll(expositionPieceDTOService.findAllByKeyword(keyword).getExpositionPiece());
+
+        return list;
     }
 }

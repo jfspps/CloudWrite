@@ -1,10 +1,10 @@
 package com.example.cloudwrite.api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.xml.bind.annotation.*;
 import java.util.List;
 
 /**
@@ -13,12 +13,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlType(namespace = "http://cloudwrite.com/conceptList",
-        propOrder = {"conceptDTOs"})
-@XmlAccessorType(XmlAccessType.FIELD)
 public class ConceptDTOList {
 
-    @XmlElementWrapper(name = "conceptDTOList", nillable = true)
-    @XmlElement(name = "conceptDTO")
+    @JsonProperty("concepts")
     private List<ConceptDTO> conceptDTOs;
 }

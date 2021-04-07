@@ -107,7 +107,7 @@ public class ExpositionController {
         Timestamp timestamp = new Timestamp(date.getTime());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Citation newCitation = Citation.builder().ref("New reference created " + simpleDateFormat.format(timestamp)).build();
+        Citation newCitation = Citation.builder().reference("New reference created " + simpleDateFormat.format(timestamp)).build();
         Citation savedCitation = citationService.save(newCitation);
         piece.getCitations().add(savedCitation);
 
@@ -191,7 +191,7 @@ public class ExpositionController {
         List<Citation> citationsOnFile = pieceOnFile.getCitations();
 
         for (int i = 0; i < references.length; i++){
-            citationsOnFile.get(i).setRef(references[i]);
+            citationsOnFile.get(i).setReference(references[i]);
         }
 
         if (toDelete.length != 0){

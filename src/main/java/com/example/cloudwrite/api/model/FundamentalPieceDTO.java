@@ -1,38 +1,36 @@
 package com.example.cloudwrite.api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-
-import javax.xml.bind.annotation.*;
 
 /**
  * A fundamental piece
  */
 @Data
-@XmlType(namespace = "http://cloudwrite.com",
-        propOrder = {"id", "title", "keyword", "prerequisites", "conceptDTOs", "summary"})
-@XmlAccessorType(XmlAccessType.FIELD)
+@JsonTypeName("FundamentalPiece")
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonPropertyOrder({"id", "title", "keyword", "prerequisites", "conceptDTOs", "summary"})
 public class FundamentalPieceDTO {
 
-    @XmlTransient
     private Long id;
 
-    @XmlElement(defaultValue = "")
     @Schema(description = "The title of the article/piece")
     private String title;
 
-    @XmlElement(defaultValue = "")
     @Schema(description = "Keyword used to search for articles/pieces on file")
     private String keyword;
 
-    @XmlElement(defaultValue = "")
     @Schema(description = "A summary of the prerequisite knowledge needed")
     private String prerequisites;
 
-    @XmlElement(defaultValue = "")
     @Schema(description = "The closing remarks and summary of the piece/article")
     private String summary;
 
+    @JsonProperty("concepts")
     @Schema(description = "A list of the concepts covered")
     private ConceptDTOList conceptDTOs;
 }

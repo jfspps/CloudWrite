@@ -1,6 +1,7 @@
 package com.example.cloudwrite.service.DTO;
 
-import com.example.cloudwrite.api.model.StandfirstDTO;
+
+import com.example.cloudwrite.JAXBModel.StandfirstDTO;
 
 import java.util.List;
 

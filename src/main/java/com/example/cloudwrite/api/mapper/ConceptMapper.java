@@ -1,12 +1,12 @@
 package com.example.cloudwrite.api.mapper;
 
-import com.example.cloudwrite.api.model.ConceptDTO;
+import com.example.cloudwrite.JAXBModel.ConceptDTO;
 import com.example.cloudwrite.model.Concept;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-// note that changing the annotation to @Mapper and @Component causes the context to fail on loading
-@Mapper(componentModel = "spring")
+// see application.properties
+@Mapper
 public interface ConceptMapper {
 
     ConceptMapper INSTANCE = Mappers.getMapper(ConceptMapper.class);

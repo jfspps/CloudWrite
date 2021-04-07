@@ -1,6 +1,6 @@
 package com.example.cloudwrite.controller.api;
 
-import com.example.cloudwrite.api.model.FundamentalPieceDTOList;
+import com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList;
 import com.example.cloudwrite.service.DTO.FundamentalPieceDTOService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,7 +32,9 @@ public class FundamentalDTOController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getAllFunPieces(){
-        return new FundamentalPieceDTOList(fundamentalPieceDTOService.findAll().getFundamentalPieceDTOs());
+        com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList list = new com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList();
+        list.getFundamentalPiece().addAll(fundamentalPieceDTOService.findAll().getFundamentalPiece());
+        return list;
     }
 
     /**
@@ -44,6 +46,9 @@ public class FundamentalDTOController {
     @GetMapping("/{keyword}/search")
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getFunPiecesByKeyword(@PathVariable("keyword") String keyword){
-        return new FundamentalPieceDTOList(fundamentalPieceDTOService.findAllByKeyword(keyword).getFundamentalPieceDTOs());
+        FundamentalPieceDTOList list = new FundamentalPieceDTOList();
+        list.getFundamentalPiece().addAll(fundamentalPieceDTOService.findAllByKeyword(keyword).getFundamentalPiece());
+
+        return list;
     }
 }
