@@ -47,8 +47,10 @@ public class ExpositionPieceDTOServiceImpl implements ExpositionPieceDTOService{
                 .map(expositionPieceMapper::expoPieceToExpoPieceDTO)
                 .collect(Collectors.toList());
 
-        // sync DTO with POJOs and return
-        return addCitationsAndKeyResults(piecesOnDB, pieceDTOList);
+        ExpositionPieceDTOList list = new ExpositionPieceDTOList();
+        list.getExpositionPiece().addAll(pieceDTOList);
+
+        return list;
     }
 
     @Override
@@ -64,8 +66,10 @@ public class ExpositionPieceDTOServiceImpl implements ExpositionPieceDTOService{
                 .map(expositionPieceMapper::expoPieceToExpoPieceDTO)
                 .collect(Collectors.toList());
 
-        // sync DTO with POJOs and return
-        return addCitationsAndKeyResults(piecesOnDB, pieceDTOList);
+        ExpositionPieceDTOList list = new ExpositionPieceDTOList();
+        list.getExpositionPiece().addAll(pieceDTOList);
+
+        return list;
     }
 
     @Override
@@ -74,28 +78,5 @@ public class ExpositionPieceDTOServiceImpl implements ExpositionPieceDTOService{
                 .findById(id)
                 .map(expositionPieceMapper::expoPieceToExpoPieceDTO)
                 .orElse(null);
-    }
-
-    private ExpositionPieceDTOList addCitationsAndKeyResults(List<ExpositionPiece> piecesOnDB, List<ExpositionPieceDTO> pieceDTOList) {
-        for (int pieceID = 0; pieceID < piecesOnDB.size(); pieceID++){
-            ExpositionPiece currentPieceOnDB = piecesOnDB.get(pieceID);
-            ExpositionPieceDTO currentPieceDTO = pieceDTOList.get(pieceID);
-
-            currentPieceOnDB.getKeyResults()
-                    .stream()
-                    .map(keyResultMapper::keyResultToKeyResultDTO)
-                    .forEach(keyResultDTO -> currentPieceDTO.getKeyResultDTOList().getKeyResultDTOs().add(keyResultDTO));
-
-            currentPieceOnDB.getCitations()
-                    .stream()
-                    .map(citationMapper::citationToCitationDTO)
-                    .forEach(citationDTO -> currentPieceDTO.getCitationDTOList().getCitationDTOs().add(citationDTO));
-
-            currentPieceDTO.setStandfirstDTO(standfirstMapper.standfirstToStandfirstDTO(currentPieceOnDB.getStandfirst()));
-        }
-        ExpositionPieceDTOList list = new ExpositionPieceDTOList();
-        list.getExpositionPiece().addAll(pieceDTOList);
-
-        return list;
     }
 }
