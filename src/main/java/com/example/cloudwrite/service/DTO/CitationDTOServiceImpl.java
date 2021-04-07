@@ -1,8 +1,8 @@
 package com.example.cloudwrite.service.DTO;
 
+import com.example.cloudwrite.JAXBModel.CitationDTO;
 import com.example.cloudwrite.JPARepository.CitationRepo;
 import com.example.cloudwrite.api.mapper.CitationMapper;
-import com.example.cloudwrite.api.model.CitationDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

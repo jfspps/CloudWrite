@@ -1,8 +1,8 @@
 package com.example.cloudwrite.service.DTO;
 
+import com.example.cloudwrite.JAXBModel.ConceptDTO;
 import com.example.cloudwrite.JPARepository.ConceptRepo;
 import com.example.cloudwrite.api.mapper.ConceptMapper;
-import com.example.cloudwrite.api.model.ConceptDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -3,56 +3,56 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="ExpositionPieceDTOList" type="ExpositionPieceDTOList"/>
 
-    <xs:complexType name="Standfirst">
+    <xs:complexType name="StandfirstDTO">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="rationale"/>
-            <xs:element type="xs:string" name="approach"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="rationale" minOccurs="0"/>
+            <xs:element type="xs:string" name="approach" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="KeyResult">
+    <xs:complexType name="KeyResultDTO">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="description"/>
-            <xs:element type="xs:int" name="priority"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="description" minOccurs="0"/>
+            <xs:element type="xs:int" name="priority" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="KeyResults">
+    <xs:complexType name="KeyResultDTOList">
         <xs:sequence>
-            <xs:element type="KeyResult" name="keyResults" maxOccurs="unbounded" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="Citation">
-        <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="references"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="Citations">
-        <xs:sequence>
-            <xs:element type="Citation" name="citation" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="KeyResultDTO" name="keyResultDTOs" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ExpositionPiece">
+    <xs:complexType name="CitationDTO">
         <xs:sequence>
-            <xs:element type="xs:long" name="id"/>
-            <xs:element type="xs:string" name="title"/>
-            <xs:element type="xs:string" name="keyword"/>
-            <xs:element type="Standfirst" name="standfirst"/>
-            <xs:element type="xs:string" name="expositionPurpose"/>
-            <xs:element type="xs:string" name="currentProgress"/>
-            <xs:element type="KeyResults" name="keyResults"/>
-            <xs:element type="xs:string" name="futureWork"/>
-            <xs:element type="Citations" name="citations"/>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="reference" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CitationDTOList">
+        <xs:sequence>
+            <xs:element type="CitationDTO" name="citationDTOs" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ExpositionPieceDTO">
+        <xs:sequence>
+            <xs:element type="xs:long" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="title" minOccurs="0"/>
+            <xs:element type="xs:string" name="keyword" minOccurs="0"/>
+            <xs:element type="StandfirstDTO" name="standfirstDTO" minOccurs="0"/>
+            <xs:element type="xs:string" name="expositionPurpose" minOccurs="0"/>
+            <xs:element type="xs:string" name="currentProgress" minOccurs="0"/>
+            <xs:element type="KeyResultDTOList" name="keyResultDTOList" minOccurs="0"/>
+            <xs:element type="xs:string" name="futureWork" minOccurs="0"/>
+            <xs:element type="CitationDTOList" name="citationDTOList" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="ExpositionPieceDTOList">
         <xs:sequence>
-            <xs:element type="ExpositionPiece" name="expositionPieces" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="ExpositionPieceDTO" name="expositionPiece" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

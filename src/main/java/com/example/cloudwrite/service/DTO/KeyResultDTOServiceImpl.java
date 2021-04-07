@@ -1,8 +1,8 @@
 package com.example.cloudwrite.service.DTO;
 
+import com.example.cloudwrite.JAXBModel.KeyResultDTO;
 import com.example.cloudwrite.JPARepository.KeyResultRepo;
 import com.example.cloudwrite.api.mapper.KeyResultMapper;
-import com.example.cloudwrite.api.model.KeyResultDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

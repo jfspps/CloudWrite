@@ -1,7 +1,7 @@
 package com.example.cloudwrite.controller.api;
 
-import com.example.cloudwrite.api.model.ExpositionPieceDTO;
-import com.example.cloudwrite.api.model.ExpositionPieceDTOList;
+import com.example.cloudwrite.JAXBModel.ExpositionPieceDTO;
+import com.example.cloudwrite.JAXBModel.ExpositionPieceDTOList;
 import com.example.cloudwrite.service.DTO.ExpositionPieceDTOService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -51,7 +50,8 @@ class ExpositionDTOControllerTest {
 
         expositionPieceDTO2.setId(2L);
         expositionPieceDTO2.setKeyword(KEYWORD + "sss");
-        pieceDTOS = new ExpositionPieceDTOList(Arrays.asList(expositionPieceDTO1, expositionPieceDTO2));
+        pieceDTOS = new ExpositionPieceDTOList();
+        pieceDTOS.getExpositionPiece().addAll(Arrays.asList(expositionPieceDTO1, expositionPieceDTO2));
     }
 
     // these test expect JSON returns instead of XML returns
@@ -64,7 +64,7 @@ class ExpositionDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.expositionPieces", hasSize(2))); // $ is root, followed by DTO properties
+                .andExpect(jsonPath("$.expositionPiece", hasSize(2))); // $ is root, followed by DTO properties
     }
 
     @Test
@@ -75,6 +75,6 @@ class ExpositionDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.expositionPieces", hasSize(2)));
+                .andExpect(jsonPath("$.expositionPiece", hasSize(2)));
     }
 }

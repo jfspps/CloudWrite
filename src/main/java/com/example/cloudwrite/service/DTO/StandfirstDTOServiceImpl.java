@@ -1,8 +1,8 @@
 package com.example.cloudwrite.service.DTO;
 
+import com.example.cloudwrite.JAXBModel.StandfirstDTO;
 import com.example.cloudwrite.JPARepository.StandfirstRepo;
 import com.example.cloudwrite.api.mapper.StandfirstMapper;
-import com.example.cloudwrite.api.model.StandfirstDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

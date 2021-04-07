@@ -1,6 +1,7 @@
 package com.example.cloudwrite.service.DTO;
 
-import com.example.cloudwrite.api.model.CitationDTO;
+
+import com.example.cloudwrite.JAXBModel.CitationDTO;
 
 import java.util.List;
 
