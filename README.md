@@ -2,6 +2,11 @@
 
 This Spring-based application provides authors with a collaborative environment from which to plan research expositions and educational articles.
 
+Commits from [this point](https://github.com/jfspps/CloudWrite/tree/a3a04eba5478a445bcd0f580ab79dc5e474642a2) onwards 
+use JAXB2 to generate DTO classes needed to run CloudWrite; see the [XSD files](./src/main/resources/xsd/). These classes
+will be flagged as missing within an IDE. To proceed, run package from maven (or within an IDE) to generate the DTO classes
+(the generated classes will be saved in the /target/generated-sources/jaxb directory).
+
 The packaged jar file is included [here](./JAR/) for demonstration purposes.
 
 ### Research themed articles

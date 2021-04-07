@@ -129,7 +129,7 @@
         </dependency>
 
         <!-- XML (and JSON) parsing -->
-        <!-- the header should be set to `application/json` or `appliction/xml` as desired (change header in e.g. Postman) -->
+        <!-- the header should be set to `application/json` or `application/xml` as desired (change header in e.g. Postman) -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
@@ -226,6 +226,7 @@
                     <sources>
                         <source>src/main/resources/xsd</source>
                     </sources>
+
                 </configuration>
             </plugin>
         </plugins>
