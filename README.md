@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/jfspps/CloudWrite.svg?style=svg)](https://circleci.com/gh/jfspps/CloudWrite)
+
 # CloudWrite
 
 This Spring-based application provides authors with a collaborative environment from which to plan research expositions and educational articles.
