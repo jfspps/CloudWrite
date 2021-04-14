@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * A collection of key results as part of an exposition piece
+ * A collection of key results as part of an research piece
  */
 @Data
 @AllArgsConstructor

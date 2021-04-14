@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
- * A key result of an exposition piece
+ * A key result of an research piece
  */
 @Data
 @JsonTypeName("KeyResult")

@@ -90,7 +90,7 @@ class UserControllerTest extends SecurityCredentialsSetup {
                 .andExpect(status().isOk())
                 .andExpect(view().name("authenticated"))
                 .andExpect(model().attributeExists("user"))
-                .andExpect(model().attributeExists("expositions"))
+                .andExpect(model().attributeExists("researchPieces"))
                 .andExpect(model().attributeExists("fundamentals"));
     }
 
@@ -102,7 +102,7 @@ class UserControllerTest extends SecurityCredentialsSetup {
                 .andExpect(status().isOk())
                 .andExpect(view().name("authenticated"))
                 .andExpect(model().attributeExists("user"))
-                .andExpect(model().attributeExists("expositions"))
+                .andExpect(model().attributeExists("researchPieces"))
                 .andExpect(model().attributeExists("fundamentals"));
     }
 

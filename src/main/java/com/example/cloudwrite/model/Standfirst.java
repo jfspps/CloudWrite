@@ -22,5 +22,5 @@ public class Standfirst implements Serializable {
     private String approach;
 
     @OneToOne
-    private ExpositionPiece expositionPiece;
+    private ResearchPiece researchPiece;
 }

@@ -15,7 +15,7 @@ The packaged jar file is included [here](./JAR/) for demonstration purposes.
 
 The model is broken down into entities, as follows:
 
-+ Article type: research exposition
++ Article type: research article
 + Article standfirst/headline
   + Reasons/rationale for research
   + How above aspect(s) is/are approached

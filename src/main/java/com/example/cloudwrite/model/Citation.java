@@ -24,7 +24,7 @@ public class Citation implements Serializable, Comparable<Citation> {
     private String reference = "";
 
     @ManyToOne
-    private ExpositionPiece piece;
+    private ResearchPiece piece;
 
     @Override
     public int compareTo(Citation o) {

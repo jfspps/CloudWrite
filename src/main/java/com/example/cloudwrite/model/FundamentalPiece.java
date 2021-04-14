@@ -57,7 +57,7 @@ public class FundamentalPiece implements Serializable, Comparable<FundamentalPie
         return false;
     }
 
-    // list exposition pieces by title
+    // list research pieces by title
     @Override
     public int compareTo(FundamentalPiece o) {
         String thisPiece = this.title;

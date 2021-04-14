@@ -1,7 +1,6 @@
 package com.example.cloudwrite.service.SDjpa;
 
 import com.example.cloudwrite.JPARepository.FundamentalPieceRepo;
-import com.example.cloudwrite.model.ExpositionPiece;
 import com.example.cloudwrite.model.FundamentalPiece;
 import com.example.cloudwrite.service.FundamentalPieceService;
 import lombok.extern.slf4j.Slf4j;

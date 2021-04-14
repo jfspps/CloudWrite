@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Stores a key research result and paired to an exposition piece
+ * Stores a key research result and paired to an research piece
  */
 @Setter
 @Getter
@@ -24,7 +24,7 @@ public class KeyResult implements Serializable, Comparable<KeyResult> {
     private String description = "";
 
     @ManyToOne
-    private ExpositionPiece expositionPiece;
+    private ResearchPiece researchPiece;
 
     // used to sort key results in the order they should appear in the article
     @Builder.Default

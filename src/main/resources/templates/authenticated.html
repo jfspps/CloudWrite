@@ -38,7 +38,7 @@
 
     <div class="row justify-content-start">
         <div class="col">
-            <h3>Exposition pieces</h3>
+            <h3>Research pieces</h3>
         </div>
     </div>
     <div class="row justify-content-start">
@@ -54,25 +54,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--/*@thymesVar id="exposition" type="com.example.cloudwrite.model.ExpositionPiece"*/-->
-                <tr th:each="exposition: ${expositions}">
+                <!--/*@thymesVar id="research" type="com.example.cloudwrite.model.ResearchPiece"*/-->
+                <tr th:each="research: ${researchPieces}">
                     <th class="px-3"><a role="button" class="btn btn-sm btn-outline-info"
-                                        th:href="@{/expositions/{ID}(ID=${exposition.id})}" th:text="${exposition.id}"></a></th>
-                    <td class="px-3" th:text="${exposition.title}"></td>
-                    <td class="px-3" th:text="${exposition.keyword}"></td>
-                    <td class="px-3" th:text="${exposition.keyResults.size()}"></td>
-                    <td class="px-3" th:text="${exposition.lastModifiedDate}"></td>
+                                        th:href="@{/research/{ID}(ID=${research.id})}" th:text="${research.id}"></a></th>
+                    <td class="px-3" th:text="${research.title}"></td>
+                    <td class="px-3" th:text="${research.keyword}"></td>
+                    <td class="px-3" th:text="${research.keyResults.size()}"></td>
+                    <td class="px-3" th:text="${research.lastModifiedDate}"></td>
                 </tr>
                 </tbody>
             </table>
-            <p th:if="${expositions.isEmpty()}">No exposition pieces on file</p>
+            <p th:if="${researchPieces.isEmpty()}">No research pieces on file</p>
         </div>
     </div>
     <br>
     <div class="row justify-content-start">
         <div class="col">
             <div class="btn-group">
-                <a href="/expositions/new" class="btn btn-outline-primary">New exposition piece</a>
+                <a href="/research/new" class="btn btn-outline-primary">New research piece</a>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
- * A citation as part of an exposition piece
+ * A citation as part of an research piece
  */
 @Data
 @JsonTypeName("Citation")
@@ -19,7 +19,7 @@ public class CitationDTO {
     private Long id;
 
     @JsonProperty("references")
-    @Schema(description = "Citation used as part of the exposition article/piece")
+    @Schema(description = "Citation used as part of the research article/piece")
     private String ref;
 }
 

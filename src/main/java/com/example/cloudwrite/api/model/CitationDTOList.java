@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.*;
 import java.util.List;
 
 /**
- * A collection of citations as part of an exposition piece
+ * A collection of citations as part of an research piece
  */
 @Data
 @AllArgsConstructor

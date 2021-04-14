@@ -23,7 +23,7 @@ import java.util.List;
 public class DataLoader implements CommandLineRunner {
 
     private final FundamentalPieceService fundamentalPieceService;
-    private final ExpositionPieceService expositionPieceService;
+    private final ResearchPieceService researchPieceService;
     private final ConceptService conceptService;
     private final KeyResultService keyResultService;
     private final StandfirstService standfirstService;
@@ -41,10 +41,10 @@ public class DataLoader implements CommandLineRunner {
             log.info("Fundamental pieces already on file; nothing loaded");
         }
 
-        if (expositionPieceService.findAll() == null || expositionPieceService.findAll().size() == 0){
-            buildResearchExpositions();
+        if (researchPieceService.findAll() == null || researchPieceService.findAll().size() == 0){
+            buildResearchResearch();
         } else {
-            log.info("Exposition pieces already on file; nothing loaded");
+            log.info("Research pieces already on file; nothing loaded");
         }
 
         // reset user login credentials on each run
@@ -91,7 +91,7 @@ public class DataLoader implements CommandLineRunner {
         log.info("Saved " + fundamentalPieceService.findAll().size() + " piece(s)");
     }
 
-    private void buildResearchExpositions(){
+    private void buildResearchResearch(){
 
         KeyResult someResult = KeyResult.builder().description("Some first description").priority(1).build();
         KeyResult someResult2 = KeyResult.builder().description("Some second description").priority(2).build();
@@ -105,9 +105,9 @@ public class DataLoader implements CommandLineRunner {
 
         Citation savedCitation = citationService.save(citation);
 
-        ExpositionPiece piece = ExpositionPiece.builder()
+        ResearchPiece piece = ResearchPiece.builder()
                 .title("The best piece in the world!")
-                .expositionPurpose("A purpose")
+                .researchPurpose("A purpose")
                 .currentProgress("The current state")
                 .keyword("Keyword")
                 .keyResults(List.of(savedResult, savedResult2))
@@ -115,11 +115,11 @@ public class DataLoader implements CommandLineRunner {
                 .citations(List.of(savedCitation))
                 .futureWork("What to expect").build();
 
-        ExpositionPiece savedPiece = expositionPieceService.save(piece);
+        ResearchPiece savedPiece = researchPieceService.save(piece);
 
-        savedResult.setExpositionPiece(savedPiece);
-        savedResult2.setExpositionPiece(savedPiece);
-        savedStandfirst.setExpositionPiece(savedPiece);
+        savedResult.setResearchPiece(savedPiece);
+        savedResult2.setResearchPiece(savedPiece);
+        savedStandfirst.setResearchPiece(savedPiece);
         savedCitation.setPiece(savedPiece);
 
         standfirstService.save(savedStandfirst);
@@ -127,7 +127,7 @@ public class DataLoader implements CommandLineRunner {
         keyResultService.save(savedResult2);
         citationService.save(savedCitation);
 
-        log.info("Saved " + expositionPieceService.findAll().size() + " piece(s)");
+        log.info("Saved " + researchPieceService.findAll().size() + " piece(s)");
     }
 
     private void addUsers(){
