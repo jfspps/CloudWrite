@@ -14,7 +14,7 @@
 
     <xs:complexType name="ConceptDTOList">
         <xs:sequence>
-            <xs:element type="ConceptDTO" name="conceptDTOs" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="ConceptDTO" name="conceptDTO" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 

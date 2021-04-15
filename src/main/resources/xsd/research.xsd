@@ -20,7 +20,7 @@
     </xs:complexType>
     <xs:complexType name="KeyResultDTOList">
         <xs:sequence>
-            <xs:element type="KeyResultDTO" name="keyResultDTOs" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="KeyResultDTO" name="keyResultDTO" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -32,7 +32,7 @@
     </xs:complexType>
     <xs:complexType name="CitationDTOList">
         <xs:sequence>
-            <xs:element type="CitationDTO" name="citationDTOs" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="CitationDTO" name="citationDTO" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 

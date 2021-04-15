@@ -59,9 +59,12 @@ public class DataLoader implements CommandLineRunner {
                 .description("Some random concept in Biology").purpose("Explain the origin of life").build();
         Concept chemConcept = Concept.builder()
                 .description("Some random concept in Chemistry").purpose("Why are electrons needed").build();
+        Concept chemConcept2 = Concept.builder()
+                .description("Another random concept in Chemistry").purpose("Why are protons needed").build();
 
         Concept savedBio = conceptService.save(bioConcept);
         Concept savedChem = conceptService.save(chemConcept);
+        Concept savedChem2 = conceptService.save(chemConcept2);
 
         FundamentalPiece bioPiece = FundamentalPiece.builder()
                 .conceptList(List.of(savedBio))
@@ -72,7 +75,7 @@ public class DataLoader implements CommandLineRunner {
                 .build();
 
         FundamentalPiece chemPiece = FundamentalPiece.builder()
-                .conceptList(List.of(savedChem))
+                .conceptList(List.of(savedChem, savedChem2))
                 .keyword("keyword2")
                 .prerequisites("The necessary knowhow again")
                 .title("Chemistry 101")
@@ -84,9 +87,11 @@ public class DataLoader implements CommandLineRunner {
 
         savedBio.setFundamentalPiece(savedBioPiece);
         savedChem.setFundamentalPiece(savedChemPiece);
+        savedChem2.setFundamentalPiece(savedChemPiece);
 
         conceptService.save(savedBio);
         conceptService.save(savedChem);
+        conceptService.save(savedChem2);
 
         log.info("Saved " + fundamentalPieceService.findAll().size() + " piece(s)");
     }

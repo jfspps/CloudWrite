@@ -100,7 +100,7 @@ class FundamentalControllerTest extends SecurityCredentialsSetup {
                 .andExpect(view().name("redirect:/fundamentals/1"));
 
         // confirm that that deletion of one concept was followed*
-        assertEquals(1, fundamentalPieceService.findById(1L).getConceptList().size());
+        assertEquals(2, fundamentalPieceService.findById(1L).getConceptList().size());
     }
 
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")
@@ -122,7 +122,7 @@ class FundamentalControllerTest extends SecurityCredentialsSetup {
                 .andExpect(view().name("redirect:/fundamentals/1"));
 
         // confirm that that deletion of one concept was followed*
-        assertEquals(0, fundamentalPieceService.findById(1L).getConceptList().size());
+        assertEquals(1, fundamentalPieceService.findById(1L).getConceptList().size());
     }
 
     @MethodSource("com.example.cloudwrite.controller.SecurityCredentialsSetup#streamAllUsers")

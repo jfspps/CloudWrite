@@ -132,7 +132,7 @@
         <!-- the header should be set to `application/json` or `application/xml` as desired (change header in e.g. Postman) -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
 
         <dependency>
