@@ -38,7 +38,7 @@ public class FundamentalPieceDTOServiceImpl implements FundamentalPieceDTOServic
                 .collect(Collectors.toList());
 
         FundamentalPieceDTOList list = new FundamentalPieceDTOList();
-        list.getFundamentalPiece().addAll(pieceDTOList);
+        list.getFundamentalPieces().addAll(pieceDTOList);
 
         return list;
     }
@@ -57,7 +57,7 @@ public class FundamentalPieceDTOServiceImpl implements FundamentalPieceDTOServic
                 .collect(Collectors.toList());
 
         FundamentalPieceDTOList list = new FundamentalPieceDTOList();
-        list.getFundamentalPiece().addAll(pieceDTOList);
+        list.getFundamentalPieces().addAll(pieceDTOList);
 
         return list;
     }

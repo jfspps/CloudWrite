@@ -33,7 +33,7 @@ public class FundamentalDTOController {
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getAllFunPieces(){
         com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList list = new com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList();
-        list.getFundamentalPiece().addAll(fundamentalPieceDTOService.findAll().getFundamentalPiece());
+        list.getFundamentalPieces().addAll(fundamentalPieceDTOService.findAll().getFundamentalPieces());
         return list;
     }
 
@@ -47,7 +47,7 @@ public class FundamentalDTOController {
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getFunPiecesByKeyword(@PathVariable("keyword") String keyword){
         FundamentalPieceDTOList list = new FundamentalPieceDTOList();
-        list.getFundamentalPiece().addAll(fundamentalPieceDTOService.findAllByKeyword(keyword).getFundamentalPiece());
+        list.getFundamentalPieces().addAll(fundamentalPieceDTOService.findAllByKeyword(keyword).getFundamentalPieces());
 
         return list;
     }

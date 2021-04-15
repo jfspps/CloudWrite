@@ -52,10 +52,10 @@ class FundamentalDTOControllerTest {
         fundamentalPieceDTO1.setKeyword(KEYWORD + "sss");
 
         pieceDTOS_long = new FundamentalPieceDTOList();
-        pieceDTOS_long.getFundamentalPiece().addAll(Arrays.asList(fundamentalPieceDTO, fundamentalPieceDTO1));
+        pieceDTOS_long.getFundamentalPieces().addAll(Arrays.asList(fundamentalPieceDTO, fundamentalPieceDTO1));
 
         pieceDTOS_short = new FundamentalPieceDTOList();
-        pieceDTOS_short.getFundamentalPiece().add(fundamentalPieceDTO);
+        pieceDTOS_short.getFundamentalPieces().add(fundamentalPieceDTO);
     }
 
     // these test expect JSON returns instead of XML returns
@@ -68,7 +68,7 @@ class FundamentalDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fundamentalPiece", hasSize(1))); // $ is root, followed by DTO properties
+                .andExpect(jsonPath("$.fundamentalPieces", hasSize(1))); // $ is root, followed by DTO properties
     }
 
     @Test
@@ -79,6 +79,6 @@ class FundamentalDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fundamentalPiece", hasSize(1)));
+                .andExpect(jsonPath("$.fundamentalPieces", hasSize(1)));
     }
 }

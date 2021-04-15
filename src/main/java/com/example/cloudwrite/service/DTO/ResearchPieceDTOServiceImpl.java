@@ -48,7 +48,7 @@ public class ResearchPieceDTOServiceImpl implements ResearchPieceDTOService {
                 .collect(Collectors.toList());
 
         ResearchPieceDTOList list = new ResearchPieceDTOList();
-        list.getResearchPiece().addAll(pieceDTOList);
+        list.getResearchPieces().addAll(pieceDTOList);
 
         return list;
     }
@@ -67,7 +67,7 @@ public class ResearchPieceDTOServiceImpl implements ResearchPieceDTOService {
                 .collect(Collectors.toList());
 
         ResearchPieceDTOList list = new ResearchPieceDTOList();
-        list.getResearchPiece().addAll(pieceDTOList);
+        list.getResearchPieces().addAll(pieceDTOList);
 
         return list;
     }

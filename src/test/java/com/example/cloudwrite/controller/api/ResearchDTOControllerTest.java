@@ -82,7 +82,7 @@ class ResearchDTOControllerTest {
         researchPieceDTO2.setId(2L);
         researchPieceDTO2.setKeyword(KEYWORD + "sss");
         pieceDTOS = new ResearchPieceDTOList();
-        pieceDTOS.getResearchPiece().addAll(Arrays.asList(researchPieceDTO1, researchPieceDTO2));
+        pieceDTOS.getResearchPieces().addAll(Arrays.asList(researchPieceDTO1, researchPieceDTO2));
     }
 
     // these test expect JSON returns instead of XML returns
@@ -95,7 +95,7 @@ class ResearchDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.researchPiece", hasSize(2))); // $ is root, followed by DTO properties
+                .andExpect(jsonPath("$.researchPieces", hasSize(2))); // $ is root, followed by DTO properties
     }
 
     @Test
@@ -106,7 +106,7 @@ class ResearchDTOControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.researchPiece", hasSize(2)));
+                .andExpect(jsonPath("$.researchPieces", hasSize(2)));
 
     }
 }

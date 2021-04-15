@@ -54,7 +54,7 @@ class FundamentalPieceDTOServiceTest {
         fundamentalPieceDTOList = fundamentalPieceDTOService.findAll();
 
         // check mapping (then)
-        assertEquals(1, fundamentalPieceDTOList.getFundamentalPiece().size());
+        assertEquals(1, fundamentalPieceDTOList.getFundamentalPieces().size());
     }
 
     @Test
@@ -64,7 +64,7 @@ class FundamentalPieceDTOServiceTest {
 
         FundamentalPieceDTOList found = fundamentalPieceDTOService.findAllByKeyword("lafjdlfkj");
 
-        assertEquals(1, found.getFundamentalPiece().size());
+        assertEquals(1, found.getFundamentalPieces().size());
     }
 
     @Test

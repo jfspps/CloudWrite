@@ -33,7 +33,7 @@ public class ResearchDTOController {
     @ResponseStatus(HttpStatus.OK)
     public ResearchPieceDTOList getAllResPieces(){
         ResearchPieceDTOList list = new ResearchPieceDTOList();
-        list.getResearchPiece().addAll(researchPieceDTOService.findAll().getResearchPiece());
+        list.getResearchPieces().addAll(researchPieceDTOService.findAll().getResearchPieces());
 
         return list;
     }
@@ -48,7 +48,7 @@ public class ResearchDTOController {
     @ResponseStatus(HttpStatus.OK)
     public ResearchPieceDTOList getResPiecesByKeyword(@PathVariable("keyword") String keyword){
         ResearchPieceDTOList list = new ResearchPieceDTOList();
-        list.getResearchPiece().addAll(researchPieceDTOService.findAllByKeyword(keyword).getResearchPiece());
+        list.getResearchPieces().addAll(researchPieceDTOService.findAllByKeyword(keyword).getResearchPieces());
 
         return list;
     }

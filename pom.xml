@@ -131,13 +131,8 @@
         <!-- XML (and JSON) parsing -->
         <!-- the header should be set to `application/json` or `application/xml` as desired (change header in e.g. Postman) -->
         <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.woodstox</groupId>
-            <artifactId>woodstox-core-asl</artifactId>
-            <version>4.4.1</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
         </dependency>
 
         <dependency>
@@ -227,6 +222,10 @@
                         <source>src/main/resources/xsd</source>
                     </sources>
 
+                    <!-- Define default XJB binding rules  -->
+                    <xjbSources>
+                        <xjbSource>src/main/resources/xjb/global.xjb</xjbSource>
+                    </xjbSources>
                 </configuration>
             </plugin>
         </plugins>

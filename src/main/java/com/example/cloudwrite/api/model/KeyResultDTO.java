@@ -1,8 +1,6 @@
 package com.example.cloudwrite.api.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -10,8 +8,6 @@ import lombok.Data;
  * A key result of an research piece
  */
 @Data
-@JsonTypeName("KeyResult")
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 @JsonPropertyOrder({"id", "description", "priority"})
 public class KeyResultDTO {
 

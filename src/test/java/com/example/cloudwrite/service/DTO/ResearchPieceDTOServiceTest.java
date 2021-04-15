@@ -60,7 +60,7 @@ class ResearchPieceDTOServiceTest {
         ResearchPieceDTOList researchPieceDTOS = researchPieceDTOService.findAll();
 
         // check mapping (then)
-        assertEquals(1, researchPieceDTOS.getResearchPiece().size());
+        assertEquals(1, researchPieceDTOS.getResearchPieces().size());
     }
 
     @Test
@@ -70,7 +70,7 @@ class ResearchPieceDTOServiceTest {
 
         ResearchPieceDTOList researchPieceDTOS = researchPieceDTOService.findAllByKeyword("lafjdlfkj");
 
-        assertEquals(1, researchPieceDTOS.getResearchPiece().size());
+        assertEquals(1, researchPieceDTOS.getResearchPieces().size());
     }
 
     @Test
