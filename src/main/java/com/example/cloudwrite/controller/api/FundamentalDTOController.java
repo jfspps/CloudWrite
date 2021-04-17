@@ -32,7 +32,7 @@ public class FundamentalDTOController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public FundamentalPieceDTOList getAllFunPieces(){
-        com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList list = new com.example.cloudwrite.JAXBModel.FundamentalPieceDTOList();
+        FundamentalPieceDTOList list = new FundamentalPieceDTOList();
         list.getFundamentalPieces().addAll(fundamentalPieceDTOService.findAll().getFundamentalPieces());
         return list;
     }
