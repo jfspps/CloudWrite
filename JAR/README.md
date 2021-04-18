@@ -3,7 +3,7 @@
 Run the jar from the command line:
 
 ```bash
-java -jar cloudwrite-0.0.1-SNAPSHOT.jar
+java -jar -Djava.security.egd=file:/dev/./urandom cloudwrite-0.0.1-SNAPSHOT.jar
 ```
 
 From a browser, go to [localhost:5000](http://localhost:5000) (port selection is set in [application.properties](../src/main/resources/application.properties)) and enter one of the login details:
