@@ -17,9 +17,11 @@ The packaged jar file is included [here](./JAR/) for demonstration purposes.
 
 Download copies of the JAR directories and subdirectories present for both [CloudRead](https://github.com/jfspps/CloudRead/tree/main/JAR) and [CloudWrite](https://github.com/jfspps/CloudWrite/tree/main/JAR). Run both JARs in separate terminals as outlined in their respective READMEs. Then access localhost port 5000 for CloudWrite or localhost port 8080 for CloudRead.
 
+The admin user (edit articles and add/remove/edit user accounts) is 'admin', with the imaginative password 'admin123'. Non-admin users who can only edit articles can be accessed with the username 'user' and password 'user123'.
+
 ## Docker image
 
-The image can be pulled from Docker Hub [here](https://hub.docker.com/repository/docker/jfspps/cloud-write-docker).
+The image can be pulled from Docker Hub [here](https://hub.docker.com/repository/docker/jfspps/cloud-write-docker). The same login details mentioned above also apply.
 
 To build a CloudWrite Docker image, follow the guidelines [here](https://github.com/jfspps/CloudWrite/tree/main/docker/README.md). To build a CloudRead image and then run both as networked containers, go [here](https://github.com/jfspps/CloudRead/tree/main/docker/README.md)).
 
