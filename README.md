@@ -2,7 +2,7 @@
 
 # CloudWrite
 
-This Spring-based application provides authors with a collaborative environment from which to plan research expositions and educational articles.
+This Spring-based application provides authors with a collaborative environment from which to plan research and educational (fundamental) articles.
 
 Commits from [this point](https://github.com/jfspps/CloudWrite/tree/a3a04eba5478a445bcd0f580ab79dc5e474642a2) onwards 
 use JAXB2 to generate DTO classes needed to run CloudWrite; see the [XSD files](./src/main/resources/xsd/). These classes
@@ -16,6 +16,10 @@ The packaged jar file is included [here](./JAR/) for demonstration purposes.
 [CloudRead](https://github.com/jfspps/CloudRead) is a REST client for CloudWrite and grants all users read-only access to the article plans. It consumes and maps XML to Java objects and (i) presents them in a browser or (ii) can export articles as DOCX files.
 
 Download copies of the JAR directories and subdirectories present for both [CloudRead](https://github.com/jfspps/CloudRead/tree/main/JAR) and [CloudWrite](https://github.com/jfspps/CloudWrite/tree/main/JAR). Run both JARs in separate terminals as outlined in their respective READMEs. Then access localhost port 5000 for CloudWrite or localhost port 8080 for CloudRead.
+
+## Docker image
+
+The image can be pulled from Docker Hub [here](https://hub.docker.com/repository/docker/jfspps/cloud-write-docker).
 
 To build a CloudWrite Docker image, follow the guidelines [here](https://github.com/jfspps/CloudWrite/tree/main/docker/README.md). To build a CloudRead image and then run both as networked containers, go [here](https://github.com/jfspps/CloudRead/tree/main/docker/README.md)).
 
@@ -73,3 +77,5 @@ employed by REST clients is referred to as 'un-marshalling'.
 Data can be saved to a MySQL database by triggering the 'SQL' annotation in [application.properties](/src/main/resources/application.properties). 
  The SQL scripts for the user account and tables are provided in the [SQLscript directory](/src/main/resources/SQLscript). 
 Changes to the [MySQL user account](/src/main/resources/SQLscript/SQLsetup.sql) must match those provided in the [application-SQL.yml](/src/main/resources/application-SQL.yml) file.
+
+Currently, the JAR build and Docker image are prepared for demo purposes and utilise the in-memory H2 database.
