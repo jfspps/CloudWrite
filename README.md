@@ -13,11 +13,11 @@ The packaged jar file is included [here](./JAR/) for demonstration purposes.
 
 ## Running CloudRead (client) with CloudWrite (service)
 
-(Docker images are currently under development)
-
 [CloudRead](https://github.com/jfspps/CloudRead) is a REST client for CloudWrite and grants all users read-only access to the article plans. It consumes and maps XML to Java objects and (i) presents them in a browser or (ii) can export articles as DOCX files.
 
 Download copies of the JAR directories and subdirectories present for both [CloudRead](https://github.com/jfspps/CloudRead/tree/main/JAR) and [CloudWrite](https://github.com/jfspps/CloudWrite/tree/main/JAR). Run both JARs in separate terminals as outlined in their respective READMEs. Then access localhost port 5000 for CloudWrite or localhost port 8080 for CloudRead.
+
+To build a CloudWrite Docker image, follow the guidelines [here](https://github.com/jfspps/CloudWrite/tree/main/docker/README.md). To build a CloudRead image and then run both as networked containers, go [here](https://github.com/jfspps/CloudRead/tree/main/docker/README.md)).
 
 ### Research themed articles
 
